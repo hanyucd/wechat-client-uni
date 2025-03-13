@@ -4,7 +4,6 @@
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
-    "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
         "usingComponents" : true,
@@ -13,8 +12,7 @@
         "splashscreen" : {
             "alwaysShowBeforeRender" : true,
             "waiting" : true,
-            "autoclose" : true,
-            "delay" : 0
+            "autoclose" : true
         },
         /* 模块配置 */
         "modules" : {},
@@ -44,7 +42,8 @@
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {}
-        }
+        },
+        "nvueCompiler" : "uni-app"
     },
     /* 快应用特有相关 */
     "quickapp" : {},
@@ -65,8 +64,8 @@
     "mp-toutiao" : {
         "usingComponents" : true
     },
-    "uniStatistics": {  
-        "enable": false
+    "uniStatistics" : {
+        "enable" : false
     },
     "vueVersion" : "3"
 }

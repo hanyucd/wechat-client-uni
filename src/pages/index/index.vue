@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const title = ref('欢迎使用wechat');
+const title = ref('wechat 学习');
 
 onLoad(() => {
   console.log('页面加载完成');
