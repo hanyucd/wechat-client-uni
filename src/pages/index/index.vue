@@ -7,16 +7,12 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      title: 'Hello',
-    };
-  },
-  onLoad() {},
-  methods: {},
-};
+<script setup>
+const title = ref('欢迎使用wechat');
+
+onLoad(() => {
+  console.log('页面加载完成');
+});
 </script>
 
 <style>

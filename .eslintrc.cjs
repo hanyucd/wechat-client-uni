@@ -8,7 +8,11 @@ module.exports = {
     node: true
   },
   // 继承 eslint 中推荐的 (打钩的) 规则项
-  extends: ['eslint:recommended', 'plugin:vue/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/recommended',
+    './.eslintrc-auto-import.json'
+  ],
   // 指定全局变量
   globals: {
     wx: true,
@@ -17,7 +21,7 @@ module.exports = {
     plus: true,
     getApp: true,
     getCurrentPages: true,
-    Component: true
+    Component: true,
   },
   // parser 是 ESLint 配置文件的顶级选项，用于指定整个 ESLint 配置使用的解析器。这是设置解析器的主要方式
   parser: 'vue-eslint-parser',
