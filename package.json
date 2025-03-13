@@ -33,7 +33,13 @@
     "build:mp-xhs": "uni build -p mp-xhs",
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
-    "build:quickapp-webview-union": "uni build -p quickapp-webview-union"
+    "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,vue}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4040520250104002",
@@ -61,6 +67,11 @@
     "@dcloudio/uni-stacktracey": "3.0.0-4040520250104002",
     "@dcloudio/vite-plugin-uni": "3.0.0-4040520250104002",
     "@vue/runtime-core": "^3.4.21",
-    "vite": "5.2.8"
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^10.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "vite": "5.2.8",
+    "vite-plugin-eslint2": "^5.0.3"
   }
 }

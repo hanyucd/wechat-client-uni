@@ -1,6 +1,6 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
+    <image class="logo" src="/static/logo.png" />
     <view class="text-area">
       <text class="title">{{ title }}</text>
     </view>
@@ -12,11 +12,11 @@ export default {
   data() {
     return {
       title: 'Hello',
-    }
+    };
   },
   onLoad() {},
   methods: {},
-}
+};
 </script>
 
 <style>

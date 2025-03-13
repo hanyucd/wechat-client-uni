@@ -1,0 +1,11 @@
+build
+public
+dist
+# lib
+src/wxcomponents
+# src/common/lib
+# src/components/qiun-data-charts
+# src/components/qiun-error
+# src/components/qiun-loading
+# src/components/u-charts
+# src/static

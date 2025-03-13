@@ -1,0 +1,1 @@
+npx lint-staged  # 或用 pnpm exec lint-staged
