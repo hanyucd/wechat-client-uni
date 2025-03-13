@@ -37,7 +37,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "src/**/*.{js,ts,vue}": [
+    "src/**/*.{js,ts,vue,nvue}": [
       "eslint --fix"
     ]
   },

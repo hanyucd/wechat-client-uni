@@ -8,7 +8,9 @@
 </template>
 
 <script setup>
-const title = ref('wechat 学习-网页');
+// import { onLoad } from '@dcloudio/uni-app';
+// import { ref } from 'vue';
+const title = ref('wechat 学习 Ap');
 
 onLoad(() => {
   console.log('页面加载完成');

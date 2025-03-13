@@ -7,12 +7,6 @@ module.exports = {
     es6: true,
     node: true
   },
-  // 继承 eslint 中推荐的 (打钩的) 规则项
-  extends: [
-    'eslint:recommended',
-    'plugin:vue/recommended',
-    './.eslintrc-auto-import.json'
-  ],
   // 指定全局变量
   globals: {
     wx: true,
@@ -27,10 +21,28 @@ module.exports = {
   parser: 'vue-eslint-parser',
   // 解析器选项
   parserOptions: {
-    // parser: '@babel/eslint-parser', // 解析器
     ecmaVersion: 'latest', // JavaScript 语言选项 es*@babel/eslint-parser
     sourceType: 'module',
+    // extraFileExtensions: ['.vue', '.nvue'] // 声明扩展名
   },
+  // 继承 eslint 中推荐的 (打钩的) 规则项
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/recommended',
+    './.eslintrc-auto-import.json'
+  ],
+  // 针对特定文件或目录应用不同的规则或配置
+  overrides: [
+    {
+      files: ['*.nvue'],
+      // 无需重复配置 parser，因为就是nvue
+      // parser: 'vue-eslint-parser',
+      rules: {
+        'vue/comment-directive': 'off', // 忽略条件编译注释
+        'vue/no-v-html': 'off' // nvue 不支持 v-html
+      }
+    },
+  ],
   /**
    * off 或 0 - 关闭规则
    * warn 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出),
