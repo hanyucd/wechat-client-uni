@@ -31,11 +31,11 @@ module.exports = {
     'plugin:vue/recommended',
     './.eslintrc-auto-import.json'
   ],
-  // 针对特定文件或目录应用不同的规则或配置
+  // 针对特定文件或目录应用不同的规则或配置（配置覆盖）
   overrides: [
     {
       files: ['*.nvue'],
-      // 无需重复配置 parser，因为就是nvue
+      // 无需重复配置 parser，因为就是vue语法
       // parser: 'vue-eslint-parser',
       rules: {
         'vue/comment-directive': 'off', // 忽略条件编译注释

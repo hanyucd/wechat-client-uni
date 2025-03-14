@@ -1,0 +1,12 @@
+/* 1. 页面背景色 */
+.page {
+	background-color: #EDEDED;
+	/* #ifndef APP-NVUE */
+	min-height: 100vh;
+	height: auto;
+	/* #endif */
+
+	/* #ifdef APP-NVUE */
+	flex: 1;
+	/* #endif */
+}

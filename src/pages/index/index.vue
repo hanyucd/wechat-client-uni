@@ -1,10 +1,14 @@
 <template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
+  <view class="flex">
+    <!-- <image class="logo" src="/static/logo.png" /> -->
+    <!-- <view class="text-area">
+    </view> -->
+    <view class="flex-1 bg-danger" style="height: 200rpx">1</view>
+    <view class="flex-1 bg-success" style="height: 200rpx">2</view>
   </view>
+
+  <text class="title">{{ title }}</text>
+  <text>{{ title }}</text>
 </template>
 
 <script setup>
@@ -15,30 +19,8 @@ onLoad(() => {
 });
 </script>
 
-<style>
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
+<style lang="scss" scoped>
 .title {
-  font-size: 36rpx;
-  color: #8f8f94;
+  color: $main-text-color;
 }
 </style>

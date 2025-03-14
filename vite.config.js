@@ -9,10 +9,29 @@ export default defineConfig({
     port: 8080,
     host: true,
   },
+  css: {
+    // https://cn.vitejs.dev/config/#css-preprocessoroptions
+    preprocessorOptions: {
+      scss: {
+        // 将 scss 代码注入到每个组件的样式中，因此（变量、混入、函数）等可以在组件样式中直接使用
+        additionalData: `
+          @import "@/styles/var.scss";
+        `,
+      },
+    },
+  },
   plugins: [
     uni(),
     eslintPlugin(),
     AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.vue\.[tj]sx?\?vue/, // .vue (vue-loader with experimentalInlineMatchResource enabled)
+        /\.md$/, // .md
+        /\.nvue$/ // 包含 .nvue 文件
+      ],
       imports: ['vue', 'uni-app'], // 自动导入vue和uni-app相关函数
       dts: 'src/auto-imports.d.ts', // 生成类型声明文件
       // 问题？：unplugin-auto-import 自动导入的变量在代码中被使用，但 ESLint 并没有检测到相应的import语句 | 插件冲突错误
