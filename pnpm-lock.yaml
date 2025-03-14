@@ -91,6 +91,12 @@ devDependencies:
   sass:
     specifier: ^1.78.0
     version: 1.78.0
+  uni-mini-router:
+    specifier: ^0.1.6
+    version: 0.1.6
+  uni-parse-pages:
+    specifier: ^0.0.1
+    version: 0.0.1
   unplugin-auto-import:
     specifier: ^19.1.1
     version: 19.1.1
@@ -7142,6 +7148,14 @@ packages:
 
   /undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
+    dev: true
+
+  /uni-mini-router@0.1.6:
+    resolution: {integrity: sha512-dgeEYCv00yTkiX3gVAQXrx4IAzAVtZv+2lVtVaixH6J/IHfZP7R3wqUwBvy4eFD0vP20p+QWNNE2c5LuHbPSiQ==}
+    dev: true
+
+  /uni-parse-pages@0.0.1:
+    resolution: {integrity: sha512-OyuNFo/nCw7mnZnrtTYi/C12uWxmK7FczrxRATZETCh7j23uk1kOxEWVD4BXRSjif7YJg0ZPYQE4xBWqxUMHAw==}
     dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.1:

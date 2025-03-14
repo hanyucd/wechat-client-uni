@@ -1,16 +1,58 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "F微信",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	}
+	},
+	"tabBar": {
+		"color":"#000000",
+		"selectedColor":"#08C261",
+		"borderStyle": "white",
+		"backgroundColor":"#F7F7F7",
+		"list": [
+			{
+				"text": "首页",
+				"pagePath": "pages/tabbar/index/index",
+				"iconPath": "static/tabbar/index.png",
+				"selectedIconPath": "static/tabbar/index-select.png"
+			},
+			{
+				"text": "通讯录",
+				"pagePath": "pages/tabbar/contact/contact",
+				"iconPath": "static/tabbar/contact.png",
+				"selectedIconPath":"static/tabbar/contact-select.png"
+			},
+			{
+				"text": "发现",
+				"pagePath": "pages/tabbar/find/find",
+				"iconPath":"static/tabbar/find.png",
+				"selectedIconPath":"static/tabbar/find-select.png"
+			},
+			{
+				"text": "我的",
+				"pagePath": "pages/tabbar/profile/profile",
+				"iconPath": "static/tabbar/profile.png",
+				"selectedIconPath": "static/tabbar/profile-select.png"
+			}
+		]
+	},
+	"pages": [
+		{
+			"path": "pages/tabbar/index/index",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar/contact/contact",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar/find/find",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar/profile/profile",
+			"style": {}
+		}
+	]
 }
