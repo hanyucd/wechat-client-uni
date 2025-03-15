@@ -13,6 +13,8 @@ onLaunch(() => {
 });
 onShow(() => {
   console.log('App Show');
+  // console.log(plus.runtime);
+  // console.log(plus.android);
 });
 onHide(() => {
   console.log('App Hide');
@@ -25,8 +27,7 @@ onHide(() => {
 // @import "./styles/free.css";
 @import "./styles/common.scss";
 
-/* #ifndef APP-PLUS-NVUE */
+/* #ifndef APP-NVUE */
 @import "./styles/iconfont.scss";
 /* #endif */
-
 </style>

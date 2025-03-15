@@ -1,9 +1,22 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uv-(.*)": "@climblee/uv-ui/components/uv-$1/uv-$1.vue"
+		}
+	},
 	"globalStyle": {
+		// #ifndef APP
+		"navigationStyle": "custom",
+		// #endif
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "F微信",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"titleNView": false, // 自定义顶部导航栏（如果是App下，建议使用titleNView或subNVue，体验更好）
+			"scrollIndicator": "none" // 滚动条显示策略 (不显示)
+		}
 	},
 	"tabBar": {
 		"color":"#000000",

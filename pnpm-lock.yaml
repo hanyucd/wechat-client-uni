@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@climblee/uv-ui':
+    specifier: ^1.1.20
+    version: 1.1.20
   '@dcloudio/uni-app':
     specifier: 3.0.0-4050620250312001
     version: 3.0.0-4050620250312001(@dcloudio/types@3.4.14)(postcss@8.5.3)(vue@3.5.13)
@@ -1307,6 +1310,10 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
+
+  /@climblee/uv-ui@1.1.20:
+    resolution: {integrity: sha512-jkyesHJsPJkF4Nap9ZmG1/ibKlxXA5M8+ntqKXwwloIsYSYL5SOKb0gyPj17aBOU1PkJpmeiZ8PwnTolhK2/HA==}
+    dev: false
 
   /@dcloudio/types@3.4.14:
     resolution: {integrity: sha512-VolQeZfTh8pQFsr2IlfIVX93blfvGTuBoJuZUc7iWOqtHV8gDrq6fXLhzsVlgZyuhhRZLOxlo33rkEqnY+ucAw==}
