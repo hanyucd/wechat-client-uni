@@ -23,9 +23,18 @@
       </view>
     </view>
   </view>
+
+  <scroll-view>
+    fg 
+    <!-- <view id="demo1" class="scroll-view-item uni-bg-red">A</view>
+    <view id="demo2" class="scroll-view-item uni-bg-green">B</view>
+    <view id="demo3" class="scroll-view-item uni-bg-blue">C</view> -->
+  </scroll-view>
+
+  <view>e</view>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // 状态栏高度
 const statusBarHeight = ref(0);
 
@@ -55,28 +64,19 @@ const _getSystemInfo = () => {
   // #endif
 
   // #ifndef APP-PLUS
-  statusBarHeight.value = uni.getSystemInfoSync().statusBarHeight;
+  statusBarHeight.value = uni.getSystemInfoSync().statusBarHeight!;
   // #endif
 };
 
-// back(){
-// 				if(this.backEvent){
-// 					return uni.navigateBack({
-// 						delta: 1
-// 					});
-// 				}
-// 				this.$emit('back')
-// 			},
-
 // 修改后的返回方法
-const handleBack = () => {
+// const handleBack = () => {
   // if (props.backEvent) {
   //   return uni.navigateBack({
   //     delta: 1
   //   });
   // }
   // emit('back');
-};
+// };
 </script>
 
 <style lang="scss" scoped>

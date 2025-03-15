@@ -10,6 +10,6 @@ export const useAppStore = defineStore('appModule', () => {
 }, {
   persist: {
     key: 'wechat-app-store',
-    pick: ['systemInfo'],
+    paths: ['systemInfo']
   }
 });

@@ -2,7 +2,9 @@ build
 public
 dist
 
-auto-imports.d.ts
+# src/main.ts
+
+# auto-imports.d.ts
 # lib
 src/wxcomponents
 # src/common/lib

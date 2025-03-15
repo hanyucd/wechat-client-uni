@@ -10,14 +10,14 @@
   <text class="title">{{ title }}</text>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useAppStore } from '@/store';
 
 const appStore = useAppStore();
 const title = ref('wechat 学习-网页');
 
 onLoad(() => {
-  // console.log('vue页面加载完成:', appStore.systemInfo);
+  console.log('vue页面加载完成:', appStore.systemInfo);
 });
 </script>
 

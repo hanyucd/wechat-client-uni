@@ -7,7 +7,7 @@
   <view class="flex-1 bg-success" style="height: 200rpx">2</view>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useAppStore } from '@/store';
 
 const appStore = useAppStore();

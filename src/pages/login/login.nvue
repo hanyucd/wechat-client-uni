@@ -1,9 +1,11 @@
 <template>
   <text class="title">{{ title }}</text>
   <text>{{ title }}</text>
+
+  <view>eee</view>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const title = ref('登录 App');
 
 onLoad(() => {

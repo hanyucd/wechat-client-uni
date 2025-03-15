@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 onLaunch(() => {
   console.log('App Launch');
   
@@ -17,7 +17,6 @@ onShow(() => {
 onHide(() => {
   // console.log('App Hide');
 });
-
 </script>
 
 <style lang="scss">

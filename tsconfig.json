@@ -1,0 +1,33 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+   // 指定 TypeScript 编译器需要处理的文件范围
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.nvue",
+  ],
+  "compilerOptions": {
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "lib": ["esnext", "dom"],
+    "types": [
+      // uni-app api 相关的 TypeScript 类型，需要安装 @dcloudio/types
+      "@dcloudio/types",
+      // 为 uni-app 组件提供 TypeScript 类型，需要安装 @uni-helper/uni-app-types
+      "@uni-helper/uni-app-types",
+
+      // "@ttou/uv-typings/shim",
+      // "@ttou/uv-typings/v2"
+    ],
+  },
+  // 校验 uni-app 组件类型
+  "vueCompilerOptions": {
+    "plugins": ["@uni-helper/uni-app-types/volar-plugin"],
+    // "nativeTags": ["block", "component", "template", "slot"]
+  },
+}
