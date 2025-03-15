@@ -1,5 +1,5 @@
 <template>
-  <!-- <uv-navbar title="个人中心" placeholder /> -->
+  <uv-navbar title="个人中心" placeholder />
   <CustomNavbar />
 
   <view class="flex">

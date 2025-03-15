@@ -24,7 +24,7 @@
     </view>
   </view>
 
-  <scroll-view>
+  <scroll-view> 
     fg 
     <!-- <view id="demo1" class="scroll-view-item uni-bg-red">A</view>
     <view id="demo2" class="scroll-view-item uni-bg-green">B</view>

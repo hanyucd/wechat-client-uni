@@ -3,11 +3,12 @@ onLaunch(() => {
   console.log('App Launch');
   
   // 加载公共图标库
-  // #ifdef APP-NVUE
+  // #ifdef APP
   const domModule = uni.requireNativePlugin('dom');
   domModule.addRule('fontFace', {
     'fontFamily': 'iconfont',
-    'src': 'url(\'https://at.alicdn.com/t/font_1365296_2ijcbdrmsg.ttf\')'
+    'src': 'url(\'/static/font.ttf\')'
+    // 'src': 'url(\'https://at.alicdn.com/t/font_1365296_2ijcbdrmsg.ttf\')'
   });
   // #endif
 });
@@ -24,7 +25,7 @@ onHide(() => {
 // @import "./styles/free.css";
 @import "./styles/common.scss";
 
-/* #ifndef APP-NVUE */
+/* #ifndef APP */
 @import "./styles/iconfont.scss";
 // @import "./common/free-icon.css";
 /* #endif */

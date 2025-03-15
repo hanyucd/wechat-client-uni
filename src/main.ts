@@ -1,14 +1,15 @@
 import { createSSRApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-// import uvUI from '@climblee/uv-ui';
 import * as Pinia from 'pinia';
 import pinia from './store';
+// @ts-ignore
+import uvUI from '@climblee/uv-ui';
 
 export function createApp() {
   const app = createSSRApp(App);
   
-  // app.use(uvUI);
+  app.use(uvUI);
   app.use(router);
   app.use(pinia);
   
@@ -18,4 +19,4 @@ export function createApp() {
   };
 }
 
-// console.log(uni.$uv);
+console.log(uni.$uv);

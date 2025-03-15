@@ -12,7 +12,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
     },
     "lib": ["esnext", "dom"],
     "types": [
@@ -20,14 +20,13 @@
       "@dcloudio/types",
       // 为 uni-app 组件提供 TypeScript 类型，需要安装 @uni-helper/uni-app-types
       "@uni-helper/uni-app-types",
-
-      // "@ttou/uv-typings/shim",
-      // "@ttou/uv-typings/v2"
+      "@ttou/uv-typings/v3",
+      "@ttou/uv-typings/shim",
     ],
   },
-  // 校验 uni-app 组件类型
+  // Vue 模板的编译行为
   "vueCompilerOptions": {
+    // 让 TypeScript 和 Vue 模板编译器（Volar）能够正确识别 Uniapp 特有的组件
     "plugins": ["@uni-helper/uni-app-types/volar-plugin"],
-    // "nativeTags": ["block", "component", "template", "slot"]
   },
 }
