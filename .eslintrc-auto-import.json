@@ -17,6 +17,7 @@
     "WritableComputedRef": true,
     "computed": true,
     "createApp": true,
+    "createRouter": true,
     "customRef": true,
     "defineAsyncComponent": true,
     "defineComponent": true,
@@ -88,14 +89,13 @@
     "useCssVars": true,
     "useId": true,
     "useModel": true,
+    "useRoute": true,
+    "useRouter": true,
     "useSlots": true,
     "useTemplateRef": true,
     "watch": true,
     "watchEffect": true,
     "watchPostEffect": true,
-    "watchSyncEffect": true,
-    "createRouter": true,
-    "useRoute": true,
-    "useRouter": true
+    "watchSyncEffect": true
   }
 }

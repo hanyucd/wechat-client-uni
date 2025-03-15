@@ -1,5 +1,6 @@
 <template>
-  <uv-navbar title="个人中心" placeholder />
+  <!-- <uv-navbar title="个人中心" placeholder /> -->
+  <CustomNavbar />
 
   <view class="flex">
     <view class="flex-1 bg-danger" style="height: 200rpx">1</view>
@@ -16,7 +17,7 @@ const appStore = useAppStore();
 const title = ref('wechat 学习-网页');
 
 onLoad(() => {
-  console.log('vue页面加载完成:', appStore.systemInfo);
+  // console.log('vue页面加载完成:', appStore.systemInfo);
 });
 </script>
 

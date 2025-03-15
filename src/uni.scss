@@ -16,6 +16,7 @@
 // flex xy 轴布局
 @mixin flex-xy-layout($xLayout: center, $yLayout: center) {
   display: flex;
+  flex-direction: row;
   justify-content: $xLayout;
   align-items: $yLayout;
 }

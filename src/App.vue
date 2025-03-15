@@ -3,7 +3,7 @@ onLaunch(() => {
   console.log('App Launch');
   
   // 加载公共图标库
-  // #ifdef APP-NVUE 
+  // #ifdef APP-NVUE
   const domModule = uni.requireNativePlugin('dom');
   domModule.addRule('fontFace', {
     'fontFamily': 'iconfont',
@@ -12,12 +12,10 @@ onLaunch(() => {
   // #endif
 });
 onShow(() => {
-  console.log('App Show');
-  // console.log(plus.runtime);
-  // console.log(plus.android);
+  // console.log('App Show');
 });
 onHide(() => {
-  console.log('App Hide');
+  // console.log('App Hide');
 });
 
 </script>
@@ -29,5 +27,6 @@ onHide(() => {
 
 /* #ifndef APP-NVUE */
 @import "./styles/iconfont.scss";
+// @import "./common/free-icon.css";
 /* #endif */
 </style>

@@ -1,7 +1,24 @@
 .custom-navbar {
-  background-color: #000000;
-  padding: 10px 0;
-  .text {
-    color: #ffffff;
+  .statusbar-module {
+    background-color: red;
+  }
+  .navbar-module {
+    @include flex-xy-layout;
+    background-color: green;
+    height: 90rpx;
+    padding: 0 20rpx;
+    .navbar-left {
+      .icon-back {
+        font-size: 35rpx;
+      }
+    }
+    .navbar-center {
+      @include flex-xy-layout;
+      flex: 1;
+      margin: 0 10rpx;
+      .navbar-title {
+        font-size: 35rpx;
+      }
+    }
   }
 }
