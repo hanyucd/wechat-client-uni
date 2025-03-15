@@ -47,6 +47,12 @@
     },
     /* 快应用特有相关 */
     "quickapp" : {},
+    "h5" : {
+        "router" : {
+            // 路由模式，默认为 hash
+            "mode" : "history"
+        }
+    },
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "wx81d0bb9da8c3046d",

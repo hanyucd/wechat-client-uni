@@ -1,5 +1,5 @@
 <template>
-  <CustomNavBar />
+  <CustomNavbar />
   
   <view>首页</view>
 
@@ -8,8 +8,14 @@
 </template>
 
 <script setup>
+import { useAppStore } from '@/store';
 
+const appStore = useAppStore();
 // console.log(uni.$uv);
+
+onLoad(() => {
+  console.log('Nvue页面加载完成:', appStore.systemInfo);
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,0 +1,18 @@
+<template>
+  <text class="title">{{ title }}</text>
+  <text>{{ title }}</text>
+</template>
+
+<script setup>
+const title = ref('登录 App');
+
+onLoad(() => {
+  console.log('页面加载完成');
+});
+</script>
+
+<style lang="scss" scoped>
+.title {
+  color: $main-text-color;;
+}
+</style>

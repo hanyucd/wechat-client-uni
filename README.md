@@ -22,19 +22,20 @@
 
 uni-app App 端内置 HTML5+ 引擎，让 js 可以 **直接调用** HTML5 Plus丰富的原生能力。
 
-[HTML5 Plus移动App](https://ask.dcloud.net.cn/article/89)，简称5+App，是一种基于HTML、JS、CSS编写的运行于手机端的App，这种App可以通过扩展的JS API任意调用手机的原生能力，实现与原生App同样强大的功能和性能：
+[HTML5 Plus移动App](https://ask.dcloud.net.cn/article/89)，简称5+App，是一种基于HTML、JS、CSS编写的运行于手机端的App，这种App可以通过扩展的JS API任意调用手机的原生能力，实现与原生App同样强大的功能和性能。
 
-- 原生的api多达40万，HTML5 Plus的封装并非把40万api都封装了一遍，而是分成了2个层面：
+**原生的api多达40万，HTML5 Plus的封装并非把40万api都封装了一遍，而是分成了2个层面：**
 
-1. HTML5Plus规范：**常用的扩展能力**，比如二维码、语音输入，都封装到了规范中，同时实现了Android和iOS的解析引擎，使得开发者的代码编写一次，可跨平台运行。
+1. HTML5Plus 规范：**常用的扩展能力**，比如二维码、语音输入，都封装到了规范中，同时实现了 android 和 ios 的解析引擎，使得开发者的代码编写一次，可跨平台运行。
 
-2. Native.js是另一项创新技术。手机OS的原生API有四十多万，大量的API无法被HTML5使用。Native.js把几十万原生API映射成了js对象，通过js可以直接调ios和android的原生API。这部分就不再跨平台，写法分别是plus.ios和plus.android，比如调ios game center，或在android手机桌面创建快捷方式，这些都是 **平台专有** 的api。
+2. Native.js **各自专有扩展能力**，Native.js把几十万原生API映射成了js对象，通过js可以直接调ios和android 的原生API。这部分就不再跨平台，写法分别是 plus.ios 和 plus.android，比如调 ios game center，或在 android 手机桌面创建快捷方式，这些都是 **平台专有** 的api。
 
 ### nvue开发与vue开发的常见区别
 [uniapp官方说明](https://uniapp.dcloud.net.cn/tutorial/nvue-outline.html#nvue%E5%BC%80%E5%8F%91%E4%B8%8Evue%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8C%BA%E5%88%AB)
 
 ### ios真机运行、打包所需要的证书申请（**注意：需要付费Apple账号才能申请证书**）
 [iOS证书(.p12)和描述文件(.mobileprovision)申请](https://ask.dcloud.net.cn/article/152)
+
 [苹果个人付费开发者证书申请及使用图文详解](https://cloud.tencent.com/developer/article/1863935)
 
 - **主要是申请: AppId、证书、描述文件**
