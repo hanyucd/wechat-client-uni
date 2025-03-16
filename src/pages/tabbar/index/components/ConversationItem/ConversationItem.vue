@@ -2,9 +2,11 @@
   <view class="conversation-item" @click="onClick" @longpress="long">
     <!-- 会话左侧 -->
     <view class="conversation-left">
-      <!-- <image :srcc="conversation.avatar" mode="aspectFill" style="width: 92rpx; height: 92rpx;" /> -->
-      <Avatar :src="conversation.avatar" :radius="10" />
-      <!-- <free-badge v-if="item.noreadnum" badge-class="position-absolute" badge-style="top:15rpx;right:15rpx" :value="item.noreadnum" /> -->
+      <VAvatar :src="conversation.avatar" :radius="10" />
+      <VBadge
+        :badge-style="{ position: 'absolute', top:'15rpx', right: '15rpx' }"
+        :value="8"
+      />
     </view>
 
     <!-- 会话右侧 -->

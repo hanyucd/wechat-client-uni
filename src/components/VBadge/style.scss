@@ -1,0 +1,13 @@
+.badge-view {
+  background-color: #dc3545;
+  // border-radius: 100rpx;
+  border-radius: 100%;
+  // padding: 6rpx;
+  @include flex-xy-layout;
+  width: 30rpx;
+  height: 30rpx;
+  .badge-text {
+    color: #ffffff;
+    font-size: 20rpx;
+  }
+}

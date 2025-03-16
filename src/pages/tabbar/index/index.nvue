@@ -1,5 +1,5 @@
 <template>
-  <CustomNavbar :placeholder="true" />
+  <VNavbar :placeholder="true" />
   
   <!-- <view style="height: 1000px; background: yellow" /> -->
   
@@ -22,6 +22,7 @@ const conversationList = ref([
   { id: 3, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
   { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
 ]);
+
 // console.log(uni.$uv);
 
 onLoad(() => {

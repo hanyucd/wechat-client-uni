@@ -1,6 +1,6 @@
 <template>
   <!-- <uv-navbar title="个人中心" /> -->
-  <CustomNavbar />
+  <VNavbar />
 
   <text class="title">{{ title }}</text>
 
