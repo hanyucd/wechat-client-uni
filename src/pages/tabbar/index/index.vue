@@ -1,12 +1,8 @@
 <template>
-  <uv-navbar title="个人中心" placeholder />
-  <CustomNavbar />
+  <!-- <uv-navbar title="个人中心" /> -->
+  <CustomNavbar :placeholder="true" />
 
-  <view class="flex">
-    <view class="flex-1 bg-danger" style="height: 200rpx">1</view>
-    <view class="flex-1 bg-success" style="height: 200rpx">2</view>
-  </view>
-
+  <!-- <view style="height: 1000px; background: yellow" /> -->
   <text class="title">{{ title }}</text>
 </template>
 

@@ -19,4 +19,4 @@ export function createApp() {
   };
 }
 
-console.log(uni.$uv);
+// console.log(uni.$uv);

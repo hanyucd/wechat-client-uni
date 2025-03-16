@@ -1,10 +1,9 @@
 <template>
-  <CustomNavbar />
+  <CustomNavbar :placeholder="true" />
+  
+  <!-- <view style="height: 1000px; background: yellow" /> -->
   
   <view>首页</view>
-
-  <view class="flex-1 bg-danger" style="height: 200rpx">1</view>
-  <view class="flex-1 bg-success" style="height: 200rpx">2</view>
 </template>
 
 <script setup lang="ts">

@@ -3,7 +3,7 @@
    // 指定 TypeScript 编译器需要处理的文件范围
   "include": [
     "src/**/*.ts",
-    "src/**/*.d.ts",
+    // "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/**/*.nvue",
@@ -20,6 +20,7 @@
       "@dcloudio/types",
       // 为 uni-app 组件提供 TypeScript 类型，需要安装 @uni-helper/uni-app-types
       "@uni-helper/uni-app-types",
+      // uv-ui 组件库的类型，需要安装 @ttou/uv-typings
       "@ttou/uv-typings/v3",
       "@ttou/uv-typings/shim",
     ],
