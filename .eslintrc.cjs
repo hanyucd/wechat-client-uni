@@ -53,14 +53,17 @@ module.exports = {
     // eslint (http://eslint.cn/docs/rules)
     semi: ['error', 'always'], // 强制在语句末尾使用分号
     quotes: ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
-
+    'no-unused-vars': 'off', // 禁止使用未声明的变量
+    // "space-infix-ops": "error", // 或 "warn"
+    
     // typeScript (https://typescript-eslint.io/rules)
     '@typescript-eslint/semi': 'error', // 强制在语句末尾使用分号
     '@typescript-eslint/quotes': ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
     '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/space-infix-ops': 'error', // 要求中缀操作符周围有空格
     // 接口和类型别名中的成员之间分隔符
     '@typescript-eslint/member-delimiter-style': [
       'error',
@@ -78,8 +81,8 @@ module.exports = {
     'vue/require-default-prop': 'off', // 关闭 props 需要默认值
     'vue/no-v-html': 'off', // 关闭 Disallow use of v-html to prevent XSS attack
     'vue/multi-word-component-names': 'off', // 关闭 组件名称始终是多个单词
-    'no-unused-vars': 'off', // 禁止使用未声明的变量
     'vue/v-on-event-hyphenation': 'off', // 禁止对模板中的自定义组件强制执行 v-on 事件命名样式
+    'vue/prop-name-casing': 'off', // 关闭 组件的 prop 名称大小写
     // 控制一/多行可接受的属性量
     'vue/max-attributes-per-line': [
       'error',

@@ -3,13 +3,25 @@
   
   <!-- <view style="height: 1000px; background: yellow" /> -->
   
-  <view>首页</view>
+  <template v-for="(item, index) in conversationList" :key="item.id">
+    <ConversationItem :index="index" :conversation="item" />
+  </template>
+  
+  <view>App端</view>
 </template>
 
 <script setup lang="ts">
+import ConversationItem from './components/ConversationItem/ConversationItem.vue';
 import { useAppStore } from '@/store';
 
 const appStore = useAppStore();
+
+const conversationList = ref([
+  { id: 1, name: '张三', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1742139046,  data: '你好，我是张三' },
+  { id: 2, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 3, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+]);
 // console.log(uni.$uv);
 
 onLoad(() => {
