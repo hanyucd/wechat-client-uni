@@ -8,8 +8,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    Avatar: typeof import('./components/Avatar/Avatar.vue')['default']
-    CustomNavbar: typeof import('./components/CustomNavbar/CustomNavbar.vue')['default']
     VAvatar: typeof import('./components/VAvatar/VAvatar.vue')['default']
     VBadge: typeof import('./components/VBadge/VBadge.vue')['default']
     VNavbar: typeof import('./components/VNavbar/VNavbar.vue')['default']

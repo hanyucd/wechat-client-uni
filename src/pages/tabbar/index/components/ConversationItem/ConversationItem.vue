@@ -1,23 +1,24 @@
 <template>
-  <view class="conversation-item" @click="onClick" @longpress="long">
-    <!-- 会话左侧 -->
-    <view class="conversation-left">
-      <VAvatar :src="conversation.avatar" :radius="10" />
-      <VBadge
-        :badge-style="{ position: 'absolute', top:'15rpx', right: '15rpx' }"
-        :value="8"
-      />
-    </view>
-
-    <!-- 会话右侧 -->
-    <view class="conversation-right">
-      <view class="conversation-info">
-        <text class="conversation-name">{{ conversation.name }}</text>
-        <!-- <text class="conversation-time">{{ conversation.update_time }}</text> -->
-        <text class="conversation-time">{{ timeUtil.gettime(conversation.update_time) }}</text>
+  <view class="conversation-item" :class="{ 'conversation-item-top': 1 }" hover-class="bg-light">
+    <div class="conversation-div" @click="onClick" @longpress="onLongpressEvt">
+      <!-- 会话左侧 -->
+      <view class="conversation-left">
+        <VAvatar :src="conversation.avatar" :radius="10" />
+        <VBadge
+          :badge-style="{ position: 'absolute', top:'15rpx', right: '15rpx' }"
+          :value="8"
+        />
       </view>
-      <text class="conversation-content">{{ conversation.data }}</text>
-    </view>
+  
+      <!-- 会话右侧 -->
+      <view class="conversation-right">
+        <view class="conversation-info">
+          <text class="conversation-name">{{ conversation.name }}</text>
+          <text class="conversation-time">{{ timeUtil.gettime(conversation.update_time) }}</text>
+        </view>
+        <text class="conversation-content">{{ conversation.data }}</text>
+      </view>
+    </div>
   </view>
 </template>
 
@@ -41,8 +42,11 @@ const onClick = () => {
   console.log('onClick');
 };
 
-const long = () => {
-  console.log('onLong');
+/**
+ * 手指长按事件
+ */
+const onLongpressEvt = (event: any) => {
+  console.log('onLongpressEvt', event);
 };
 </script>
 

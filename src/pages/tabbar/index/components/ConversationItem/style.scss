@@ -1,43 +1,54 @@
-.conversation-item {
-  @include flex-xy-layout;
-  align-items: stretch;
-  .conversation-left {
-    @include flex-xy-layout;
-    position: relative;
-    width: 145rpx;
-  }
-  .conversation-right {
-    @include flex-xy-layout;
-    flex-direction: column;
-    align-items: stretch;
-    border-bottom: 1rpx solid #dee2e6;
-    flex: 1;
-    padding: 30rpx 0;
-    padding-right: 30rpx;
-    border-color: #E9E8E5;
-    .conversation-info {
-      @include flex-xy-layout(space-between);
-      margin-bottom: 10rpx;
-      .conversation-name {
-        font-size: 35rpx;
-      }
-      .conversation-time {
-        font-size: 25rpx;
-        color: #A9A5A0;
-      }
-    }
-    .conversation-content {
-      font-size: 30rpx;
-      color: #A9A5A0;
-      /* #ifndef APP-PLUS-NVUE */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      /* #endif */
 
-      /* #ifdef APP-PLUS-NVUE */
-      lines: 1;
-      /* #endif */
+.bg-light {
+  background-color: red;
+}
+
+.conversation-item {
+  background-color: #ffffff;
+  &.conversation-item-top {
+    background-color: #f8f9fa;
+  }
+  .conversation-div {
+    @include flex-xy-layout;
+    align-items: stretch;
+    .conversation-left {
+      @include flex-xy-layout;
+      position: relative;
+      width: 145rpx;
+    }
+    .conversation-right {
+      @include flex-xy-layout;
+      flex-direction: column;
+      align-items: stretch;
+      border-bottom: 1rpx solid #dee2e6;
+      flex: 1;
+      padding: 30rpx 0;
+      padding-right: 30rpx;
+      border-color: #E9E8E5;
+      .conversation-info {
+        @include flex-xy-layout(space-between);
+        margin-bottom: 10rpx;
+        .conversation-name {
+          font-size: 35rpx;
+        }
+        .conversation-time {
+          font-size: 25rpx;
+          color: #A9A5A0;
+        }
+      }
+      .conversation-content {
+        font-size: 30rpx;
+        color: #A9A5A0;
+        /* #ifndef APP-PLUS-NVUE */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        /* #endif */
+  
+        /* #ifdef APP-PLUS-NVUE */
+        lines: 1;
+        /* #endif */
+      }
     }
   }
 }
