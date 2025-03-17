@@ -1,18 +1,36 @@
 <template>
-  <VNavbar :placeholder="true" />
+  <VNavbar title="首页">
+    <template #right>
+      <view class="right-icons">
+        <VIcon :icon="'\ue6e3'" :icon-style="{ marginRight: '40rpx' }" />
+        <VIcon :icon="'\ue682'" @click="openExtendPopup" />
+      </view>
+    </template>
+  </VNavbar>
   
   <!-- <view style="height: 1000px; background: yellow" /> -->
+  <view>App端</view>
   
+  <!-- 会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
     <ConversationItem :index="index" :conversation="item" />
   </template>
-  
-  <view>App端</view>
+
+  <VPopup ref="topVPopupRef">
+    弹窗
+  </VPopup>
 </template>
 
 <script setup lang="ts">
 import ConversationItem from './components/ConversationItem/ConversationItem.vue';
+import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
+// import { useTemplateRef } from 'vue';
+
+type VPopupType = InstanceType<typeof VPopup>;
+  
+// 顶部popup ref
+const topVPopupRef = ref<VPopupType | null>(null);
 
 const appStore = useAppStore();
 
@@ -27,7 +45,17 @@ const conversationList = ref([
 
 onLoad(() => {
 });
+
+/**
+ * 打开顶部扩展弹窗
+ */
+const openExtendPopup = () => {
+  console.log('打开扩展弹窗');
+  // 打开扩展弹窗
+  topVPopupRef.value!.showVPopup();
+};
 </script>
 
 <style lang="scss" scoped>
+@import './style.scss';
 </style>

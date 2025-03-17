@@ -1,9 +1,17 @@
 <template>
   <!-- <uv-navbar title="个人中心" /> -->
-  <VNavbar />
+  <VNavbar title="首页">
+    <template #right>
+      <view class="right-icons">
+        <VIcon :icon="'\ue6e3'" :icon-style="{ marginRight: '40rpx' }" />
+        <VIcon :icon="'\ue682'" @click="openExtendPopup" />
+      </view>
+    </template>
+  </VNavbar>
 
   <text class="title">{{ title }}</text>
 
+  <!-- 会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
     <ConversationItem :index="index" :conversation="item" />
   </template>
@@ -25,10 +33,14 @@ const conversationList = ref([
 onLoad(() => {
   console.log('vue页面加载完成:', appStore.systemInfo);
 });
+
+const openExtendPopup = () => {
+  console.log('打开扩展弹窗');
+  // 打开扩展弹窗
+  // appStore.openExtendPopup();
+};
 </script>
 
 <style lang="scss" scoped>
-.title {
-  color: $main-text-color;
-}
+@import './style.scss';
 </style>

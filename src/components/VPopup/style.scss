@@ -1,0 +1,39 @@
+.badge-view {
+  background-color: #dc3545;
+  // border-radius: 100rpx;
+  border-radius: 100%;
+  // padding: 6rpx;
+  @include flex-xy-layout;
+  width: 30rpx;
+  height: 30rpx;
+  .badge-text {
+    color: #ffffff;
+    font-size: 20rpx;
+  }
+}
+.free-animated{
+  /* #ifdef APP-PLUS-NVUE */
+  /* transform: scale(0,0);
+  opacity: 0; */
+  /* #endif */
+}
+
+.popup-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* #ifndef APP-NVUE */
+  z-index: 9999;
+  /* #endif */
+}
+
+.popup-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* #ifndef APP-NVUE */
+  z-index: 9999;
+  /* #endif */
+}

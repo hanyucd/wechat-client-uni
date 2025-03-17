@@ -11,8 +11,10 @@
       background-color: transparent;
     }
     .navbar-module {
-      @include flex-xy-layout;
+      @include flex-xy-layout(space-between);
+      position: relative;
       padding: 0 20rpx;
+      height: 90rpx;
       .navbar-left {
         .icon-back {
           font-size: 35rpx;
@@ -20,8 +22,9 @@
       }
       .navbar-center {
         @include flex-xy-layout;
-        flex: 1;
-        margin: 0 10rpx;
+        position: absolute;
+        height: 90rpx;
+        z-index: -1;
         .navbar-title {
           font-size: 35rpx;
         }

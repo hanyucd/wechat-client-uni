@@ -5,14 +5,14 @@
       <view class="statusbar-module" :style="{ height: `${ statusBarHeight }px` }" />
 
       <!-- 导航栏 -->
-      <view class="navbar-module" style="height: 45px">
+      <view class="navbar-module">
         <!-- 左边 -->
         <view class="navbar-left">
-          <text class="iconfont icon-back">{{ '\ue60d' }}</text>
+          <VIcon :icon="'\ue60d'" />
         </view>
   
         <!-- 中间 -->
-        <view class="navbar-center">
+        <view class="navbar-center" :style="{ width: `${ appStore.systemInfo.screenWidth - 20 }px` }">
           <slot>
             <text v-if="title" class="navbar-title">{{ title }}</text>
           </slot>
@@ -20,7 +20,7 @@
         
         <!-- 右边 -->
         <view v-if="isShowRight" class="navbar-right">
-          右边
+          <slot name="right"></slot>
         </view>
       </view>
     </view>
@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import config from '@/config';
+import { useAppStore } from '@/store';
 
 interface Props {
   title?: string;
@@ -53,11 +54,15 @@ const props = withDefaults(defineProps<Props>(), {
   isShowRight: true,
 });
 
+const appStore = useAppStore();
+
 // 状态栏高度
 const statusBarHeight = ref(0);
 
 onMounted(() => {
   _getSystemInfo();
+
+  console.log('appStore.systemInfo', appStore.systemInfo.screenWidth);
 });
 
 /**
