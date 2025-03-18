@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import timeUtil from '@/utils/timeUtil';
+import type { NumberBoxEvents } from '@ttou/uv-typings/types/numberBox';
 
 interface IConversation {
   id?: number;
@@ -38,6 +39,10 @@ const props = defineProps<{
   index: number;
 }>();
 
+const emit = defineEmits<{
+  longpress: [x: number, y: number, index: number];
+}>();
+
 const onClick = () => {
   console.log('onClick');
 };
@@ -47,6 +52,28 @@ const onClick = () => {
  */
 const onLongpressEvt = (event: any) => {
   console.log('onLongpressEvt', event);
+
+  let _leftX = 0;
+  let _topY = 0;
+
+  // #ifdef APP-NVUE
+  if (Array.isArray(event.changedTouches) && event.changedTouches.length) {
+    _leftX = event.changedTouches[0].screenX;
+    _topY = event.changedTouches[0].screenY;
+  }
+  // #endif
+
+  // #ifdef WEB
+  _leftX = event.changedTouches[0].pageX;
+  _topY = event.changedTouches[0].pageY;
+  // #endif
+
+  // #ifdef MP
+  _leftX = event.detail.x;
+  _topY = event.detail.y;
+  // #endif
+
+  emit('longpress', _leftX, _topY, props.index);
 };
 </script>
 

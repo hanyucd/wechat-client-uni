@@ -13,9 +13,10 @@
   
   <!-- 会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
-    <ConversationItem :index="index" :conversation="item" />
+    <ConversationItem :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
   </template>
 
+  <!-- 顶部弹窗 -->
   <VPopup ref="topVPopupRef">
     弹窗
   </VPopup>
@@ -25,7 +26,6 @@
 import ConversationItem from './components/ConversationItem/ConversationItem.vue';
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
-// import { useTemplateRef } from 'vue';
 
 type VPopupType = InstanceType<typeof VPopup>;
   
@@ -53,6 +53,15 @@ const openExtendPopup = () => {
   console.log('打开扩展弹窗');
   // 打开扩展弹窗
   topVPopupRef.value!.showVPopup();
+};
+
+/**
+ * 打开顶部扩展弹窗
+ */
+const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
+  console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  // 打开扩展弹窗
+  // topVPopupRef.value!.showVPopup();
 };
 </script>
 

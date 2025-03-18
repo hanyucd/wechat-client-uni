@@ -12,7 +12,7 @@
   }
 }
 .free-animated{
-  /* #ifdef APP-PLUS-NVUE */
+  /* #ifdef APP-NVUE */
   /* transform: scale(0,0);
   opacity: 0; */
   /* #endif */
@@ -29,11 +29,18 @@
   /* #endif */
 }
 
-.popup-view {
+.popup-body {
   position: fixed;
   top: 0;
   left: 0;
   /* #ifndef APP-NVUE */
   z-index: 9999;
   /* #endif */
+  &.popup-body-center {
+  }
+  &.popup-body-bottom {
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }

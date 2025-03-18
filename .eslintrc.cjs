@@ -54,9 +54,10 @@ module.exports = {
     semi: ['error', 'always'], // 强制在语句末尾使用分号
     quotes: ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
     'no-unused-vars': 'off', // 禁止使用未声明的变量
-    // "space-infix-ops": "error", // 或 "warn"
+    // 'object-curly-spacing': 'off',
     
     // typeScript (https://typescript-eslint.io/rules)
+    '@typescript-eslint/object-curly-spacing': ['error', 'always'], // 需要大括号内有间距
     '@typescript-eslint/semi': 'error', // 强制在语句末尾使用分号
     '@typescript-eslint/quotes': ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
     '@typescript-eslint/ban-ts-comment': 'off',
@@ -77,6 +78,7 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { 'max': 1 }], // 空行最多不能超过 1 行
 
     // vue (https://eslint.vuejs.org/rules)
+    'vue/object-curly-spacing': ['error', 'always'],
     'vue/singleline-html-element-content-newline': 'off', // 在单行元素的内容前后需要换行符
     'vue/require-default-prop': 'off', // 关闭 props 需要默认值
     'vue/no-v-html': 'off', // 关闭 Disallow use of v-html to prevent XSS attack

@@ -39,14 +39,14 @@
       .conversation-content {
         font-size: 30rpx;
         color: #A9A5A0;
-        /* #ifndef APP-PLUS-NVUE */
+        /* #ifndef APP-NVUE */
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         /* #endif */
   
-        /* #ifdef APP-PLUS-NVUE */
-        lines: 1;
+        /* #ifdef APP-NVUE */
+        // lines: 1;
         /* #endif */
       }
     }

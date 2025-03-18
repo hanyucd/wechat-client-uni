@@ -1,5 +1,7 @@
 .avatar-view {
   .avatar-img {
+    /* #ifndef APP-NVUE */
     display: block;
+    /*  #endif  */
   }
 }
