@@ -17,8 +17,12 @@
   </template>
 
   <!-- 顶部弹窗 -->
-  <VPopup ref="topVPopupRef">
-    弹窗
+  <VPopup ref="topVPopupRef" mode="custom" :body-width="240" :body-height="conversationMenuHeight">
+    <view class="menu-popup">
+      <view v-for="(mItem, mIndex) in conversationMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
+					<text class="menu-item-text">{{ mItem.name }}</text>
+				</view>
+    </view>
   </VPopup>
 </template>
 
@@ -39,9 +43,28 @@ const conversationList = ref([
   { id: 2, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
   { id: 3, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
   { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+]);
+
+// 会话菜单
+const conversationMenu = ref([
+  { name:'设为置顶', event: 'setTop' },
+  { name:'删除该聊天', event: 'delChat' }
 ]);
 
 // console.log(uni.$uv);
+
+// 会话菜单高度 rpx
+const conversationMenuHeight = computed(() => {
+  const _menuItemHeight = 100;
+  return conversationMenu.value.length * _menuItemHeight;
+});
 
 onLoad(() => {
 });
@@ -52,16 +75,32 @@ onLoad(() => {
 const openExtendPopup = () => {
   console.log('打开扩展弹窗');
   // 打开扩展弹窗
-  topVPopupRef.value!.showVPopup();
+  topVPopupRef.value!.openVPopup();
 };
 
 /**
  * 打开顶部扩展弹窗
  */
 const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
-  console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
   // 打开扩展弹窗
-  // topVPopupRef.value!.showVPopup();
+  topVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);
+};
+
+/**
+ * 点击菜单项
+ */
+const clickMenuItem = (eventName: string) => {
+  switch (eventName){
+    case 'setTop': // 置顶/取消置顶会话
+      console.log('置顶/取消置顶会话');
+      break;
+    case 'delChat': // 删除当前会话
+      console.log('删除当前会话');
+      break;
+  }
+  // 关闭弹窗
+  topVPopupRef.value!.closeVPopup();
 };
 </script>
 

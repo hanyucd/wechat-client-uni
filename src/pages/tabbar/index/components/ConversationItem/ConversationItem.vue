@@ -51,8 +51,7 @@ const onClick = () => {
  * 手指长按事件
  */
 const onLongpressEvt = (event: any) => {
-  console.log('onLongpressEvt', event);
-
+  // console.log('onLongpressEvt', event);
   let _leftX = 0;
   let _topY = 0;
 

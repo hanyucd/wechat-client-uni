@@ -37,10 +37,15 @@
   z-index: 9999;
   /* #endif */
   &.popup-body-center {
+    border-radius: 8rpx;
   }
   &.popup-body-bottom {
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  &.popup-body-custom {
+    border-radius: 8rpx;
+    border: 1rpx solid #dee2e6;;
   }
 }
