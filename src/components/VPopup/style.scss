@@ -11,12 +11,6 @@
     font-size: 20rpx;
   }
 }
-.free-animated{
-  /* #ifdef APP-NVUE */
-  /* transform: scale(0,0);
-  opacity: 0; */
-  /* #endif */
-}
 
 .popup-mask {
   position: fixed;
@@ -48,4 +42,11 @@
     border-radius: 8rpx;
     border: 1rpx solid #dee2e6;;
   }
+}
+
+.popup-body-animated {
+  /* #ifdef APP-ANDROID */
+  transform: scale(0,0);
+  opacity: 0;
+  /* #endif */
 }

@@ -16,8 +16,8 @@
     <ConversationItem :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
   </template>
 
-  <!-- 顶部弹窗 -->
-  <VPopup ref="topVPopupRef" mode="custom" :body-width="240" :body-height="conversationMenuHeight">
+  <!-- 弹窗 -->
+  <VPopup ref="convMenuVPopupRef" mode="custom" :body-width="240" :body-height="conversationMenuHeight">
     <view class="menu-popup">
       <view v-for="(mItem, mIndex) in conversationMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
 					<text class="menu-item-text">{{ mItem.name }}</text>
@@ -33,8 +33,8 @@ import { useAppStore } from '@/store';
 
 type VPopupType = InstanceType<typeof VPopup>;
   
-// 顶部popup ref
-const topVPopupRef = ref<VPopupType | null>(null);
+// 会话菜单 popup ref
+const convMenuVPopupRef = ref<VPopupType | null>(null);
 
 const appStore = useAppStore();
 
@@ -75,7 +75,7 @@ onLoad(() => {
 const openExtendPopup = () => {
   console.log('打开扩展弹窗');
   // 打开扩展弹窗
-  topVPopupRef.value!.openVPopup();
+  convMenuVPopupRef.value!.openVPopup();
 };
 
 /**
@@ -84,7 +84,7 @@ const openExtendPopup = () => {
 const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
   // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
   // 打开扩展弹窗
-  topVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);
+  convMenuVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);
 };
 
 /**
@@ -100,7 +100,7 @@ const clickMenuItem = (eventName: string) => {
       break;
   }
   // 关闭弹窗
-  topVPopupRef.value!.closeVPopup();
+  convMenuVPopupRef.value!.closeVPopup();
 };
 </script>
 

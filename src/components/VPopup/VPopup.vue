@@ -3,13 +3,16 @@
     <!-- 蒙版 -->
     <view v-if="mask" class="popup-mask" :style="getMaskColor" @click="closeVPopup" />
     <!-- 弹出框内容 -->
-    <view ref="popup" class="popup-body" :class="popupBodyClass" :style="[{ background: bodyBgColor }, popupCostomPosition]">
+    <view ref="popupBodyRef" class="popup-body popup-body-animated" :class="popupBodyClass" :style="[{ background: bodyBgColor }, popupCostomPosition]">
       <slot></slot>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
+// #ifdef APP-NVUE
+const animation = uni.requireNativePlugin('animation');
+// #endif
 import { useAppStore } from '@/store';
 
 interface IPopup {
@@ -38,6 +41,9 @@ const emit = defineEmits<{
 }>();
 
 const appStore = useAppStore();
+
+// popup body ref
+const popupBodyRef = ref(null);
 
  // 是否显示 popup
 const status = ref(false);
@@ -91,17 +97,33 @@ onMounted(() => {
  * @param _leftX
  * @param _topY 
  */
-const openVPopup = (_leftX = 0, _topY = 0) => {
+const openVPopup = async (_leftX = 0, _topY = 0) => {
   if (status.value) return;
+  // console.log('弹窗坐标：', leftX.value, topY.value);
 
+  // 自定义位置-计算位置px
   if (props.mode === 'custom') {
     leftX.value = (_leftX > maxLeftX.value) ? maxLeftX.value : _leftX;
     topY.value = (_topY > maxTopY.value) ? maxTopY.value : _topY;
-    // todo:
   }
-  // console.log('弹窗坐标：', leftX.value, topY.value);
-
+  
   status.value = true;
+  
+  // #ifdef APP-ANDROID
+  // 对于APP-ANDROID和APP-IOS两个平台: 在uni-app项目中，仅uts文件中支持（通常是uts插件里使用）
+  await nextTick();
+  animation.transition(popupBodyRef.value, {
+    styles: {
+      transform: 'scale(1, 1)',
+      transformOrigin: 'left top',
+      opacity: 1
+    },
+    duration: 500, //ms
+    timingFunction: 'ease',
+    }, () => {
+      console.log('动画执行结束');
+  });
+  // #endif
 };
 
 /**
