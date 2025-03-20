@@ -139,7 +139,9 @@ const clickConvMenuItem = (eventName: string, convIndex: number) => {
   convMenuVPopupRef.value!.closeVPopup();
 };
 
-// 删除当前会话
+/**
+ * 删除会话 item
+ */
 const _delConvItem = () => {
   conversationList.value.splice(longpressActiveConvIndex.value, 1);
   // let item = this.list[this.propIndex];
