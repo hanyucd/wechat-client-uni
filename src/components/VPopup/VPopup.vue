@@ -108,7 +108,7 @@ const openVPopup = async (_leftX = 0, _topY = 0) => {
   }
   
   status.value = true;
-  
+
   // #ifdef APP-ANDROID
   // 对于APP-ANDROID和APP-IOS两个平台: 在uni-app项目中，仅uts文件中支持（通常是uts插件里使用）
   await nextTick();

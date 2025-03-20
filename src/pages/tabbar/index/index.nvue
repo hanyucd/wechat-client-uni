@@ -16,10 +16,20 @@
     <ConversationItem :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
   </template>
 
-  <!-- 弹窗 -->
+  <!-- 会话菜单弹窗 -->
   <VPopup ref="convMenuVPopupRef" mode="custom" :body-width="240" :body-height="conversationMenuHeight">
     <view class="menu-popup">
-      <view v-for="(mItem, mIndex) in conversationMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
+      <view v-for="(mItem, mIndex) in conversationMenuList" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
+					<text class="menu-item-text">{{ mItem.name }}</text>
+				</view>
+    </view>
+  </VPopup>
+
+  <!-- 顶部扩展菜单弹窗 -->
+  <VPopup ref="topExtendMenuVPopupRef" mode="custom" body-bg-color="#343a40" :mask-color="false" :body-width="240" :body-height="topExtendMenuHeight">
+    <view class="menu-popup top-menu-popup">
+      <view v-for="(mItem, mIndex) in topExtendMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
+          <text class="menu-item-icon iconfont">{{ mItem.icon }}</text>
 					<text class="menu-item-text">{{ mItem.name }}</text>
 				</view>
     </view>
@@ -33,10 +43,28 @@ import { useAppStore } from '@/store';
 
 type VPopupType = InstanceType<typeof VPopup>;
   
+// 顶部扩展菜单弹窗 popup ref
+const topExtendMenuVPopupRef = ref<VPopupType | null>(null);
 // 会话菜单 popup ref
 const convMenuVPopupRef = ref<VPopupType | null>(null);
 
 const appStore = useAppStore();
+
+// 会话菜单列表
+const conversationMenuList = ref([
+  { name: '设为置顶', event: 'setTop' },
+  { name: '删除该聊天', event: 'delChat' }
+]);
+
+// 顶部扩展菜单列表
+const topExtendMenu = ref([
+  { name: '发起群聊', event: 'navigateTo', path: '', icon: '\ue633' },
+  { name: '添加好友', event: 'navigateTo', path: '', icon: '\ue65d' },
+  // #ifndef WEB
+  { name: '扫一扫', event: 'scan', path: '', icon: '\ue614' },
+  // #endif
+  { name: '收付款', event: 'navigateTo', path: '', icon: '\ue66c' },
+]);
 
 const conversationList = ref([
   { id: 1, name: '张三', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1742139046,  data: '你好，我是张三' },
@@ -52,34 +80,35 @@ const conversationList = ref([
   { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
 ]);
 
-// 会话菜单
-const conversationMenu = ref([
-  { name:'设为置顶', event: 'setTop' },
-  { name:'删除该聊天', event: 'delChat' }
-]);
-
-// console.log(uni.$uv);
-
 // 会话菜单高度 rpx
 const conversationMenuHeight = computed(() => {
   const _menuItemHeight = 100;
-  return conversationMenu.value.length * _menuItemHeight;
+  return conversationMenuList.value.length * _menuItemHeight;
+});
+
+// 会话菜单高度 rpx
+const topExtendMenuHeight = computed(() => {
+  const _menuItemHeight = 100;
+  return topExtendMenu.value.length * _menuItemHeight;
 });
 
 onLoad(() => {
 });
 
 /**
- * 打开顶部扩展弹窗
+ * 打开顶部扩展 popup
  */
 const openExtendPopup = () => {
-  console.log('打开扩展弹窗');
+  const statusBarHeight = appStore.systemInfo.statusBarHeight!;
+  const navBarHeight = 45;
+  const topY = statusBarHeight + navBarHeight + 10;
+  const topX = 800;
   // 打开扩展弹窗
-  convMenuVPopupRef.value!.openVPopup();
+  topExtendMenuVPopupRef.value!.openVPopup(topX, topY);
 };
 
 /**
- * 打开顶部扩展弹窗
+ * 打开会话菜单 popup
  */
 const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
   // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);

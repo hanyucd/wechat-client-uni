@@ -65,6 +65,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/space-infix-ops': 'error', // 要求中缀操作符周围有空格
+    '@typescript-eslint/key-spacing': ['error', { 'beforeColon': false, 'afterColon': true }], // 强制在对象字面量的属性中键和值之间使用一致的间距
     // 接口和类型别名中的成员之间分隔符
     '@typescript-eslint/member-delimiter-style': [
       'error',
