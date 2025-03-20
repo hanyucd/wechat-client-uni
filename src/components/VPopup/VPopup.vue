@@ -132,6 +132,21 @@ const openVPopup = async (_leftX = 0, _topY = 0) => {
 const closeVPopup = () => {
   emit('hide');
   status.value = false;
+
+  // #ifdef APP-ANDROID
+  animation.transition(popupBodyRef.value, {
+    styles: {
+      transform: 'scale(0,0)',
+      transformOrigin: 'left top',
+      opacity: 0
+    },
+    duration: 100, //ms
+    timingFunction: 'ease',
+    }, ()=> {
+      status.value = false;
+      console.log('动画执行结束');
+  });
+  // #endif
 };
 
 defineExpose({

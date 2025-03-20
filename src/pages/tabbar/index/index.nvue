@@ -9,7 +9,6 @@
   </VNavbar>
   
   <!-- <view style="height: 1000px; background: yellow" /> -->
-  <view>App端</view>
   
   <!-- 会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
@@ -19,7 +18,7 @@
   <!-- 会话菜单弹窗 -->
   <VPopup ref="convMenuVPopupRef" mode="custom" :body-width="240" :body-height="conversationMenuHeight">
     <view class="menu-popup">
-      <view v-for="(mItem, mIndex) in conversationMenuList" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
+      <view v-for="(mItem, mIndex) in conversationMenuList" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickConvMenuItem(mItem.event)">
 					<text class="menu-item-text">{{ mItem.name }}</text>
 				</view>
     </view>
@@ -28,7 +27,7 @@
   <!-- 顶部扩展菜单弹窗 -->
   <VPopup ref="topExtendMenuVPopupRef" mode="custom" body-bg-color="#343a40" :mask-color="false" :body-width="240" :body-height="topExtendMenuHeight">
     <view class="menu-popup top-menu-popup">
-      <view v-for="(mItem, mIndex) in topExtendMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickMenuItem(mItem.event)">
+      <view v-for="(mItem, mIndex) in topExtendMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickTopExtendMenuItem(mItem.event)">
           <text class="menu-item-icon iconfont">{{ mItem.icon }}</text>
 					<text class="menu-item-text">{{ mItem.name }}</text>
 				</view>
@@ -66,19 +65,23 @@ const topExtendMenu = ref([
   { name: '收付款', event: 'navigateTo', path: '', icon: '\ue66c' },
 ]);
 
+// 会话列表
 const conversationList = ref([
   { id: 1, name: '张三', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1742139046,  data: '你好，我是张三' },
   { id: 2, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 3, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 3, name: '王五', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '赵国', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '关羽', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '张飞', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '刘备', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '吕布', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '董卓', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '诸葛亮', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '吕蒙', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
 ]);
+
+// 长按激活的会话 index
+const longpressActiveConvIndex = ref(-1);
 
 // 会话菜单高度 rpx
 const conversationMenuHeight = computed(() => {
@@ -111,25 +114,45 @@ const openExtendPopup = () => {
  * 打开会话菜单 popup
  */
 const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
-  // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  longpressActiveConvIndex.value = cItemIndex;
   // 打开扩展弹窗
   convMenuVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);
 };
 
 /**
- * 点击菜单项
+ * 点击会话菜单项
  */
-const clickMenuItem = (eventName: string) => {
+const clickConvMenuItem = (eventName: string, convIndex: number) => {
   switch (eventName){
     case 'setTop': // 置顶/取消置顶会话
       console.log('置顶/取消置顶会话');
       break;
     case 'delChat': // 删除当前会话
-      console.log('删除当前会话');
+      _delConvItem();
       break;
   }
-  // 关闭弹窗
+
+  console.log('clickConvMenuItem', eventName, convIndex);
+
+  // 关闭会话菜单 popup
   convMenuVPopupRef.value!.closeVPopup();
+};
+
+// 删除当前会话
+const _delConvItem = () => {
+  conversationList.value.splice(longpressActiveConvIndex.value, 1);
+  // let item = this.list[this.propIndex];
+};
+
+/**
+ * 点击顶部扩展菜单项
+ */
+const clickTopExtendMenuItem = () => {
+  // 关闭扩展菜单 popup
+  topExtendMenuVPopupRef.value!.closeVPopup();
+
+  console.log('clickTopExtendMenuItem');
 };
 </script>
 
