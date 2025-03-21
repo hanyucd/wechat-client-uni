@@ -8,7 +8,7 @@
       <view class="navbar-module">
         <!-- 左边 -->
         <view class="navbar-left">
-          <VIcon :icon="'\ue60d'" />
+          <VIcon v-if="showBack" :icon="'\ue60d'" @click="handleBack" />
         </view>
   
         <!-- 中间 -->
@@ -42,6 +42,7 @@ interface Props {
   /** 导航栏背景设置 */
   bgColor?: string;
 
+  showBack?: boolean;
   isShowRight?: boolean;
 }
 
@@ -51,6 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: true,
   bgColor: '#F8F9FA',
 
+  showBack: true,
   isShowRight: true,
 });
 
@@ -79,14 +81,12 @@ const _getSystemInfo = () => {
 };
 
 // 修改后的返回方法
-// const handleBack = () => {
+const handleBack = () => {
+  return uni.navigateBack({ delta: 1 });
   // if (props.backEvent) {
-  //   return uni.navigateBack({
-  //     delta: 1
-  //   });
   // }
   // emit('back');
-// };
+};
 </script>
 
 <style lang="scss" scoped>

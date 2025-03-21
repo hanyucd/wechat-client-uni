@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import timeUtil from '@/utils/timeUtil';
-import type { NumberBoxEvents } from '@ttou/uv-typings/types/numberBox';
 
 interface IConversation {
   id?: number;
@@ -32,7 +31,7 @@ interface IConversation {
   name?: string;
   update_time?: number;
   data?: string;
-  isTop: boolean;
+  isTop?: boolean;
 }
 
 const props = defineProps<{

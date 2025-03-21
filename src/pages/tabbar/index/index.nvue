@@ -1,5 +1,5 @@
 <template>
-  <VNavbar title="首页">
+  <VNavbar title="首页" :show-back="false">
     <template #right>
       <view class="right-icons">
         <VIcon :icon="'\ue6e3'" :icon-style="{ marginRight: '40rpx' }" />
@@ -132,7 +132,6 @@ const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, c
 const clickConvMenuItem = (eventName: string) => {
   switch (eventName){
     case 'setTop': // 置顶/取消置顶会话
-      console.log('置顶/取消置顶会话');
       _setTopConvItem();
       break;
     case 'delChat': // 删除当前会话

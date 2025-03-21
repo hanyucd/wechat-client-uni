@@ -1,8 +1,10 @@
 <template>
+  <VNavbar title="通讯录" :show-back="false" />
+  
   <view>通讯录</view>
 </template>
 
-<script setup>
+<script setup lang="ts">
 </script>
 
 <style lang="scss" scoped>
