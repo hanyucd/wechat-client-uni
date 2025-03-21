@@ -22,7 +22,6 @@ onHide(() => {
 
 <style lang="scss">
 /*每个页面公共css */
-// @import "./styles/free.css";
 @import "./styles/common.scss";
 
 /* #ifndef APP */

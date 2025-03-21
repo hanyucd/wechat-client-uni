@@ -7,7 +7,7 @@
 .conversation-item {
   background-color: #ffffff;
   &.conversation-item-top {
-    // background-color: #f8f9fa;
+    background-color: #f8f9fa;
   }
   .conversation-div {
     @include flex-xy-layout;

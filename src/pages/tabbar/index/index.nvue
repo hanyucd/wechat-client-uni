@@ -8,11 +8,14 @@
     </template>
   </VNavbar>
   
-  <!-- <view style="height: 1000px; background: yellow" /> -->
-  
-  <!-- 会话列表 -->
+   <!-- 置顶-会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
-    <ConversationItem :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
+    <ConversationItem v-if="item.isTop" :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
+  </template>
+
+   <!-- 非置顶-会话列表 -->
+  <template v-for="(item, index) in conversationList" :key="item.id">
+    <ConversationItem v-if="!item.isTop" :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
   </template>
 
   <!-- 会话菜单弹窗 -->
@@ -67,17 +70,13 @@ const topExtendMenu = ref([
 
 // 会话列表
 const conversationList = ref([
-  { id: 1, name: '张三', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1742139046,  data: '你好，我是张三' },
-  { id: 2, name: '李四', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 3, name: '王五', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '赵国', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '关羽', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '张飞', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '刘备', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '吕布', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '董卓', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '诸葛亮', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
-  { id: 4, name: '吕蒙', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767,  data: '你好，我是李四' },
+  { id: 4, name: '关羽', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '张飞', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '刘备', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕布', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '董卓', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '诸葛亮', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕蒙', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
 ]);
 
 // 长按激活的会话 index
@@ -106,7 +105,7 @@ const openExtendPopup = () => {
   const navBarHeight = 45;
   const topY = statusBarHeight + navBarHeight + 10;
   const topX = 800;
-  // 打开扩展弹窗
+  // 打开扩展 popup
   topExtendMenuVPopupRef.value!.openVPopup(topX, topY);
 };
 
@@ -114,26 +113,32 @@ const openExtendPopup = () => {
  * 打开会话菜单 popup
  */
 const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
-  console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  // 长按选择的 index
   longpressActiveConvIndex.value = cItemIndex;
-  // 打开扩展弹窗
+
+  // 拿到当前选中的对象
+  const longpressActiveConvItem = conversationList.value[cItemIndex];
+  // 判断之前是否处于置顶状态
+  conversationMenuList.value[0].name = longpressActiveConvItem.isTop ? '取消置顶' : '设为置顶';
+
+  // 打开会话菜单 popup
   convMenuVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);
 };
 
 /**
  * 点击会话菜单项
  */
-const clickConvMenuItem = (eventName: string, convIndex: number) => {
+const clickConvMenuItem = (eventName: string) => {
   switch (eventName){
     case 'setTop': // 置顶/取消置顶会话
       console.log('置顶/取消置顶会话');
+      _setTopConvItem();
       break;
     case 'delChat': // 删除当前会话
       _delConvItem();
       break;
   }
-
-  console.log('clickConvMenuItem', eventName, convIndex);
 
   // 关闭会话菜单 popup
   convMenuVPopupRef.value!.closeVPopup();
@@ -148,9 +153,18 @@ const _delConvItem = () => {
 };
 
 /**
+ * 设置/取消置顶 会话 item
+ */
+const _setTopConvItem = () => {
+  // 拿到当前选中的对象
+  const activeConvItem = conversationList.value[longpressActiveConvIndex.value];
+  conversationList.value[longpressActiveConvIndex.value].isTop = !activeConvItem.isTop;
+};
+
+/**
  * 点击顶部扩展菜单项
  */
-const clickTopExtendMenuItem = () => {
+const clickTopExtendMenuItem = (eventName: string) => {
   // 关闭扩展菜单 popup
   topExtendMenuVPopupRef.value!.closeVPopup();
 

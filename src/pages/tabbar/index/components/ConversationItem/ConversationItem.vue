@@ -1,5 +1,5 @@
 <template>
-  <view class="conversation-item" :class="{ 'conversation-item-top': 1 }" hover-class="bg-light">
+  <view class="conversation-item" :class="{ 'conversation-item-top': conversation.isTop }" hover-class="bg-light">
     <div class="conversation-div" @click="onClick" @longpress="onLongpressEvt">
       <!-- 会话左侧 -->
       <view class="conversation-left">
@@ -32,6 +32,7 @@ interface IConversation {
   name?: string;
   update_time?: number;
   data?: string;
+  isTop: boolean;
 }
 
 const props = defineProps<{
@@ -43,8 +44,9 @@ const emit = defineEmits<{
   longpress: [x: number, y: number, index: number];
 }>();
 
+// TODO: 进入聊天页面
 const onClick = () => {
-  console.log('onClick');
+  console.log('进入聊天页面');
 };
 
 /**
