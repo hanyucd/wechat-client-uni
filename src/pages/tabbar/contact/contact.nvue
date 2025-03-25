@@ -1,10 +1,22 @@
 <template>
   <VNavbar title="通讯录" :show-back="false" />
   
-  <view>通讯录</view>
+  <VListItem
+    v-for="item in contactMenuList"
+    :key="item.id"
+    :title="item.title"
+    :cover="item.cover"
+  />
 </template>
 
 <script setup lang="ts">
+
+// 通讯录菜单
+const contactMenuList = ref([
+  { id: 'friend', title: '新的朋友', cover: '/static/images/mail/friend.png', path: 'mail/apply-list/apply-list' },
+  { id: 'group', title: '群聊', cover: '/static/images/mail/group.png', path: 'mail/group-list/group-list' },
+  { id: 'tag', title: '标签', cover: '/static/images/mail/tag.png', path: 'mail/tag-list/tag-list' }
+]);
 </script>
 
 <style lang="scss" scoped>

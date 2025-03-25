@@ -30,7 +30,7 @@
   <!-- 顶部扩展菜单弹窗 -->
   <VPopup ref="topExtendMenuVPopupRef" mode="custom" body-bg-color="#343a40" :mask-color="false" :body-width="240" :body-height="topExtendMenuHeight">
     <view class="menu-popup top-menu-popup">
-      <view v-for="(mItem, mIndex) in topExtendMenu" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickTopExtendMenuItem(mItem.event)">
+      <view v-for="(mItem, mIndex) in topExtendMenu" :key="mIndex" class="menu-item" hover-class="bg-hover-dark" @click="clickTopExtendMenuItem(mItem.event)">
           <text class="menu-item-icon iconfont">{{ mItem.icon }}</text>
 					<text class="menu-item-text">{{ mItem.name }}</text>
 				</view>

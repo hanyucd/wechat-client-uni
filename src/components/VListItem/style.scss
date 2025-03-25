@@ -1,0 +1,32 @@
+.list-item-view {
+  @include flex-xy-layout;
+  align-items: stretch;
+  background-color: #fff;
+  .list-item-left {
+    @include flex-xy-layout;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+    padding-left: 30rpx;
+  }
+  .list-item-right {
+    @include flex-xy-layout(space-between);
+    flex: 1;
+    padding: 30rpx;
+    &.border-bottom {
+      border-bottom-width: 1rpx;
+      border-bottom-style: solid;
+      border-bottom-color: #dee2e6;
+    }
+    .list-item-title {
+      font-size: 35rpx;
+      color: #343a40;
+    }
+    .list-item-right-wrap {
+      @include flex-xy-layout;
+      .arrow-right {
+        color: #A9A5A0;
+        font-size: 35rpx;
+      }
+    }
+  }
+}
