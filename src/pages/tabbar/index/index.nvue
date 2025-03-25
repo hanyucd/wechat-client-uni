@@ -70,13 +70,13 @@ const topExtendMenu = ref([
 
 // 会话列表
 const conversationList = ref([
-  { id: 4, name: '关羽', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
-  { id: 4, name: '张飞', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
-  { id: 4, name: '刘备', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
-  { id: 4, name: '吕布', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
-  { id: 4, name: '董卓', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
-  { id: 4, name: '诸葛亮', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
-  { id: 4, name: '吕蒙', avatar: 'http://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/public/67d13e1103efc.jpg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '关羽', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '张飞', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '刘备', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕布', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '董卓', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '诸葛亮', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕蒙', avatar: 'https://i0.hdslb.com/bfs/archive/c33446346b619cd7a16544443041f175bd4bef45.png', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
 ]);
 
 // 长按激活的会话 index

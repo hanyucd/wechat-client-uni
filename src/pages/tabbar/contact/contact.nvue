@@ -1,12 +1,27 @@
 <template>
   <VNavbar title="通讯录" :show-back="false" />
   
+  <!-- 通讯录菜单 -->
   <VListItem
     v-for="item in contactMenuList"
     :key="item.id"
     :title="item.title"
     :cover="item.cover"
   />
+
+  <!-- 联系人列表 -->
+  <view v-for="(cItem, cIndex) in contactList" :key="cIndex">
+    <view v-if="cItem.list.length" class="contact-item-letter">
+      <text class="contact-letter font-md text-dark">{{ cItem.title }}</text>
+    </view>
+
+    <VListItem
+      v-for="(item, index) in cItem.list" 
+      :key="index"
+      :title="item" 
+      :cover="'/static/images/userpic.png'"
+    />
+  </view>
 </template>
 
 <script setup lang="ts">
@@ -17,7 +32,28 @@ const contactMenuList = ref([
   { id: 'group', title: '群聊', cover: '/static/images/mail/group.png', path: 'mail/group-list/group-list' },
   { id: 'tag', title: '标签', cover: '/static/images/mail/tag.png', path: 'mail/tag-list/tag-list' }
 ]);
+
+// 联系人列表
+const contactList = ref([
+  {
+    title: 'A',
+    list: ['艾伦-沃克', 'A神']
+  },
+  {
+    title: 'B',
+    list: []
+  },
+  {
+    title: 'L',
+    list: ['ILLENIUM', '蛇叔']
+  },
+  {
+    title: 'M',
+    list: ['马丁-盖瑞斯', '棉花糖']
+  },
+]);
 </script>
 
 <style lang="scss" scoped>
+@import './style.scss';
 </style>

@@ -10,7 +10,7 @@
         <text class="list-item-title">{{ title }}</text>
       </slot>
       <view v-if="showRight" class="list-item-right-wrap ">
-        <slot name="right">右边插槽</slot>
+        <slot name="right"></slot>
         <text v-if="showRightIcon" class="arrow-right iconfont font-md">&#xe60c;</text>
       </view>
     </view>
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<IListItem>(), {
   showLeftIcon: true,
   border: true,
   coverSize: 75,
-  showRight: true,
+  showRight: false,
   showRightIcon: true,
 });
 
