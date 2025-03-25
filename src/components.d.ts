@@ -11,6 +11,7 @@ declare module 'vue' {
     ConversationItem: typeof import('./components/ConversationItem/ConversationItem.vue')['default']
     VAvatar: typeof import('./components/VAvatar/VAvatar.vue')['default']
     VBadge: typeof import('./components/VBadge/VBadge.vue')['default']
+    VDivider: typeof import('./components/VDivider/VDivider.vue')['default']
     VIcon: typeof import('./components/VIcon/VIcon.vue')['default']
     VListItem: typeof import('./components/VListItem/VListItem.vue')['default']
     VNavbar: typeof import('./components/VNavbar/VNavbar.vue')['default']

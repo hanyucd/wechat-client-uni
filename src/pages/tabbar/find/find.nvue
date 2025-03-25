@@ -1,9 +1,59 @@
 <template>
   <VNavbar title="发现" :show-back="false" />
+
+  <VListItem title="朋友圈" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe667;</text>
+    </template>
+
+    <template #right>
+      <view class="msg-wrap">
+				<view class="msg-avatar">
+          <VAvatar :src="'/static/images/userpic.png'" :size="55" />
+          <text class="msg-circle" />
+				</view>
+        <!-- <VBadge :value="8" /> -->
+				<!-- <free-badge v-if="notice.num" :value="notice.num" /> -->
+			</view>
+    </template>
+  </VListItem>
+
+  <VDivider />
+
+  <VListItem title="扫一扫" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe86d;</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="摇一摇" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe63d;</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="看一看" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe610;</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="搜一搜" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe611;</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="购物" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe658;</text>
+    </template>
+  </VListItem>
 </template>
 
 <script setup lang="ts">
 </script>
 
 <style lang="scss" scoped>
+@import './style.scss';
 </style>

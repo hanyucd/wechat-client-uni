@@ -9,7 +9,7 @@
       <slot>
         <text class="list-item-title">{{ title }}</text>
       </slot>
-      <view v-if="showRight" class="list-item-right-wrap ">
+      <view v-if="showRight" class="list-item-right-wrap">
         <slot name="right"></slot>
         <text v-if="showRightIcon" class="arrow-right iconfont font-md">&#xe60c;</text>
       </view>
@@ -21,19 +21,19 @@
 interface IListItem {
   cover?: string;
   title?: string;
-  showLeftIcon?: boolean;
-  showRight?: boolean;
   coverSize?: number;
   border?: boolean;
+  showLeftIcon?: boolean;
+  showRight?: boolean;
   showRightIcon?: boolean;
 }
 
 const props = withDefaults(defineProps<IListItem>(), {
   cover: '',
   title: '',
-  showLeftIcon: true,
-  border: true,
   coverSize: 75,
+  border: true,
+  showLeftIcon: true,
   showRight: false,
   showRightIcon: true,
 });

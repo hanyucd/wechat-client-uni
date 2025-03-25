@@ -1,0 +1,20 @@
+.list-item-icon {
+  font-size: 40rpx;
+  padding: 10rpx 0;
+}
+
+.msg-wrap {
+  padding: 10rpx;
+  .msg-avatar {
+    position: relative;
+    .msg-circle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20rpx;
+      height: 20rpx;
+      background-color: #dc3545;
+      border-radius: 100rpx;
+    }
+  }
+}
