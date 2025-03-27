@@ -13,7 +13,7 @@
 		"navigationBarTitleText": "V信",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		// #ifdef MP
-		"backgroundColor": "#F8F8F8",
+		// "backgroundColor": "#F8F8F8",
 		// #endif
 		"app-plus": {
 			"titleNView": false, // 自定义顶部导航栏（如果是App下，建议使用titleNView或subNVue，体验更好）
@@ -67,7 +67,11 @@
 		},
 		{
 			"path": "pages/tabbar/profile/profile",
-			"style": {}
+			"style": {
+				"app-plus": {
+					"background": "#EDEDED"
+				}
+			}
 		}
 	]
 }

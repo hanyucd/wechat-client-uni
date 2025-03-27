@@ -63,8 +63,7 @@ const statusBarHeight = ref(0);
 
 onMounted(() => {
   _getSystemInfo();
-
-  console.log('appStore.systemInfo', appStore.systemInfo.screenWidth);
+  // console.log('appStore.systemInfo', appStore.systemInfo.screenWidth);
 });
 
 /**

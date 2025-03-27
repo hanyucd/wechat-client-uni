@@ -1,9 +1,63 @@
 <template>
-  <VNavbar title="我的" :show-back="false" />
+  <VNavbar title="我的" bg-color="#fff" :show-back="false">
+    <template #right>
+      <view class="right-icons">
+        <VIcon :icon="'\ue6ed'" />
+      </view>
+    </template>
+  </VNavbar>
+
+  <VListItem :cover="'/static/images/userpic.png'" show-right>
+    <view class="user-info-wrap">
+      <text class="user-name">{{ '艾伦-沃克' }}</text>
+      <text class="user-wechat text-light-muted font mt-2">仿微信号：{{ 'hy-woke' }}</text>
+    </view>
+    
+    <template #right>
+      <text class="iconfont icon-saosao">&#xe614;</text>
+    </template>
+  </VListItem>
+
+  <VDivider />
+
+  <VListItem title="支付" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe66c;</text>
+    </template>
+  </VListItem>
+
+  <VDivider />
+
+  <VListItem title="收藏" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xea2d;</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="相册" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe608;</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="设置" show-right>
+    <template #icon>
+      <text class="iconfont list-item-icon">&#xe612;</text>
+    </template>
+  </VListItem>
 </template>
 
 <script setup lang="ts">
 </script>
 
+<style>
+/* #ifndef APP */
+page {
+  background: #EDEDED;
+}
+/* #endif */
+</style>
+
 <style lang="scss" scoped>
+@import './style.scss';
 </style>

@@ -1,0 +1,19 @@
+.user-info-wrap {
+  @include flex-y-layout(flex-start);
+  .user-name {
+    font-size: 35rpx;
+    font-weight: 700;
+    color: #343a40;
+  }
+  .user-wechat {
+    font-size: 30rpx;
+    font-weight: 700;
+    color: #A9A5A0;
+    margin-top: 20rpx;
+  }
+}
+
+.icon-saosao {
+  font-size: 35rpx;
+  color: #A9A5A0;
+}
