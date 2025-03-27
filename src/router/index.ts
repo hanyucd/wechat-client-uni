@@ -1,3 +1,4 @@
+// https://moonofweisheng.github.io/uni-mini-router
 import { createRouter } from 'uni-mini-router';
 // 导入pages.json
 import pagesJson from '../pages.json';

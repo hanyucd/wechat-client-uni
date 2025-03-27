@@ -10,12 +10,12 @@
   
    <!-- 置顶-会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
-    <ConversationItem v-if="item.isTop" :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
+    <ConversationItem v-if="item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConversationItemLongpressEvt" />
   </template>
 
    <!-- 非置顶-会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
-    <ConversationItem v-if="!item.isTop" :conversation="item" :index="index" @longpress="onConversationItemLongpressEvt" />
+    <ConversationItem v-if="!item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConversationItemLongpressEvt" />
   </template>
 
   <!-- 会话菜单弹窗 -->
@@ -51,6 +51,8 @@ const topExtendMenuVPopupRef = ref<VPopupType | null>(null);
 const convMenuVPopupRef = ref<VPopupType | null>(null);
 
 const appStore = useAppStore();
+
+// const router = useRouter();
 
 // 会话菜单列表
 const conversationMenuList = ref([
@@ -168,6 +170,13 @@ const clickTopExtendMenuItem = (eventName: string) => {
   topExtendMenuVPopupRef.value!.closeVPopup();
 
   console.log('clickTopExtendMenuItem');
+};
+
+/**
+ * 进入聊天页面
+ */
+const navToChatRoute = () =>{
+  uni.$uv.route('/pages/module-chat/chat/chat', { name: 'uvui', age: 1 });
 };
 </script>
 

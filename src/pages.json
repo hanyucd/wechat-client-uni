@@ -72,6 +72,11 @@
 					"background": "#EDEDED"
 				}
 			}
+		},
+		{
+			"path": "pages/module-chat/chat/chat",
+			// "name": "chatRoute",
+			"style": {}
 		}
 	]
 }

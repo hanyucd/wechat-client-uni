@@ -41,11 +41,14 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   longpress: [x: number, y: number, index: number];
+  click: [];
 }>();
 
-// TODO: 进入聊天页面
+/**
+ * 点击事件
+ */
 const onClick = () => {
-  console.log('进入聊天页面');
+  emit('click');
 };
 
 /**
