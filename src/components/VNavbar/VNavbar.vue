@@ -6,16 +6,17 @@
 
       <!-- 导航栏 -->
       <view class="navbar-module">
-        <!-- 左边 -->
-        <view class="navbar-left">
-          <VIcon v-if="showBack" :icon="'\ue60d'" @click="handleBack" />
-        </view>
-  
         <!-- 中间 -->
         <view class="navbar-center" :style="{ width: `${ appStore.systemInfo.screenWidth - 20 }px` }">
           <slot>
             <text v-if="title" class="navbar-title">{{ title }}</text>
           </slot>
+        </view>
+
+        <!-- 注：nvue中 设置z-index对于定位元素的层级无影响，元素越靠后层级越高 -->
+        <!-- 左边 -->
+        <view class="navbar-left">
+          <VIcon v-if="showBack" :icon="'\ue60d'" @click="handleBack" />
         </view>
         
         <!-- 右边 -->

@@ -17,8 +17,7 @@
       height: 90rpx;
       .navbar-left {
         position: relative;
-        // position: absolute;
-        // z-index: 10;
+        background: green;
         .icon-back {
           font-size: 35rpx;
         }
@@ -27,7 +26,8 @@
         @include flex-xy-layout;
         position: absolute;
         height: 90rpx;
-        z-index: -10;
+        // z-index: -10;
+        background: red;
         .navbar-title {
           font-size: 35rpx;
         }

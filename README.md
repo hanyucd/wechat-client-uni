@@ -34,6 +34,12 @@ uni-app App 端内置 HTML5+ 引擎，让 js 可以 **直接调用** HTML5 Plus�
 ### nvue开发与vue开发的常见区别
 [uniapp官方说明](https://uniapp.dcloud.net.cn/tutorial/nvue-outline.html#nvue%E5%BC%80%E5%8F%91%E4%B8%8Evue%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8C%BA%E5%88%AB)
 
+
+### 开发 nvue 页面踩过的坑
+
+- nvue中不支持z-index控制层级，越靠后的代码层级越高
+- 文字内容，必须只能在text组件下，text组件不能换行写内容
+
 ### ios真机运行、打包所需要的证书申请（**注意：需要付费Apple账号才能申请证书**）
 [iOS证书(.p12)和描述文件(.mobileprovision)申请](https://ask.dcloud.net.cn/article/152)
 
