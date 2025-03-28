@@ -78,6 +78,8 @@ const _getSystemInfo = () => {
   // #ifndef APP-PLUS
   statusBarHeight.value = uni.getSystemInfoSync().statusBarHeight!;
   // #endif
+
+  console.log('状态栏高度：', statusBarHeight.value);
 };
 
 // 修改后的返回方法
