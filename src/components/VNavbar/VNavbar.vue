@@ -82,11 +82,9 @@ const _getSystemInfo = () => {
 
 // 修改后的返回方法
 const handleBack = () => {
-  return uni.navigateBack({ delta: 1 });
+  // return uni.navigateBack({ delta: 1 });
+  uni.$uv.route({ type: 'back' });
 
-  // console.log('开始返回');
-  // uni.$uv.route({ type: 'back' });
-  // console.log('返回了');
   // if (props.backEvent) {
   // }
   // emit('back');

@@ -176,7 +176,7 @@ const clickTopExtendMenuItem = (eventName: string) => {
  * 进入聊天页面
  */
 const navToChatRoute = () =>{
-  uni.$uv.route('/pages/module-chat/chat/chat', { name: 'uvui', age: 1 });
+  uni.$uv.route('/pages/module-chat/chat-room/chat-room', { name: 'uvui', age: 1 });
 };
 </script>
 

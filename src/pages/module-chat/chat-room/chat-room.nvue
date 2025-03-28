@@ -1,0 +1,128 @@
+<template>
+  <VNavbar title="聊天">
+    <template #right>
+      <view class="right-icons">
+        <VIcon :icon="'\ue6fd'" @click="navToChatSetRoute" />
+      </view>
+    </template>
+  </VNavbar>
+
+  聊天
+
+  <view class="div" />
+
+  <!-- 底部输入框、工具栏 -->
+  <view class="input-module" :style="'bottom:'+ KeyboardHeight + 'px;'">
+    <!-- 输入栏 -->
+    <view class="input-box">
+      <VIcon v-if="inputMode === 'audio'" :icon="'\ue607'" />
+      <VIcon v-else :icon="'\ue606'" />
+
+      <!-- 输入框 -->
+      <view class="input-wrap">
+        <!-- 录音按钮 -->
+        <view v-if="inputMode === 'audio'" class="rounded flex align-center justify-center" style="height: 80rpx;" :class="isRecording?'bg-hover-light':'bg-white'" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
+          <text class="font">{{ isRecording ? '松开 结束':'按住 说话' }}</text>
+        </view>
+        
+        <textarea
+          v-else
+          v-model="inputValue"
+          class="input-textarea"
+          fixed
+          :adjust-position="false"
+          @focus="onTextareaFocusEvt"
+          @blur="onTextareaBlurEvt"
+        ></textarea>
+      </view>
+
+      <!-- 表情icon -->
+      <VIcon :icon="'\ue605'" @click="openActionOrEmoticon('emoticon')" />
+      <!-- 扩展icon -->
+      <VIcon v-if="!inputValue.length" :icon="'\ue603'" @click="openActionOrEmoticon('action')" />
+      <!-- 发送按钮 -->
+      <view v-else class="flex-shrink">
+        发送按钮
+      </view>
+    </view>
+
+    <!-- 工具栏 -->
+    <!-- <view class="tool-box">工具栏</view> -->
+  </view>
+</template>
+
+<script setup lang="ts">
+
+// 输入框模式 text：输入文字，emoticon：表情，action：操作，audio：音频
+const inputMode = ref<'text' | 'action' | 'emoticon' | 'audio'>('text');
+// 键盘高度
+const KeyboardHeight = ref(0);
+// 音频录制状态
+const isRecording = ref(false);
+// 聊天文本
+const inputValue = ref('');
+
+const	onTextareaFocusEvt = (event: any) => {
+  // this.mode = 'text'
+  // this.isfocus = true
+  // this.KeyboardHeight = e.detail.height
+  console.log('焦时触发:', event);
+};
+
+/**
+ * 输入框失去焦点时触发
+ */
+const	openActionOrEmoticon = (mode: any = 'actioin') => {
+  inputMode.value = mode;
+  // uni.hideKeyboard();
+};
+
+/**
+ * 输入框失去焦点时触发
+ */
+const	onTextareaBlurEvt = (event: any) => {
+  // this.KeyboardHeight = 0
+  // this.isfocus = false
+  console.log('失去焦点:', event);
+};
+
+/**
+ * 录音开始
+ */
+const voiceTouchStart = () =>{
+  console.log('录音开始');
+};
+
+/**
+ * 录音结束
+ */
+const voiceTouchEnd = () =>{
+  console.log('录音结束');
+};
+
+/**
+ * 录音被打断
+ */
+const voiceTouchCancel = () =>{
+  console.log('录音被打断');
+};
+
+/**
+ * 录音手指移动
+ */
+const voiceTouchMove = () =>{
+  console.log('录音手指移动');
+};
+
+/**
+ * 进入聊天设置页面
+ */
+const navToChatSetRoute = () =>{
+  console.log('进入聊天设置页面');
+  // uni.$uv.route('/pages/module-chat/chat/chat', { name: 'uvui', age: 1 });
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

@@ -31,14 +31,16 @@ uni-app App 端内置 HTML5+ 引擎，让 js 可以 **直接调用** HTML5 Plus�
 
 2. Native.js **各自专有扩展能力**，Native.js把几十万原生API映射成了js对象，通过js可以直接调ios和android 的原生API。这部分就不再跨平台，写法分别是 plus.ios 和 plus.android，比如调 ios game center，或在 android 手机桌面创建快捷方式，这些都是 **平台专有** 的api。
 
-### nvue开发与vue开发的常见区别
-[uniapp官方说明](https://uniapp.dcloud.net.cn/tutorial/nvue-outline.html#nvue%E5%BC%80%E5%8F%91%E4%B8%8Evue%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8C%BA%E5%88%AB)
-
 
 ### 开发 nvue 页面踩过的坑
 
-- nvue中不支持z-index控制层级，越靠后的代码层级越高
-- 文字内容，必须只能在text组件下，text组件不能换行写内容
+- [nvue开发与vue开发的常见区别, uniapp官方说明](https://uniapp.dcloud.net.cn/tutorial/nvue-outline.html#nvue%E5%BC%80%E5%8F%91%E4%B8%8Evue%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E8%A7%81%E5%8C%BA%E5%88%AB)
+
+- nvue 页面只能使用 flex 布局，布局排列方向 **默认** 为竖排（column），如需改变布局方向可以使用 flex-direction: row; 改变为横排
+
+- nvue 中不支持 z-index 控制层级，越靠后的代码层级越高
+
+- 文字内容，必须只能在 text 组件下，text 组件不能换行写内容
 
 ### ios真机运行、打包所需要的证书申请（**注意：需要付费Apple账号才能申请证书**）
 [iOS证书(.p12)和描述文件(.mobileprovision)申请](https://ask.dcloud.net.cn/article/152)
