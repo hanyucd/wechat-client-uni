@@ -75,7 +75,6 @@
 		},
 		{
 			"path": "pages/module-chat/chat-room/chat-room",
-			// "name": "chatRoute",
 			"style": {}
 		}
 	]

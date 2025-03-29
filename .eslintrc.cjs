@@ -86,6 +86,7 @@ module.exports = {
     'vue/multi-word-component-names': 'off', // 关闭 组件名称始终是多个单词
     'vue/v-on-event-hyphenation': 'off', // 禁止对模板中的自定义组件强制执行 v-on 事件命名样式
     'vue/prop-name-casing': 'off', // 关闭 组件的 prop 名称大小写
+    'vue/attribute-hyphenation': 'off',
     // 控制一/多行可接受的属性量
     'vue/max-attributes-per-line': [
       'error',

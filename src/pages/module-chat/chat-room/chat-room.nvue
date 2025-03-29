@@ -20,7 +20,11 @@
       <view style="height: 30rpx;" />
 
       <view v-for="(item, index) in chatMsgList" :key="index">
-         <ChatMsgItem :chat-item="item" />
+         <ChatMsgItem
+         :chatItem="item"
+         :chatIndex="index"
+         :prevChatTime="index > 0 ? chatMsgList[index-1].create_time : '0'"
+        />
       </view>
     </scroll-view>
   </view>
@@ -65,6 +69,7 @@
 </template>
 
 <script setup lang="ts">
+// import dayjs from 'dayjs';
 import { useAppStore } from '@/store';
 // #ifdef APP-NVUE
 const domModule = uni.requireNativePlugin('dom');
@@ -89,6 +94,7 @@ const chatMsgList = ref([
     avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
     nickname: '艾伦沃克',
     type: 'text',
+    create_time: '1643252041',
     data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？'
   },
   {
@@ -96,7 +102,16 @@ const chatMsgList = ref([
     avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
     nickname: '马丁盖瑞斯',
     type: 'text',
+    create_time: '1743242041',
     data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯'
+  },
+  {
+    from_user_id: 1,
+    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    nickname: '马丁盖瑞斯',
+    type: 'text',
+    create_time: '1743242021',
+    data: '沃克，沃克牛逼'
   },
 ]);
 const chatModuleRef = ref(null);
@@ -104,10 +119,14 @@ const inputModuleRef = ref(null);
 
 onLoad(() => {
   // console.log('onLoad:', appStore.systemInfo);
+  // console.log('当前时间:', dayjs().format('YYYY年MM月DD日 HH:mm:ss'));
 });
 
 onMounted(() => {
-  _calcChatModuleHeight();
+  // fixbug：不加setTimeout算出来的宽度会不准，极其坑
+  setTimeout(() => {
+    _calcChatModuleHeight();
+  }, 0);
 });
 
 /**
@@ -115,7 +134,7 @@ onMounted(() => {
  */
 const _calcChatModuleHeight = () => {
   const systemInfo = uni.getSystemInfoSync();
-  // console.log('系统信息：', systemInfo);
+  console.log('系统信息：', systemInfo);
   const windowHeight = systemInfo.windowHeight;
 
   // #ifdef APP-NVUE
@@ -124,7 +143,7 @@ const _calcChatModuleHeight = () => {
     domModule.getComponentRect(chatModuleRef.value, (dom1: any) => {
       // 获取底部输入框节点信息
       domModule.getComponentRect(inputModuleRef.value, (dom2: any) => {
-        const _chatModuleHeight = windowHeight - dom1.size.top - dom1.size.height;
+        const _chatModuleHeight = windowHeight - dom1.size.top - dom2.size.height;
         chatModuleHeight.value = _chatModuleHeight;
       });
     });

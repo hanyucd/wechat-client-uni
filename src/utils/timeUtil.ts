@@ -1,3 +1,41 @@
+import dayjs from 'dayjs';
+
+// 聊天时间格式化
+// 要求转换规则：
+// 1分钟以内显示为：刚刚
+// 1小时以内显示为：N分钟前
+// 当天以内显示为：今天 N点N分（如：今天 22:33）
+// 昨天时间显示为：昨天 N点N分（如：昨天 10:15）
+// 当年以内显示为：N月N日 N点N分（如：02月03日 09:33）
+// 今年以前显示为：N年N月N日 N点N分（如：2000年09月18日 15:59）
+export const formatChatTime = (seconds: string) => {
+  const timestamp = parseInt(seconds) * 1000; // 转换为毫秒
+  const date = dayjs(timestamp);
+  const now = dayjs();
+  
+  // 时间差计算
+  const diffSeconds = now.diff(date, 'second');
+  const diffMinutes = now.diff(date, 'minute');
+  const diffHours = now.diff(date, 'hour');
+
+  if (diffSeconds < 60) return '刚刚';
+  if (diffMinutes < 60) return `${diffMinutes}分钟前`;
+  
+  if (date.isSame(now, 'day')) {
+    return `${date.format('HH:mm')}`;
+  }
+  
+  if (date.isSame(now.subtract(1, 'day'), 'day')) {
+    return `昨天 ${date.format('HH:mm')}`;
+  }
+  
+  if (date.isSame(now, 'year')) {
+    return date.format('MM月DD日 HH:mm');
+  }
+  
+  return date.format('YYYY年MM月DD日 HH:mm');
+};
+
 export default {
 	/**
 	 * @param date 计算当前日期星座

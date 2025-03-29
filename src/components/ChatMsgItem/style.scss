@@ -1,3 +1,12 @@
+.chat-time-wrap {
+  @include flex-xy-layout;
+  margin-bottom: 30rpx;
+  .chat-time {
+    @include font-style(25rpx);
+    color: #A9A5A0;
+  }
+}
+
 // 聊天消息-右边
 .chat-right {
   display: flex;
@@ -18,13 +27,13 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      min-width: 60rpx;
+      padding: 20rpx;
+      border-radius: 10rpx;
+      background: #fff;
       .chat-text {
         @include font-style(32rpx);
-        min-width: 60rpx;
-        padding: 20rpx;
-        border-radius: 10rpx;
         line-height: 40rpx;
-        background: #fff;
       }
     }
   }
@@ -50,13 +59,13 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      padding: 20rpx;
+      background: $main-bg-color;
+      border-radius: 10rpx;
+      min-width: 60rpx;
       .chat-text {
-        padding: 20rpx;
         @include font-style(32rpx);
-        min-width: 60rpx;
-        border-radius: 10rpx;
         line-height: 40rpx;
-        background: $main-bg-color;
       }
     }
   }
