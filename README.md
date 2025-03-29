@@ -42,7 +42,7 @@ uni-app App 端内置 HTML5+ 引擎，让 js 可以 **直接调用** HTML5 Plus�
 
 - nvue 中不支持 z-index 控制层级，越靠后的代码层级越高
 
-- nvue 暂不支持 uni.createSelectorQuery, 
+- nvue 暂不支持 uni.createSelectorQuery, 暂时使用：uni.requireNativePlugin('dom').getComponentRect
 
 
 ### ios真机运行、打包所需要的证书申请（**注意：需要付费Apple账号才能申请证书**）

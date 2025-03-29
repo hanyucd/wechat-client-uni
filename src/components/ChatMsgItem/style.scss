@@ -1,0 +1,92 @@
+// 聊天消息-右边
+.chat-right {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 30rpx;
+  margin-bottom: 50rpx;
+  .user-avatar {
+    margin-right: 20rpx;
+  }
+  .chat-msg-wrap {
+    flex: 1;
+    margin-right: calc(70rpx + 20rpx);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .chat-text-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .chat-text {
+        @include font-style(32rpx);
+        min-width: 60rpx;
+        padding: 20rpx;
+        border-radius: 10rpx;
+        line-height: 40rpx;
+        background: #fff;
+      }
+    }
+  }
+}
+
+// 聊天消息-左边
+.chat-left {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  padding: 0 30rpx;
+  margin-bottom: 50rpx;
+  .user-avatar {
+    margin-left: 20rpx;
+  }
+  .chat-msg-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: calc(70rpx + 20rpx);
+    .chat-text-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .chat-text {
+        padding: 20rpx;
+        @include font-style(32rpx);
+        min-width: 60rpx;
+        border-radius: 10rpx;
+        line-height: 40rpx;
+        background: $main-bg-color;
+      }
+    }
+  }
+}
+
+
+
+.input-module {
+  position: fixed;
+  left: 0;
+  right: 0;
+  border-top: 1rpx solid #dee2e6;
+  .input-box {
+    @include flex-xy-layout;
+    padding: 14rpx 20rpx;
+    background-color: #F7F7F6;
+    // height: 105rpx;
+    .input-wrap {
+      @include flex-xy-layout(flex-start, stretch);
+      flex: 1;
+      // background-color: green;
+      .input-textarea {
+        flex: 1;
+        width: auto;
+        height: 80rpx;
+        padding: 20rpx;
+        background: #fff;
+        font-size: 35rpx;
+        border-radius: 8rpx;
+      }
+    }
+  }
+}

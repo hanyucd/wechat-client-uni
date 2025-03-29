@@ -16,8 +16,11 @@
       :show-scrollbar="false"
       :scroll-with-animation="true"
       >
-      <view v-for="item in 20" :key="item" style="height: 150rpx;">
-        <text>{{ item }}</text>
+      <!-- 顶部占位块 -->
+      <view style="height: 30rpx;" />
+
+      <view v-for="(item, index) in chatMsgList" :key="index">
+         <ChatMsgItem :chat-item="item" />
       </view>
     </scroll-view>
   </view>
@@ -28,7 +31,6 @@
     <view class="input-box">
       <VIcon v-if="inputMode === 'audio'" :icon="'\ue607'" />
       <VIcon v-else :icon="'\ue606'" />
-
       <!-- 输入框 -->
       <view class="input-wrap">
         <!-- 录音按钮 -->
@@ -63,11 +65,10 @@
 </template>
 
 <script setup lang="ts">
- // #ifdef APP-NVUE
- const domModule = uni.requireNativePlugin('dom');
-  // #endif
-  
 import { useAppStore } from '@/store';
+// #ifdef APP-NVUE
+const domModule = uni.requireNativePlugin('dom');
+// #endif
 
 const appStore = useAppStore();
 
@@ -81,7 +82,23 @@ const isRecording = ref(false);
 const inputValue = ref('');
 // 聊天模块高度
 const chatModuleHeight = ref(0);
-
+// 聊天消息列表
+const chatMsgList = ref([
+  {
+    from_user_id: 1,
+    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    nickname: '艾伦沃克',
+    type: 'text',
+    data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？'
+  },
+  {
+    from_user_id: 2,
+    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    nickname: '马丁盖瑞斯',
+    type: 'text',
+    data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯'
+  },
+]);
 const chatModuleRef = ref(null);
 const inputModuleRef = ref(null);
 
