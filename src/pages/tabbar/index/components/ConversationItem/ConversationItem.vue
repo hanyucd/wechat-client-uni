@@ -14,7 +14,8 @@
       <view class="conversation-right">
         <view class="conversation-info">
           <text class="conversation-name">{{ conversation.name }}</text>
-          <text class="conversation-time">{{ timeUtil.gettime(conversation.update_time) }}</text>
+          <!-- <text class="conversation-time">{{ timeUtil.gettime(conversation.update_time) }}</text> -->
+          <text class="conversation-time">{{ formatChatTime(conversation.update_time) }}</text>
         </view>
         <text class="conversation-content">{{ conversation.data }}</text>
       </view>
@@ -23,13 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import timeUtil from '@/utils/timeUtil';
+import { formatChatTime } from '@/utils/timeUtil';
 
 interface IConversation {
   id?: number;
   avatar?: string;
   name?: string;
-  update_time?: number;
+  update_time: number | string;
   data?: string;
   isTop?: boolean;
 }

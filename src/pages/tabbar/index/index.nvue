@@ -79,6 +79,9 @@ const conversationList = ref([
   { id: 4, name: '董卓', avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
   { id: 4, name: '诸葛亮', avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
   { id: 4, name: '吕蒙', avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕蒙', avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕蒙', avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
+  { id: 4, name: '吕蒙', avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', update_time: 1567695767, isTop: false, data: '你好，我是李四' },
 ]);
 
 // 长按激活的会话 index
