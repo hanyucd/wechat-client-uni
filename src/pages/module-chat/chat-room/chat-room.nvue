@@ -73,7 +73,7 @@
   <!-- chat 菜单弹窗 -->
   <VPopup ref="chatMenuVPopupRef" mode="custom" :maskColor="false" :bodyWidth="240" :bodyHeight="chatMenuHeight" :tabbarHeight="inputModuleHeight">
     <view class="menu-popup">
-      <view v-for="(mItem, mIndex) in chatMenuListComputed" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickConvMenuItem(mItem.event)">
+      <view v-for="(mItem, mIndex) in chatMenuListComputed" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickChatMenuItem(mItem.event)">
         <text class="menu-item-text">{{ mItem.name }}</text>
       </view>
     </view>
@@ -107,14 +107,14 @@ const inputValue = ref('');
 const chatModuleHeight = ref(0);
 // 聊天消息列表
 const chatMsgList = ref([
-  { from_user_id: 1, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
-  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
-  { from_user_id: 1, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
-  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
-  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
-  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
-  { from_user_id: 1, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
-  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
+  { from_user_id: 2, isremove: true, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
+  { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
+  { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
 ]);
 
 const chatModuleRef = ref(null);
@@ -124,11 +124,11 @@ const inputModuleHeight = ref(0);
 
 // chat 菜单列表
 const chatMenuListData = ref([
-  { name: '复制', event: 'copy', isShow: true },
-  { name: '转发', event: 'sendToChatItem', isShow: true },
-  { name: '收藏', event: 'fava', isShow: true },
-  { name: '删除', event: 'delete', isShow: true },
-  { name: '撤回', event: 'removeChatItem', isShow: false }
+  { name: '复制', event: 'copyMsg', isShow: true },
+  { name: '转发', event: 'changeMsg', isShow: true },
+  { name: '收藏', event: 'collectMsg', isShow: true },
+  { name: '删除', event: 'deleteMsg', isShow: true },
+  { name: '撤回', event: 'revokeMsg', isShow: false }
 ]);
 const chatMenuListComputed = computed(() => chatMenuListData.value.filter((item: any) => item.isShow));
 
@@ -218,14 +218,20 @@ const	openActionOrEmoticon = (mode: any = 'actioin') => {
 };
 
 /**
- * 点击会话菜单项
+ * 点击聊天菜单项
  */
- const clickConvMenuItem = (eventName: string) => {
-  switch (eventName){
-    case 'setTop': // 置顶/取消置顶会话
-      // _setTopConvItem();
+const clickChatMenuItem = (eventName: string) => {
+   // 拿到当前选中的对象
+   const activeChatItem = chatMsgList.value[longpressActiveChatIndex.value];
+   console.log('点击聊天菜单项:', eventName, activeChatItem);
+
+  switch (eventName) {
+    // 撤回消息
+    case 'revokeMsg':
+      activeChatItem.isremove = true;
       break;
-    case 'delChat': // 删除当前会话
+    // 删除消息
+    case 'deleteMsg':
       // _delConvItem();
       break;
   }

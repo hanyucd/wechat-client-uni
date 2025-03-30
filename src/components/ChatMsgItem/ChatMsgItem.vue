@@ -2,34 +2,42 @@
   <view class="chat-div">
     <!-- 时间显示 -->
     <view v-if="chatTimeDisplayStatus(prevChatTime, chatItem.create_time)" class="chat-time-wrap">
-      <text class="chat-time">{{ formatChatTime(chatItem.create_time) }}</text>
-    </view>
-    
-    <!-- 聊天消息-右边 (别人) -->
-    <view v-if="!isSelfComputed" class="chat-right">
-      <view class="user-avatar">
-        <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
-      </view>
-      <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
-        <!-- 文字 -->
-        <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
-          <text class="chat-text">{{ chatItem.data }}</text>
-        </view>
-      </div>
+      <text class="chat-time-text">{{ formatChatTime(chatItem.create_time) }}</text>
     </view>
 
-    <!-- 聊天消息-左边 (自己) -->
-    <view v-else class="chat-left">
-      <view class="user-avatar">
-        <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
-      </view>
-      <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
-        <!-- 文字 -->
-        <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
-          <text class="chat-text">{{ chatItem.data }}</text>
-        </view>
-      </div>
+    <!-- 撤回消息 -->
+    <view v-if="chatItem.isremove" class="chat-revoke-wrap">
+      <text class="chat-revoke-text font-sm text-light-muted">{{ isSelfComputed ? '你' : '对方' }}撤回了一条信息</text>
     </view>
+
+    <!-- 聊天消息 -->
+    <template v-else>
+      <!-- 消息-右边 (别人) -->
+      <view v-if="!isSelfComputed" class="chat-right">
+        <view class="user-avatar">
+          <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
+        </view>
+        <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
+          <!-- 文字 -->
+          <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
+            <text class="chat-text">{{ chatItem.data }}</text>
+          </view>
+        </div>
+      </view>
+  
+      <!-- 消息-左边 (自己) -->
+      <view v-else class="chat-left">
+        <view class="user-avatar">
+          <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
+        </view>
+        <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
+          <!-- 文字 -->
+          <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
+            <text class="chat-text">{{ chatItem.data }}</text>
+          </view>
+        </div>
+      </view>
+    </template>
   </view>
 </template>
 
@@ -43,6 +51,7 @@ interface IChatMsgItem {
   data?: string;
   type?: string;
   create_time: string;
+  isremove: boolean;
 }
 
 const props = defineProps<{

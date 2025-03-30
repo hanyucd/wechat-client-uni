@@ -1,7 +1,16 @@
 .chat-time-wrap {
   @include flex-xy-layout;
   margin-bottom: 30rpx;
-  .chat-time {
+  .chat-time-text {
+    @include font-style(25rpx);
+    color: #A9A5A0;
+  }
+}
+
+.chat-revoke-wrap {
+  @include flex-xy-layout;
+  margin-bottom: 30rpx;
+  .chat-revoke-text {
     @include font-style(25rpx);
     color: #A9A5A0;
   }
