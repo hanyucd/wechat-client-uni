@@ -46,6 +46,8 @@ uni-app App 端内置 HTML5+ 引擎，让 js 可以 **直接调用** HTML5 Plus�
 
 - nvue 暂不支持 uni.createSelectorQuery, 暂时使用：uni.requireNativePlugin('dom').getComponentRect
 
+- nvue 的各组件在安卓端默认是**透明的**，如果不设置 background-color，可能会导致出现重影的问题
+
 
 ### ios真机运行、打包所需要的证书申请（**注意：需要付费Apple账号才能申请证书**）
 [iOS证书(.p12)和描述文件(.mobileprovision)申请](https://ask.dcloud.net.cn/article/152)

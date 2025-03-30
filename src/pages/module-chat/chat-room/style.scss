@@ -28,16 +28,14 @@
   .input-box {
     @include flex-xy-layout;
     padding: 14rpx 20rpx;
-    // background: transparent;
     .input-wrap {
       @include flex-xy-layout(flex-start, stretch);
       flex: 1;
-      // background-color: green;
       .input-textarea {
         flex: 1;
-        // #ifndef APP-NVUE
+        /* #ifndef APP-NVUE */
         width: auto;
-        // #endif
+        /* #endif */
         height: 80rpx;
         padding: 20rpx;
         background: #fff;

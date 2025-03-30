@@ -79,22 +79,25 @@ const popupCostomPosition = computed(() => {
   };
 });
 
-onMounted(() => {});
+onMounted(() => {
+});
 
 watch([() => props.bodyWidth, () => props.bodyHeight, () => props.tabbarHeight], ([newBodyWidth, newBodyHeight, newTabbarHeight]) => {
   console.log(`bodyWidth: ${newBodyWidth}, bodyHeight: ${newBodyHeight}, tabbarHeight: ${newTabbarHeight}`);
+  const systemInfo = uni.getSystemInfoSync();
+  
   // 计算弹窗: 最大 left x 和 top y
   const spacingPX = 10;
   // #ifdef APP
-  maxLeftX.value = appStore.systemInfo.windowWidth - uni.upx2px(newBodyWidth) - spacingPX;
-  maxTopY.value = appStore.systemInfo.windowHeight - uni.upx2px(newBodyHeight) - newTabbarHeight - spacingPX;
+  maxLeftX.value = systemInfo.windowWidth - uni.upx2px(newBodyWidth) - spacingPX;
+  maxTopY.value = systemInfo.windowHeight - uni.upx2px(newBodyHeight) - newTabbarHeight - spacingPX;
   // #endif
   
   // #ifndef APP
   // @ts-ignore
-  maxLeftX.value = appStore.systemInfo.windowWidth - uni.rpx2px(newBodyWidth) - spacingPX;
+  maxLeftX.value = systemInfo.windowWidth - uni.rpx2px(newBodyWidth) - spacingPX;
   // @ts-ignore
-  maxTopY.value = appStore.systemInfo.windowHeight - uni.rpx2px(newBodyHeight) - newTabbarHeight - spacingPX;
+  maxTopY.value = systemInfo.windowHeight - uni.rpx2px(newBodyHeight) - newTabbarHeight - spacingPX;
   // #endif
 }, { immediate: true });
 

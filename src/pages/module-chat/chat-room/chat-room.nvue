@@ -142,8 +142,8 @@ const chatMenuHeight = computed(() => {
 const longpressActiveChatIndex = ref(-1);
 
 onLoad(() => {
-  // console.log('onLoad:', appStore.systemInfo);
   // console.log('当前时间:', dayjs().format('YYYY年MM月DD日 HH:mm:ss'));
+  // console.log('onLoad:', uni.getSystemInfoSync());
 });
 
 onMounted(() => {
@@ -167,7 +167,7 @@ const _calcChatModuleHeight = () => {
     domModule.getComponentRect(chatModuleRef.value, (dom1: any) => {
       // 获取底部输入框节点信息
       domModule.getComponentRect(inputModuleRef.value, (dom2: any) => {
-        // inputModuleHeight.value = dom2.size.height;
+        inputModuleHeight.value = dom2.size.height;
         chatModuleHeight.value = windowHeight - dom1.size.top - dom2.size.height;
       });
     });
