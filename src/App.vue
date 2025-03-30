@@ -26,6 +26,5 @@ onHide(() => {
 
 /* #ifndef APP */
 @import "./styles/iconfont.scss";
-// @import "./common/free-icon.css";
 /* #endif */
 </style>

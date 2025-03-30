@@ -13,7 +13,6 @@
       scroll-y
       :style="{ height: chatModuleHeight + 'px' }"
       class="scroll-y-view  px-3"
-      :show-scrollbar="false"
       :scroll-with-animation="true"
       >
       <!-- 顶部占位块 -->
@@ -24,13 +23,17 @@
          :chatItem="item"
          :chatIndex="index"
          :prevChatTime="index > 0 ? chatMsgList[index-1].create_time : '0'"
+         @longpress="onChatMsgItemLongpressEvt"
         />
       </view>
+
+      <!-- 底部占位块 -->
+      <view style="height: 30rpx; background: red;" />
     </scroll-view>
   </view>
 
   <!-- 底部输入框、工具栏 -->
-  <view ref="inputModuleRef" class="input-module" :style="'bottom:'+ KeyboardHeight + 'px;'">
+  <view ref="inputModuleRef" class="input-module" :style="{ paddingBottom: (keyboardHeight || appStore.sysSafeAreaHeight) + 'px' }">
     <!-- 输入栏 -->
     <view class="input-box">
       <VIcon v-if="inputMode === 'audio'" :icon="'\ue607'" />
@@ -66,10 +69,21 @@
     <!-- 工具栏 -->
     <!-- <view class="tool-box">工具栏</view> -->
   </view>
+
+  <!-- chat 菜单弹窗 -->
+  <VPopup ref="chatMenuVPopupRef" mode="custom" :maskColor="false" :bodyWidth="240" :bodyHeight="chatMenuHeight" :tabbarHeight="inputModuleHeight">
+    <view class="menu-popup">
+      <view v-for="(mItem, mIndex) in chatMenuListComputed" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickConvMenuItem(mItem.event)">
+        <text class="menu-item-text">{{ mItem.name }}</text>
+      </view>
+    </view>
+  </VPopup>
 </template>
 
 <script setup lang="ts">
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
+import * as indexUtil from '@/utils'; 
+import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
 // #ifdef APP-NVUE
 const domModule = uni.requireNativePlugin('dom');
@@ -77,10 +91,14 @@ const domModule = uni.requireNativePlugin('dom');
 
 const appStore = useAppStore();
 
+type VPopupType = InstanceType<typeof VPopup>;
+// 会话菜单 popup ref
+const chatMenuVPopupRef = ref<VPopupType | null>(null);
+
 // 输入框模式 text：输入文字，emoticon：表情，action：操作，audio：音频
 const inputMode = ref<'text' | 'action' | 'emoticon' | 'audio'>('text');
 // 键盘高度
-const KeyboardHeight = ref(0);
+const keyboardHeight = ref(0);
 // 音频录制状态
 const isRecording = ref(false);
 // 聊天文本
@@ -89,33 +107,39 @@ const inputValue = ref('');
 const chatModuleHeight = ref(0);
 // 聊天消息列表
 const chatMsgList = ref([
-  {
-    from_user_id: 1,
-    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
-    nickname: '艾伦沃克',
-    type: 'text',
-    create_time: '1643252041',
-    data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？'
-  },
-  {
-    from_user_id: 2,
-    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
-    nickname: '马丁盖瑞斯',
-    type: 'text',
-    create_time: '1743242041',
-    data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯'
-  },
-  {
-    from_user_id: 1,
-    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
-    nickname: '马丁盖瑞斯',
-    type: 'text',
-    create_time: '1743242021',
-    data: '沃克，沃克牛逼'
-  },
+  { from_user_id: 1, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
+  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 1, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
+  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 1, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
+  { from_user_id: 2, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
 ]);
+
 const chatModuleRef = ref(null);
 const inputModuleRef = ref(null);
+// 底部输入框高度 px
+const inputModuleHeight = ref(0);
+
+// chat 菜单列表
+const chatMenuListData = ref([
+  { name: '复制', event: 'copy', isShow: true },
+  { name: '转发', event: 'sendToChatItem', isShow: true },
+  { name: '收藏', event: 'fava', isShow: true },
+  { name: '删除', event: 'delete', isShow: true },
+  { name: '撤回', event: 'removeChatItem', isShow: false }
+]);
+const chatMenuListComputed = computed(() => chatMenuListData.value.filter((item: any) => item.isShow));
+
+// chat 菜单列表高度 rpx
+const chatMenuHeight = computed(() => {
+  const _menuItemHeight = 100;
+  return chatMenuListComputed.value.length * _menuItemHeight;
+});
+
+// 长按激活的chat index
+const longpressActiveChatIndex = ref(-1);
 
 onLoad(() => {
   // console.log('onLoad:', appStore.systemInfo);
@@ -134,7 +158,7 @@ onMounted(() => {
  */
 const _calcChatModuleHeight = () => {
   const systemInfo = uni.getSystemInfoSync();
-  console.log('系统信息：', systemInfo);
+  // console.log('系统信息：', systemInfo);
   const windowHeight = systemInfo.windowHeight;
 
   // #ifdef APP-NVUE
@@ -143,8 +167,8 @@ const _calcChatModuleHeight = () => {
     domModule.getComponentRect(chatModuleRef.value, (dom1: any) => {
       // 获取底部输入框节点信息
       domModule.getComponentRect(inputModuleRef.value, (dom2: any) => {
-        const _chatModuleHeight = windowHeight - dom1.size.top - dom2.size.height;
-        chatModuleHeight.value = _chatModuleHeight;
+        // inputModuleHeight.value = dom2.size.height;
+        chatModuleHeight.value = windowHeight - dom1.size.top - dom2.size.height;
       });
     });
   }, 100);
@@ -152,17 +176,15 @@ const _calcChatModuleHeight = () => {
 
   // #ifndef APP-NVUE
   const chatModuleNode = uni.createSelectorQuery().select('.chat-module');
-
   chatModuleNode.boundingClientRect((rect1: any) => {
     console.log('聊天模块节点：', rect1);
       // 底部模块选择器节点
       const bottomModuleNode = uni.createSelectorQuery().select('.input-module');
       bottomModuleNode.boundingClientRect((rect2: any) => {
-          console.log('底部输入框节点：', rect2);
-
-          const _chatModuleHeight = windowHeight - rect1.top - rect2.height;
-          chatModuleHeight.value = _chatModuleHeight;
-        }).exec();
+        // console.log('底部输入框节点：', rect2);
+        inputModuleHeight.value = rect2.height;
+        chatModuleHeight.value = windowHeight - rect1.top - rect2.height;
+      }).exec();
     }).exec();
   // #endif
 };
@@ -173,12 +195,52 @@ const	openActionOrEmoticon = (mode: any = 'actioin') => {
 };
 
 /**
+ * 打开会话菜单 popup
+ */
+ const onChatMsgItemLongpressEvt = async (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
+  // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
+  // 长按选中的 index
+  longpressActiveChatIndex.value = cItemIndex;
+  // 拿到当前选中的对象
+  const activeChatItem = chatMsgList.value[cItemIndex];
+  // 是否是自己
+  const isSelf = (1 === activeChatItem.from_user_id);
+  // 不是自己就隐藏 撤回item
+  if (isSelf) {
+    chatMenuListData.value[4].isShow = true;
+  } else {
+    chatMenuListData.value[4].isShow = false;
+  }
+  // 等待 100ms 再打开 popup
+  await indexUtil.sleepWait(500);
+  // 打开会话菜单 popup
+  chatMenuVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);
+};
+
+/**
+ * 点击会话菜单项
+ */
+ const clickConvMenuItem = (eventName: string) => {
+  switch (eventName){
+    case 'setTop': // 置顶/取消置顶会话
+      // _setTopConvItem();
+      break;
+    case 'delChat': // 删除当前会话
+      // _delConvItem();
+      break;
+  }
+
+  // 关闭会话菜单 popup
+  chatMenuVPopupRef.value!.closeVPopup();
+};
+
+/**
  * 输入框聚焦点时触发
  */
  const onTextareaFocusEvt = (event: any) => {
   // this.mode = 'text'
   // this.isfocus = true
-  // this.KeyboardHeight = e.detail.height
+  // this.keyboardHeight = e.detail.height
   // console.log('焦时触发:', event);
 };
 
@@ -186,7 +248,7 @@ const	openActionOrEmoticon = (mode: any = 'actioin') => {
  * 输入框失去焦点时触发
  */
 const	onTextareaBlurEvt = (event: any) => {
-  // this.KeyboardHeight = 0
+  // this.keyboardHeight = 0
   // this.isfocus = false
   console.log('失去焦点:', event);
 };

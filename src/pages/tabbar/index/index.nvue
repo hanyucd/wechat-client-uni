@@ -10,30 +10,30 @@
   
    <!-- 置顶-会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
-    <ConversationItem v-if="item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConversationItemLongpressEvt" />
+    <ConversationItem v-if="item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConvItemLongpressEvt" />
   </template>
 
    <!-- 非置顶-会话列表 -->
   <template v-for="(item, index) in conversationList" :key="item.id">
-    <ConversationItem v-if="!item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConversationItemLongpressEvt" />
+    <ConversationItem v-if="!item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConvItemLongpressEvt" />
   </template>
 
   <!-- 会话菜单弹窗 -->
-  <VPopup ref="convMenuVPopupRef" mode="custom" :body-width="240" :body-height="conversationMenuHeight">
+  <VPopup ref="convMenuVPopupRef" mode="custom" :bodyWidth="240" :bodyHeight="convMenuHeight">
     <view class="menu-popup">
       <view v-for="(mItem, mIndex) in conversationMenuList" :key="mIndex" class="menu-item" hover-class="bg-light" @click="clickConvMenuItem(mItem.event)">
-					<text class="menu-item-text">{{ mItem.name }}</text>
-				</view>
+        <text class="menu-item-text">{{ mItem.name }}</text>
+      </view>
     </view>
   </VPopup>
 
   <!-- 顶部扩展菜单弹窗 -->
-  <VPopup ref="topExtendMenuVPopupRef" mode="custom" body-bg-color="#343a40" :mask-color="false" :body-width="240" :body-height="topExtendMenuHeight">
+  <VPopup ref="topExtendMenuVPopupRef" mode="custom" bodyBgColor="#343a40" :maskColor="false" :bodyWidth="240" :bodyHeight="topExtendMenuHeight">
     <view class="menu-popup top-menu-popup">
       <view v-for="(mItem, mIndex) in topExtendMenu" :key="mIndex" class="menu-item" hover-class="bg-hover-dark" @click="clickTopExtendMenuItem(mItem.event)">
-          <text class="menu-item-icon iconfont">{{ mItem.icon }}</text>
-					<text class="menu-item-text">{{ mItem.name }}</text>
-				</view>
+        <text class="menu-item-icon iconfont">{{ mItem.icon }}</text>
+        <text class="menu-item-text">{{ mItem.name }}</text>
+      </view>
     </view>
   </VPopup>
 </template>
@@ -88,7 +88,7 @@ const conversationList = ref([
 const longpressActiveConvIndex = ref(-1);
 
 // 会话菜单高度 rpx
-const conversationMenuHeight = computed(() => {
+const convMenuHeight = computed(() => {
   const _menuItemHeight = 100;
   return conversationMenuList.value.length * _menuItemHeight;
 });
@@ -117,15 +117,15 @@ const openExtendPopup = () => {
 /**
  * 打开会话菜单 popup
  */
-const onConversationItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
+const onConvItemLongpressEvt = (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
   // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
-  // 长按选择的 index
+  // 长按选中的 index
   longpressActiveConvIndex.value = cItemIndex;
 
   // 拿到当前选中的对象
-  const longpressActiveConvItem = conversationList.value[cItemIndex];
+  const activeConvItem = conversationList.value[cItemIndex];
   // 判断之前是否处于置顶状态
-  conversationMenuList.value[0].name = longpressActiveConvItem.isTop ? '取消置顶' : '设为置顶';
+  conversationMenuList.value[0].name = activeConvItem.isTop ? '取消置顶' : '设为置顶';
 
   // 打开会话菜单 popup
   convMenuVPopupRef.value!.openVPopup(cItemLeftX, cItemTopY);

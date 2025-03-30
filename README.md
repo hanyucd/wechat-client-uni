@@ -42,6 +42,8 @@ uni-app App 端内置 HTML5+ 引擎，让 js 可以 **直接调用** HTML5 Plus�
 
 - nvue 中不支持 z-index 控制层级，越靠后的代码层级越高
 
+- nvue 盒模型的 box-sizing 默认为 border-box，即盒子的宽高包含 content、padding 和 border 的宽度，**不包含**外边距（margin）
+
 - nvue 暂不支持 uni.createSelectorQuery, 暂时使用：uni.requireNativePlugin('dom').getComponentRect
 
 

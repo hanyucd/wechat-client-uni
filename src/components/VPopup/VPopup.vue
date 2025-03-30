@@ -23,6 +23,7 @@ interface IPopup {
   bodyBgColor?: string;
   bodyWidth?: number;
   bodyHeight?: number;
+  tabbarHeight?: number;
 }
 
 const props = withDefaults(defineProps<IPopup>(), {
@@ -34,6 +35,8 @@ const props = withDefaults(defineProps<IPopup>(), {
   bodyWidth: 0,
   // 弹出层内容高度
   bodyHeight: 0,
+  // 底部区域高度
+  tabbarHeight: 0,
 });
 
 const emit = defineEmits<{
@@ -76,21 +79,24 @@ const popupCostomPosition = computed(() => {
   };
 });
 
-onMounted(() => {
+onMounted(() => {});
+
+watch([() => props.bodyWidth, () => props.bodyHeight, () => props.tabbarHeight], ([newBodyWidth, newBodyHeight, newTabbarHeight]) => {
+  console.log(`bodyWidth: ${newBodyWidth}, bodyHeight: ${newBodyHeight}, tabbarHeight: ${newTabbarHeight}`);
   // 计算弹窗: 最大 left x 和 top y
   const spacingPX = 10;
   // #ifdef APP
-  maxLeftX.value = appStore.systemInfo.windowWidth - uni.upx2px(props.bodyWidth) - spacingPX;
-  maxTopY.value = appStore.systemInfo.windowHeight - uni.upx2px(props.bodyHeight) - spacingPX;
+  maxLeftX.value = appStore.systemInfo.windowWidth - uni.upx2px(newBodyWidth) - spacingPX;
+  maxTopY.value = appStore.systemInfo.windowHeight - uni.upx2px(newBodyHeight) - newTabbarHeight - spacingPX;
   // #endif
   
   // #ifndef APP
   // @ts-ignore
-  maxLeftX.value = appStore.systemInfo.windowWidth - uni.rpx2px(props.bodyWidth) - spacingPX;
+  maxLeftX.value = appStore.systemInfo.windowWidth - uni.rpx2px(newBodyWidth) - spacingPX;
   // @ts-ignore
-  maxTopY.value = appStore.systemInfo.windowHeight - uni.rpx2px(props.bodyHeight) - spacingPX;
+  maxTopY.value = appStore.systemInfo.windowHeight - uni.rpx2px(newBodyHeight) - newTabbarHeight - spacingPX;
   // #endif
-});
+}, { immediate: true });
 
 /**
  * 打开弹窗

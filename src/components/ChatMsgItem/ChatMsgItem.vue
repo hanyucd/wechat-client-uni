@@ -1,21 +1,21 @@
 <template>
-  <div class="chat-div" @longpress="onlongpressEvt">
+  <view class="chat-div">
     <!-- 时间显示 -->
     <view v-if="chatTimeDisplayStatus(prevChatTime, chatItem.create_time)" class="chat-time-wrap">
       <text class="chat-time">{{ formatChatTime(chatItem.create_time) }}</text>
     </view>
     
     <!-- 聊天消息-右边 (别人) -->
-    <view v-if="!isSelfUser" class="chat-right">
+    <view v-if="!isSelfComputed" class="chat-right">
       <view class="user-avatar">
         <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
       </view>
-      <view class="chat-msg-wrap">
+      <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
         <!-- 文字 -->
         <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
           <text class="chat-text">{{ chatItem.data }}</text>
         </view>
-      </view>
+      </div>
     </view>
 
     <!-- 聊天消息-左边 (自己) -->
@@ -23,14 +23,14 @@
       <view class="user-avatar">
         <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
       </view>
-      <view class="chat-msg-wrap">
+      <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
         <!-- 文字 -->
         <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
           <text class="chat-text">{{ chatItem.data }}</text>
         </view>
-      </view>
+      </div>
     </view>
-  </div>
+  </view>
 </template>
 
 <script setup lang="ts">
@@ -47,12 +47,12 @@ interface IChatMsgItem {
 
 const props = defineProps<{
   chatItem: IChatMsgItem;
-  chatIndex?: number;
+  chatIndex: number;
   prevChatTime: string;
 }>();
 
 // 是否是自己
-const isSelfUser = computed(() => {
+const isSelfComputed = computed(() => {
   return props.chatItem.from_user_id === 1;
 });
 
@@ -75,11 +75,31 @@ const emit = defineEmits<{
 }>();
 
 /**
- * 进入聊天设置页面
+ * 长按事件
  */
-const onlongpressEvt = (event: any) =>{
-  console.log('长按事件', event);
-  // uni.$uv.route('/pages/module-chat/chat/chat', { name: 'uvui', age: 1 });
+const onChatDivLongpressEvt = (event: any) =>{
+  // console.log('长按事件', event);
+  let _leftX = 0;
+  let _topY = 0;
+
+  // #ifdef APP-NVUE
+  if (Array.isArray(event.changedTouches) && event.changedTouches.length) {
+    _leftX = event.changedTouches[0].screenX;
+    _topY = event.changedTouches[0].screenY;
+  }
+  // #endif
+
+  // #ifdef WEB
+  _leftX = event.changedTouches[0].pageX;
+  _topY = event.changedTouches[0].pageY;
+  // #endif
+
+  // #ifdef MP
+  _leftX = event.detail.x;
+  _topY = event.detail.y;
+  // #endif
+
+  emit('longpress', _leftX, _topY, props.chatIndex);
 };
 </script>
 

@@ -5,15 +5,29 @@
   }
 }
 
+.menu-popup {
+  width: 240rpx;
+  .menu-item {
+    @include flex-xy-layout(flex-start);
+    height: 100rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    .menu-item-text {
+      font-size: 32rpx;
+      padding-left: 30rpx;
+    }
+  }
+}
+
 .input-module {
   position: fixed;
   left: 0;
   right: 0;
+  bottom: 0;
   border-top: 1rpx solid #dee2e6;
+  background-color: #F7F7F6;
   .input-box {
     @include flex-xy-layout;
     padding: 14rpx 20rpx;
-    background-color: #F7F7F6;
     // background: transparent;
     .input-wrap {
       @include flex-xy-layout(flex-start, stretch);
@@ -21,7 +35,9 @@
       // background-color: green;
       .input-textarea {
         flex: 1;
+        // #ifndef APP-NVUE
         width: auto;
+        // #endif
         height: 80rpx;
         padding: 20rpx;
         background: #fff;
