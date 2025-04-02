@@ -32,7 +32,7 @@ const sizeComputed = computed(() => {
 });
 
 const clickEvent = () => {
-  console.log('onClick');
+  console.log('click 头像' );
 };
 </script>
 

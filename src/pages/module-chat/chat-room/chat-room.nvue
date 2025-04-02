@@ -8,17 +8,18 @@
   </VNavbar>
 
   <!-- 聊天内容区域 -->
-  <view ref="chatModuleRef" class="chat-module" :style="{ height: `${ chatModuleHeight }px` }">
+  <view ref="chatModuleRef" class="chat-module" :style="{ height: `${ chatModuleHeight }px` }" @touchend="chatModuleTouchendEvt">
     <scroll-view
       scroll-y
+      class="scroll-y-view"
       :style="{ height: `${ chatModuleHeight }px` }"
-      class="scroll-y-view  px-3"
       :scroll-with-animation="true"
+      :scroll-into-view="scrollViewIntoId"
       >
       <!-- 顶部占位块 -->
       <view style="height: 30rpx;" />
 
-      <view v-for="(item, index) in chatMsgList" :key="index">
+      <view v-for="(item, index) in chatMsgList" :id="`chatMsgItem-${ index }`" :key="index">
          <ChatMsgItem
          :chatItem="item"
          :chatIndex="index"
@@ -28,7 +29,7 @@
       </view>
 
       <!-- 底部占位块 -->
-      <view style="height: 30rpx; background: red;" />
+      <view id="chatMsgItem-last" style="height: 30rpx; background: red;" />
     </scroll-view>
   </view>
 
@@ -47,12 +48,14 @@
         
         <textarea
           v-else
+          ref="textareaRef"
           v-model="inputValue"
           class="input-textarea"
           fixed
           :auto-focus="false"
           :show-confirm-bar="false"
           :adjust-position="false"
+          inputmode="text"
           @focus="onTextareaFocusEvt"
           @blur="onTextareaBlurEvt"
         ></textarea>
@@ -89,6 +92,7 @@ import dayjs from 'dayjs';
 import * as indexUtil from '@/utils'; 
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
+import { number } from '@climblee/uv-ui/libs/function/test.js';
 // #ifdef APP-NVUE
 const domModule = uni.requireNativePlugin('dom');
 // #endif
@@ -99,6 +103,8 @@ type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
 const chatMenuVPopupRef = ref<VPopupType | null>(null);
 
+// 会话菜单 popup ref
+const textareaRef = ref(null);
 // 输入框模式 text：输入文字，emoticon：表情，action：操作，audio：音频
 const inputMode = ref<'text' | 'action' | 'emoticon' | 'audio'>('text');
 // 键盘高度
@@ -109,6 +115,10 @@ const isRecording = ref(false);
 const inputValue = ref('');
 // 聊天模块高度
 const chatModuleHeight = ref(0);
+// scrollView into id
+const scrollViewIntoId = ref('');
+const scrollViewIntoTimer = ref<number | null>(null);
+
 // 聊天消息列表
 const chatMsgList = ref([
   { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
@@ -146,9 +156,9 @@ const chatMenuHeight = computed(() => {
 const longpressActiveChatIndex = ref(-1);
 
 watch(keyboardHeight, async (newkboardHeight) => {
-  console.log('键盘高度:', newkboardHeight);
-
+  // console.log('键盘高度:', newkboardHeight);
   await nextTick();
+  // 重新计算聊天模块高度
   _calcChatModuleHeight();
 });
 
@@ -162,7 +172,31 @@ onMounted(() => {
   setTimeout(() => {
     _calcChatModuleHeight();
   }, 0);
+
+  // #ifdef APP-NVUE
+  uni.onKeyboardHeightChange(_keyboardListenerFunc);
+  // #endif
 });
+
+// 组件卸载时移除键盘高度变化监听
+onUnmounted(() => {
+  // #ifdef APP-NVUE
+  uni.offKeyboardHeightChange(_keyboardListenerFunc);
+  // #endif
+});
+
+/**
+ * 
+ * 键盘高度变化 回调函数
+ */
+const _keyboardListenerFunc = (res: any)=> {
+  // #ifdef APP-NVUE
+    if (res.height === 0) {
+      // @ts-ignore
+      textareaRef.value.blur();
+    }
+  // #endif
+};
 
 /**
  * 计算聊天模块高度
@@ -181,6 +215,8 @@ const _calcChatModuleHeight = () => {
       domModule.getComponentRect(inputModuleRef.value, (dom2: any) => {
         inputModuleHeight.value = dom2.size.height;
         chatModuleHeight.value = windowHeight - dom1.size.top - dom2.size.height;
+        // scrollView 滚动到底部
+        _scrollViewToIntoView();
       });
     });
   }, 100);
@@ -189,21 +225,34 @@ const _calcChatModuleHeight = () => {
   // #ifndef APP-NVUE
   const chatModuleNode = uni.createSelectorQuery().select('.chat-module');
   chatModuleNode.boundingClientRect((rect1: any) => {
-    // console.log('聊天模块节点：', rect1);
       // 底部模块选择器节点
       const bottomModuleNode = uni.createSelectorQuery().select('.input-module');
       bottomModuleNode.boundingClientRect((rect2: any) => {
-        // console.log('底部输入框节点：', rect2);
         inputModuleHeight.value = rect2.height;
         chatModuleHeight.value = windowHeight - rect1.top - rect2.height;
+        // scrollView 滚动到底部
+        _scrollViewToIntoView();
       }).exec();
     }).exec();
   // #endif
 };
 
-const	openActionOrEmoticon = (mode: any = 'actioin') => {
-  inputMode.value = mode;
-  // uni.hideKeyboard();
+/**
+ * scrollView 滚动指定位置（默认底部）
+ */
+ const _scrollViewToIntoView = (id = 'chatMsgItem-last') =>{
+  // 首先清除上一次的定时器
+  if (scrollViewIntoTimer.value) clearTimeout(scrollViewIntoTimer.value);
+
+  scrollViewIntoTimer.value = setTimeout(async () => {
+    // 将scrollIntoView属性设置为 "chatMsgItem-last"，以便滚动窗口到最后一条消息
+    scrollViewIntoId.value = id;
+
+    // 等待DOM更新，即：滚动完成
+    await nextTick();
+    scrollViewIntoId.value = '';
+    // console.log('this.scrollIntoView succss ', this.scrollIntoView)
+  }, 10);
 };
 
 /**
@@ -271,6 +320,11 @@ const	onTextareaBlurEvt = (event: any) => {
   console.log('失去焦点:', event);
 };
 
+const	openActionOrEmoticon = (mode: any = 'actioin') => {
+  inputMode.value = mode;
+  // uni.hideKeyboard();
+};
+
 /**
  * 录音开始
  */
@@ -297,6 +351,17 @@ const voiceTouchCancel = () =>{
  */
 const voiceTouchMove = () =>{
   console.log('录音手指移动');
+};
+
+/**
+ * 聊天页面 touchend 事件
+ */
+const chatModuleTouchendEvt = () =>{
+  // console.log('点击touchend', textareaRef.value);
+  // #ifdef APP-NVUE
+  // @ts-ignore
+  textareaRef.value.blur();
+  // #endif
 };
 
 /**
