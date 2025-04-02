@@ -79,32 +79,3 @@
     }
   }
 }
-
-
-
-.input-module {
-  position: fixed;
-  left: 0;
-  right: 0;
-  border-top: 1rpx solid #dee2e6;
-  .input-box {
-    @include flex-xy-layout;
-    padding: 14rpx 20rpx;
-    background-color: #F7F7F6;
-    // height: 105rpx;
-    .input-wrap {
-      @include flex-xy-layout(flex-start, stretch);
-      flex: 1;
-      // background-color: green;
-      .input-textarea {
-        flex: 1;
-        width: auto;
-        height: 80rpx;
-        padding: 20rpx;
-        background: #fff;
-        font-size: 35rpx;
-        border-radius: 8rpx;
-      }
-    }
-  }
-}

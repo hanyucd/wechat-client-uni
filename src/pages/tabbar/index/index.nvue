@@ -9,14 +9,14 @@
   </VNavbar>
   
    <!-- 置顶-会话列表 -->
-  <template v-for="(item, index) in conversationList" :key="item.id">
+  <!-- <template v-for="(item, index) in conversationList" :key="item.id">
     <ConversationItem v-if="item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConvItemLongpressEvt" />
-  </template>
+  </template> -->
 
    <!-- 非置顶-会话列表 -->
-  <template v-for="(item, index) in conversationList" :key="item.id">
+  <!-- <template v-for="(item, index) in conversationList" :key="item.id">
     <ConversationItem v-if="!item.isTop" :conversation="item" :index="index" @click="navToChatRoute" @longpress="onConvItemLongpressEvt" />
-  </template>
+  </template> -->
 
   <!-- 会话菜单弹窗 -->
   <VPopup ref="convMenuVPopupRef" mode="custom" :bodyWidth="240" :bodyHeight="convMenuHeight">
@@ -36,10 +36,12 @@
       </view>
     </view>
   </VPopup>
+
+  <uv-button type="primary" text="确定" @click="navToChat" />
 </template>
 
 <script setup lang="ts">
-import ConversationItem from './components/ConversationItem/ConversationItem.vue';
+// import ConversationItem from './components/ConversationItem/ConversationItem.vue';
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
 
@@ -180,6 +182,13 @@ const clickTopExtendMenuItem = (eventName: string) => {
  */
 const navToChatRoute = () =>{
   uni.$uv.route('/pages/module-chat/chat-room/chat-room', { name: 'uvui', age: 1 });
+};
+
+/**
+ * 进入聊天页面
+ */
+const navToChat = () =>{
+  uni.$uv.route('/pages/module-chat/chat-room/chat-room');
 };
 </script>
 

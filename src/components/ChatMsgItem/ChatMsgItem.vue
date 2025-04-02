@@ -7,7 +7,7 @@
 
     <!-- 撤回消息 -->
     <view v-if="chatItem.isremove" class="chat-revoke-wrap">
-      <text class="chat-revoke-text font-sm text-light-muted">{{ isSelfComputed ? '你' : '对方' }}撤回了一条信息</text>
+      <text class="chat-revoke-text">{{ isSelfComputed ? '你' : '对方' }}撤回了一条信息</text>
     </view>
 
     <!-- 聊天消息 -->

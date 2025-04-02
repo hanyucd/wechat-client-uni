@@ -82,7 +82,7 @@ const popupCostomPosition = computed(() => {
 onMounted(() => {});
 
 watch([() => props.bodyWidth, () => props.bodyHeight, () => props.tabbarHeight], ([newBodyWidth, newBodyHeight, newTabbarHeight]) => {
-  console.log(`bodyWidth: ${newBodyWidth}, bodyHeight: ${newBodyHeight}, tabbarHeight: ${newTabbarHeight}`);
+  // console.log(`bodyWidth: ${newBodyWidth}, bodyHeight: ${newBodyHeight}, tabbarHeight: ${newTabbarHeight}`);
   const systemInfo = uni.getSystemInfoSync();
   // console.log(systemInfo);
   

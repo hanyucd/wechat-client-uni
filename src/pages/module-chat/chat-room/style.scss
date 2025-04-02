@@ -1,7 +1,8 @@
 .chat-module {
   border-top: 1rpx solid #dee2e6;
   .scroll-y-view {
-    background-color: #f8f9fa;
+    background: #f8f9fa;
+    // background: greenyellow;
   }
 }
 
@@ -25,6 +26,8 @@
   bottom: 0;
   border-top: 1rpx solid #dee2e6;
   background-color: #F7F7F6;
+  // background: transparent;
+  z-index: 100;
   .input-box {
     @include flex-xy-layout;
     padding: 14rpx 20rpx;
@@ -39,6 +42,7 @@
         height: 80rpx;
         padding: 20rpx;
         background: #fff;
+        // background: orangered;
         font-size: 35rpx;
         border-radius: 8rpx;
       }

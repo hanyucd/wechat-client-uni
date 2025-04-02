@@ -8,10 +8,10 @@
   </VNavbar>
 
   <!-- 聊天内容区域 -->
-  <view ref="chatModuleRef" class="chat-module" :style="{ height: chatModuleHeight + 'px' }">
+  <view ref="chatModuleRef" class="chat-module" :style="{ height: `${ chatModuleHeight }px` }">
     <scroll-view
       scroll-y
-      :style="{ height: chatModuleHeight + 'px' }"
+      :style="{ height: `${ chatModuleHeight }px` }"
       class="scroll-y-view  px-3"
       :scroll-with-animation="true"
       >
@@ -50,6 +50,8 @@
           v-model="inputValue"
           class="input-textarea"
           fixed
+          :auto-focus="false"
+          :show-confirm-bar="false"
           :adjust-position="false"
           @focus="onTextareaFocusEvt"
           @blur="onTextareaBlurEvt"
@@ -78,6 +80,8 @@
       </view>
     </view>
   </VPopup>
+
+  <!-- <view style="height: 500px; background: palevioletred;" /> -->
 </template>
 
 <script setup lang="ts">
@@ -141,6 +145,13 @@ const chatMenuHeight = computed(() => {
 // 长按激活的chat index
 const longpressActiveChatIndex = ref(-1);
 
+watch(keyboardHeight, async (newkboardHeight) => {
+  console.log('键盘高度:', newkboardHeight);
+
+  await nextTick();
+  _calcChatModuleHeight();
+});
+
 onLoad(() => {
   // console.log('当前时间:', dayjs().format('YYYY年MM月DD日 HH:mm:ss'));
   // console.log('onLoad:', uni.getSystemInfoSync());
@@ -160,6 +171,7 @@ const _calcChatModuleHeight = () => {
   const systemInfo = uni.getSystemInfoSync();
   // console.log('系统信息：', systemInfo);
   const windowHeight = systemInfo.windowHeight;
+  // console.log('窗口高度 windowHeight：', windowHeight);
 
   // #ifdef APP-NVUE
   setTimeout(() => {
@@ -177,7 +189,7 @@ const _calcChatModuleHeight = () => {
   // #ifndef APP-NVUE
   const chatModuleNode = uni.createSelectorQuery().select('.chat-module');
   chatModuleNode.boundingClientRect((rect1: any) => {
-    console.log('聊天模块节点：', rect1);
+    // console.log('聊天模块节点：', rect1);
       // 底部模块选择器节点
       const bottomModuleNode = uni.createSelectorQuery().select('.input-module');
       bottomModuleNode.boundingClientRect((rect2: any) => {
@@ -197,7 +209,7 @@ const	openActionOrEmoticon = (mode: any = 'actioin') => {
 /**
  * 打开会话菜单 popup
  */
- const onChatMsgItemLongpressEvt = async (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
+const onChatMsgItemLongpressEvt = async (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
   // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
   // 长按选中的 index
   longpressActiveChatIndex.value = cItemIndex;
@@ -221,9 +233,9 @@ const	openActionOrEmoticon = (mode: any = 'actioin') => {
  * 点击聊天菜单项
  */
 const clickChatMenuItem = (eventName: string) => {
-   // 拿到当前选中的对象
-   const activeChatItem = chatMsgList.value[longpressActiveChatIndex.value];
-   console.log('点击聊天菜单项:', eventName, activeChatItem);
+  // 拿到当前选中的对象
+  const activeChatItem = chatMsgList.value[longpressActiveChatIndex.value];
+  console.log('点击聊天菜单项:', eventName, activeChatItem);
 
   switch (eventName) {
     // 撤回消息
@@ -246,15 +258,15 @@ const clickChatMenuItem = (eventName: string) => {
  const onTextareaFocusEvt = (event: any) => {
   // this.mode = 'text'
   // this.isfocus = true
-  // this.keyboardHeight = e.detail.height
-  // console.log('焦时触发:', event);
+  keyboardHeight.value = event.detail.height;
+  console.log('焦时触发:', event);
 };
 
 /**
  * 输入框失去焦点时触发
  */
 const	onTextareaBlurEvt = (event: any) => {
-  // this.keyboardHeight = 0
+  keyboardHeight.value = 0;
   // this.isfocus = false
   console.log('失去焦点:', event);
 };
