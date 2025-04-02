@@ -37,8 +37,8 @@
   <view ref="inputModuleRef" class="input-module" :style="{ paddingBottom: (keyboardHeight || appStore.sysSafeAreaHeight) + 'px' }">
     <!-- 输入栏 -->
     <view class="input-box">
-      <VIcon v-if="inputMode === 'audio'" :icon="'\ue607'" />
-      <VIcon v-else :icon="'\ue606'" />
+      <VIcon v-if="inputMode === 'audio'" :size="45" :icon="'\ue607'" />
+      <VIcon v-else :size="45" :icon="'\ue606'" />
       <!-- 输入框 -->
       <view class="input-wrap">
         <!-- 录音按钮 -->
@@ -62,12 +62,12 @@
       </view>
 
       <!-- 表情icon -->
-      <VIcon :icon="'\ue605'" @click="openActionOrEmoticon('emoticon')" />
+      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="openActionOrEmoticon('emoticon')" />
       <!-- 扩展icon -->
-      <VIcon v-if="!inputValue.length" :icon="'\ue603'" @click="openActionOrEmoticon('action')" />
+      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="openActionOrEmoticon('action')" />
       <!-- 发送按钮 -->
-      <view v-else class="flex-shrink">
-        发送按钮
+      <view v-else class="send-btn" @click="sendChatMsg('text', inputValue)">
+        <text class="send-btn-text">发 送</text>
       </view>
     </view>
 
@@ -320,11 +320,6 @@ const	onTextareaBlurEvt = (event: any) => {
   console.log('失去焦点:', event);
 };
 
-const	openActionOrEmoticon = (mode: any = 'actioin') => {
-  inputMode.value = mode;
-  // uni.hideKeyboard();
-};
-
 /**
  * 录音开始
  */
@@ -357,11 +352,38 @@ const voiceTouchMove = () =>{
  * 聊天页面 touchend 事件
  */
 const chatModuleTouchendEvt = () =>{
-  // console.log('点击touchend', textareaRef.value);
   // #ifdef APP-NVUE
   // @ts-ignore
   textareaRef.value.blur();
   // #endif
+};
+
+const	openActionOrEmoticon = (mode: any = 'actioin') => {
+  inputMode.value = mode;
+  // uni.hideKeyboard();
+};
+
+/**
+ * 进入聊天设置页面
+ * @param msgType 消息类型
+ * @param msgData 消息数据
+ * @param msgOpt 消息选项
+ */
+const sendChatMsg = (msgType = 'text', msgData = '', msgOpt = {}) =>{
+  let msgObj =  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '' };
+  // 文字消息
+  if (msgType === 'text') {
+    msgObj.data = msgData.trim();
+    chatMsgList.value.push(msgObj);
+  }
+
+  // 发送文字成功，清空输入框
+  if (msgType === 'text') {
+    inputValue.value = '';
+  }
+
+  // scrollView 滚动到底部
+  _scrollViewToIntoView();
 };
 
 /**

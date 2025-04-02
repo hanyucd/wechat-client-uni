@@ -34,6 +34,7 @@
     .input-wrap {
       @include flex-xy-layout(flex-start, stretch);
       flex: 1;
+      margin: 0 10rpx;
       .input-textarea {
         flex: 1;
         /* #ifndef APP-NVUE */
@@ -45,6 +46,17 @@
         // background: orangered;
         font-size: 35rpx;
         border-radius: 8rpx;
+      }
+    }
+    .send-btn {
+      @include flex-xy-layout;
+      background: $main-bg-color;
+      padding: 10rpx 20rpx;
+      border-radius: 8rpx;
+      .send-btn-text {
+        font-size: 30rpx;
+        font-weight: 500;
+        color: #fff;
       }
     }
   }
