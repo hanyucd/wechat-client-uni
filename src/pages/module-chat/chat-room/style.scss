@@ -20,10 +20,10 @@
 }
 
 .input-module {
-  // position: fixed;
-  // left: 0;
-  // right: 0;
-  // bottom: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border-top: 1rpx solid #dee2e6;
   background-color: #F7F7F6;
   // background: transparent;
@@ -60,5 +60,27 @@
       }
     }
   }
-  .tool-box {}
+  .tool-box {
+    .action-swiper {
+      height: 500rpx;
+      .action-switerItem {
+        @include flex-xy-layout(flex-start, flex-start);
+        flex-wrap: wrap;
+        // padding: 10rpx 20rpx;
+        .action-boxItem {
+          @include flex-y-layout;
+          margin-bottom: 20rpx;
+          .action-icon {
+            width: 100rpx;
+            height: 100rpx;
+          }
+          .action-text {
+            font-size: 25rpx;
+            color: #6c757d;
+            margin-top: 20rpx;
+          }
+        }
+      }
+    }
+  }
 }

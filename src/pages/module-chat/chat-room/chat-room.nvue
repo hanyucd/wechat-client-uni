@@ -35,7 +35,7 @@
 
   <!-- 底部输入框、工具栏 -->
   <view ref="inputModuleRef" class="input-module" :style="{ paddingBottom: (keyboardHeight || appStore.sysSafeAreaHeight) + 'px' }">
-    <!-- 输入栏 -->
+    <!-- 输入栏-区域 -->
     <view class="input-box">
       <VIcon v-if="inputMode === 'audio'" :size="45" :icon="'\ue607'" />
       <VIcon v-else :size="45" :icon="'\ue606'" />
@@ -62,17 +62,27 @@
       </view>
 
       <!-- 表情icon -->
-      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="openActionOrEmoticon('emoticon')" />
+      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="changeActionOrEmoticon('emoticon')" />
       <!-- 扩展icon -->
-      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="openActionOrEmoticon('action')" />
+      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="changeActionOrEmoticon('action')" />
       <!-- 发送按钮 -->
       <view v-else class="send-btn" @click="sendChatMsg('text', inputValue)">
         <text class="send-btn-text">发 送</text>
       </view>
     </view>
 
-    <!-- 工具栏 -->
-    <!-- <view class="tool-box">工具栏</view> -->
+    <!-- 工具栏-区域 -->
+    <view v-if="['action', 'emoticon'].includes(inputMode)" class="tool-box">
+      <!-- 工具 swiper -->
+      <swiper indicator-dots class="action-swiper">
+        <swiper-item v-for="(aItem, aIndex) in actionList" :key="aIndex" class="action-switerItem">
+          <view v-for="(aSubItem, aSubIndex) in aItem" :key="aSubIndex" class="action-boxItem" :style="{ width: `${ actionBoxWidth }px` }" @click="clickActionItem(aSubItem.event)">
+            <image :src="aSubItem.icon" mode="aspectFill" class="action-icon" />
+            <text class="action-text">{{ aSubItem.name }}</text>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
   </view>
 
   <!-- chat 菜单弹窗 -->
@@ -83,8 +93,6 @@
       </view>
     </view>
   </VPopup>
-
-  <!-- <view style="height: 500px; background: palevioletred;" /> -->
 </template>
 
 <script setup lang="ts">
@@ -103,10 +111,11 @@ type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
 const chatMenuVPopupRef = ref<VPopupType | null>(null);
 
+type TInputMode = 'text' | 'action' | 'emoticon' | 'audio';
 // 会话菜单 popup ref
 const textareaRef = ref(null);
 // 输入框模式 text：输入文字，emoticon：表情，action：操作，audio：音频
-const inputMode = ref<'text' | 'action' | 'emoticon' | 'audio'>('text');
+const inputMode = ref<TInputMode>('' as TInputMode);
 // 键盘高度
 const keyboardHeight = ref(0);
 // 音频录制状态
@@ -152,8 +161,30 @@ const chatMenuHeight = computed(() => {
   return chatMenuListComputed.value.length * _menuItemHeight;
 });
 
-// 长按激活的chat index
-const longpressActiveChatIndex = ref(-1);
+// chat 菜单列表高度 rpx
+const actionBoxWidth = computed(() => {
+  // const _menuItemHeight = 100;
+  return appStore.systemInfo.windowWidth / 4;
+});
+
+// 长按激活的 chat msg index
+const longpressActiveChatMsgIndex = ref(-1);
+
+const actionList = ref([
+  [
+    { name: '相册', icon: '/static/images/extends/pic.png', event: 'uploadImage' },
+    { name: '拍摄', icon: '/static/images/extends/video.png', event: 'uploadVideo' },
+    { name: '收藏', icon: '/static/images/extends/shoucan.png', event: 'openFava' },
+    { name: '名片', icon: '/static/images/extends/man.png', event: 'sendCard' },
+    { name: '语音通话', icon: '/static/images/extends/phone.png', event: '' },
+    { name: '位置', icon: '/static/images/extends/path.png', event: '' }
+  ],
+  [
+    { name: '礼物', icon: '/static/images/extends/pic.png', event: '' },
+    { name: '转账', icon: '/static/images/extends/video.png', event: '' },
+    { name: '音乐', icon: '/static/images/extends/shoucan.png', event: '' },
+  ],
+]);
 
 watch(keyboardHeight, async (newkboardHeight) => {
   // console.log('键盘高度:', newkboardHeight);
@@ -248,10 +279,9 @@ const _calcChatModuleHeight = () => {
     // 将scrollIntoView属性设置为 "chatMsgItem-last"，以便滚动窗口到最后一条消息
     scrollViewIntoId.value = id;
 
-    // 等待DOM更新，即：滚动完成
+    // 等待 DOM 更新，即：滚动完成
     await nextTick();
     scrollViewIntoId.value = '';
-    // console.log('this.scrollIntoView succss ', this.scrollIntoView)
   }, 10);
 };
 
@@ -261,7 +291,7 @@ const _calcChatModuleHeight = () => {
 const onChatMsgItemLongpressEvt = async (cItemLeftX: number, cItemTopY: number, cItemIndex: number) => {
   // console.log('长按会话item:', cItemLeftX, cItemTopY, cItemIndex);
   // 长按选中的 index
-  longpressActiveChatIndex.value = cItemIndex;
+  longpressActiveChatMsgIndex.value = cItemIndex;
   // 拿到当前选中的对象
   const activeChatItem = chatMsgList.value[cItemIndex];
   // 是否是自己
@@ -283,7 +313,7 @@ const onChatMsgItemLongpressEvt = async (cItemLeftX: number, cItemTopY: number, 
  */
 const clickChatMenuItem = (eventName: string) => {
   // 拿到当前选中的对象
-  const activeChatItem = chatMsgList.value[longpressActiveChatIndex.value];
+  const activeChatItem = chatMsgList.value[longpressActiveChatMsgIndex.value];
   console.log('点击聊天菜单项:', eventName, activeChatItem);
 
   switch (eventName) {
@@ -305,8 +335,7 @@ const clickChatMenuItem = (eventName: string) => {
  * 输入框聚焦点时触发
  */
  const onTextareaFocusEvt = (event: any) => {
-  // this.mode = 'text'
-  // this.isfocus = true
+  inputMode.value = 'text';
   keyboardHeight.value = event.detail.height;
   console.log('焦时触发:', event);
 };
@@ -316,7 +345,6 @@ const clickChatMenuItem = (eventName: string) => {
  */
 const	onTextareaBlurEvt = (event: any) => {
   keyboardHeight.value = 0;
-  // this.isfocus = false
   console.log('失去焦点:', event);
 };
 
@@ -358,19 +386,60 @@ const chatModuleTouchendEvt = () =>{
   // #endif
 };
 
-const	openActionOrEmoticon = (mode: any = 'actioin') => {
-  inputMode.value = mode;
-  // uni.hideKeyboard();
+const	changeActionOrEmoticon = (mode: TInputMode) => {
+  if (inputMode.value !== mode) {
+    inputMode.value = mode;
+  } else {
+    inputMode.value = ('' as TInputMode);
+  }
+
+  // 隐藏软键盘
+  uni.hideKeyboard();
+  // 重新计算聊天模块高度
+  _calcChatModuleHeight();
 };
 
 /**
- * 进入聊天设置页面
+ * 点击扩展菜单
+ */
+const clickActionItem = async (eventName: string) => {
+  if (!eventName) return uni.$uv.toast('功能开发中');
+
+  // 发送图片
+  if (eventName === 'uploadImage') {
+    const imgRes = await uni.chooseImage({ count: 9 });
+    console.log(imgRes);
+    // TODO: 上传图片
+    // imgRes.tempFilePaths
+
+    // uni.showLoading({ title: '', mask: true });
+    // const imgPath = imgRes.tempFiles[0].tempFilePath;
+    // console.log(imgRes);
+    // imgUrl = await fileUtil.uploadFile(imgPath);
+  }
+
+  // 发送视频
+  if (eventName === 'uploadVideo') {
+    const videoRes = await uni.chooseImage({ count: 9 });
+    console.log(videoRes);
+    // TODO: 上传图片
+    // imgRes.tempFilePaths
+
+    // uni.showLoading({ title: '', mask: true });
+    // const imgPath = imgRes.tempFiles[0].tempFilePath;
+    // console.log(imgRes);
+    // imgUrl = await fileUtil.uploadFile(imgPath);
+  }
+};
+
+/**
+ * 发送聊天消息：文本、图片、语音、视频、表情
  * @param msgType 消息类型
  * @param msgData 消息数据
  * @param msgOpt 消息选项
  */
 const sendChatMsg = (msgType = 'text', msgData = '', msgOpt = {}) =>{
-  let msgObj =  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '' };
+  let msgObj = { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '' };
   // 文字消息
   if (msgType === 'text') {
     msgObj.data = msgData.trim();
@@ -378,9 +447,7 @@ const sendChatMsg = (msgType = 'text', msgData = '', msgOpt = {}) =>{
   }
 
   // 发送文字成功，清空输入框
-  if (msgType === 'text') {
-    inputValue.value = '';
-  }
+  if (msgType === 'text') inputValue.value = '';
 
   // scrollView 滚动到底部
   _scrollViewToIntoView();

@@ -54,6 +54,10 @@ module.exports = {
     semi: ['error', 'always'], // 强制在语句末尾使用分号
     quotes: ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
     'no-unused-vars': 'off', // 禁止使用未声明的变量
+    // 强制操作符周围有空格 (包含等号)
+    'space-infix-ops': ['error', { 'int32Hint': false }],
+    // 禁止出现多个空格
+    'no-multi-spaces': 'error',
     // 'object-curly-spacing': 'off',
     
     // typeScript (https://typescript-eslint.io/rules)
