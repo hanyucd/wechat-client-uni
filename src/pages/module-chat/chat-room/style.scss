@@ -61,8 +61,9 @@
     }
   }
   .tool-box {
+    height: 400rpx;
     .action-swiper {
-      height: 500rpx;
+      height: 400rpx;
       .action-switerItem {
         @include flex-xy-layout(flex-start, flex-start);
         flex-wrap: wrap;
@@ -80,6 +81,20 @@
             margin-top: 20rpx;
           }
         }
+      }
+    }
+    .emoji-scroll {
+      @include flex-xy-layout(flex-start, flex-start);
+      flex-wrap: wrap;
+      height: 400rpx;
+      .emoji-view {
+        /* #ifndef APP-NVUE */
+        display: inline-block;
+        /* #endif */
+        padding: 20rpx;
+      }
+      .emoji-text {
+        font-size: 40rpx;
       }
     }
   }

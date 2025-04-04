@@ -52,6 +52,7 @@
           v-model="inputValue"
           class="input-textarea"
           fixed
+          auto-height
           :auto-focus="false"
           :show-confirm-bar="false"
           :adjust-position="false"
@@ -62,9 +63,9 @@
       </view>
 
       <!-- 表情icon -->
-      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="changeActionOrEmoticon('emoticon')" />
+      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="changeActionOrEmoji('emoji')" />
       <!-- 扩展icon -->
-      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="changeActionOrEmoticon('action')" />
+      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="changeActionOrEmoji('action')" />
       <!-- 发送按钮 -->
       <view v-else class="send-btn" @click="sendChatMsg('text', inputValue)">
         <text class="send-btn-text">发 送</text>
@@ -72,9 +73,9 @@
     </view>
 
     <!-- 工具栏-区域 -->
-    <view v-if="['action', 'emoticon'].includes(inputMode)" class="tool-box">
+    <view v-if="['action', 'emoji'].includes(inputMode)" class="tool-box">
       <!-- 工具 swiper -->
-      <swiper indicator-dots class="action-swiper">
+      <swiper v-if="inputMode === 'action'" indicator-dots class="action-swiper">
         <swiper-item v-for="(aItem, aIndex) in actionList" :key="aIndex" class="action-switerItem">
           <view v-for="(aSubItem, aSubIndex) in aItem" :key="aSubIndex" class="action-boxItem" :style="{ width: `${ actionBoxWidth }px` }" @click="clickActionItem(aSubItem.event)">
             <image :src="aSubItem.icon" mode="aspectFill" class="action-icon" />
@@ -82,6 +83,13 @@
           </view>
         </swiper-item>
       </swiper>
+
+      <!-- 表情 scroll -->
+      <scroll-view v-if="inputMode === 'emoji'" scroll-y class="emoji-scroll">
+        <view v-for="(eItem, eIndex) in emojiList" :key="eIndex" class="emoji-view">
+          <text class="emoji-text" @click="selectEmojiItem(eItem)">{{ eItem }}</text>
+        </view>
+      </scroll-view>
     </view>
   </view>
 
@@ -96,6 +104,7 @@
 </template>
 
 <script setup lang="ts">
+import config from '@/config';
 import dayjs from 'dayjs';
 import * as indexUtil from '@/utils'; 
 import VPopup from '@/components/VPopup/VPopup.vue';
@@ -111,17 +120,19 @@ type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
 const chatMenuVPopupRef = ref<VPopupType | null>(null);
 
-type TInputMode = 'text' | 'action' | 'emoticon' | 'audio';
+type TInputMode = 'text' | 'action' | 'emoji' | 'audio';
 // 会话菜单 popup ref
 const textareaRef = ref(null);
 // 输入框模式 text：输入文字，emoticon：表情，action：操作，audio：音频
-const inputMode = ref<TInputMode>('' as TInputMode);
+const inputMode = ref<TInputMode>('text' as TInputMode);
 // 键盘高度
 const keyboardHeight = ref(0);
 // 音频录制状态
 const isRecording = ref(false);
 // 聊天文本
 const inputValue = ref('');
+// 输入框失去焦点光标位置
+const inputBlurCursor = ref(0);
 // 聊天模块高度
 const chatModuleHeight = ref(0);
 // scrollView into id
@@ -130,7 +141,7 @@ const scrollViewIntoTimer = ref<number | null>(null);
 
 // 聊天消息列表
 const chatMsgList = ref([
-  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '😀你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
   { from_user_id: 2, isremove: true, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
   { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
   { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
@@ -180,11 +191,13 @@ const actionList = ref([
     { name: '位置', icon: '/static/images/extends/path.png', event: '' }
   ],
   [
-    { name: '礼物', icon: '/static/images/extends/pic.png', event: '' },
-    { name: '转账', icon: '/static/images/extends/video.png', event: '' },
+    { name: '礼物', icon: '/static/images/extends/shoucan.png', event: '' },
+    { name: '转账', icon: '/static/images/extends/shoucan.png', event: '' },
     { name: '音乐', icon: '/static/images/extends/shoucan.png', event: '' },
   ],
 ]);
+
+const emojiList = ref(config.emojiData);
 
 watch(keyboardHeight, async (newkboardHeight) => {
   // console.log('键盘高度:', newkboardHeight);
@@ -346,6 +359,7 @@ const clickChatMenuItem = (eventName: string) => {
 const	onTextareaBlurEvt = (event: any) => {
   keyboardHeight.value = 0;
   console.log('失去焦点:', event);
+  inputBlurCursor.value = event.detail.cursor;
 };
 
 /**
@@ -372,7 +386,7 @@ const voiceTouchCancel = () =>{
 /**
  * 录音手指移动
  */
-const voiceTouchMove = () =>{
+const voiceTouchMove = () => {
   console.log('录音手指移动');
 };
 
@@ -386,7 +400,10 @@ const chatModuleTouchendEvt = () =>{
   // #endif
 };
 
-const	changeActionOrEmoticon = (mode: TInputMode) => {
+/**
+ * 打开扩展菜单 / 表情菜单
+ */
+const	changeActionOrEmoji = (mode: TInputMode) => {
   if (inputMode.value !== mode) {
     inputMode.value = mode;
   } else {
@@ -397,6 +414,17 @@ const	changeActionOrEmoticon = (mode: TInputMode) => {
   uni.hideKeyboard();
   // 重新计算聊天模块高度
   _calcChatModuleHeight();
+};
+
+/**
+ * 选择表情
+ */
+const selectEmojiItem = (emoji: any) => {
+  console.log('选择表情:', emoji);
+
+  // inputValue.value = inputValue.value += emoji;
+  // inputValue根据inputBlurCursor位置插入 emoji
+  inputValue.value = inputValue.value.slice(0, inputBlurCursor.value) + emoji + inputValue.value.slice(inputBlurCursor.value);
 };
 
 /**
