@@ -1,0 +1,9 @@
+.icon-view {
+  @include flex-xy-layout;
+  padding: 5rpx;
+  .icon-text {
+    font-size: 35rpx;
+  }
+}
+
+.bg-hover-light{ background-color: #dae0e5;}

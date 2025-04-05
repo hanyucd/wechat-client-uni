@@ -22,6 +22,11 @@
           <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
             <text class="chat-text">{{ chatItem.data }}</text>
           </view>
+          <!-- 图片 -->
+          <view v-else-if="chatItem.type === 'image'" class="chat-image" @click="previewImg(chatItem.data!, [chatItem.data!])">
+            <!-- <uv-image :src="chatItem.data" width="140px" height="140px" radius="5px" /> -->
+            <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="350" />
+          </view>
         </div>
       </view>
   
@@ -34,6 +39,10 @@
           <!-- 文字 -->
           <view v-if="chatItem.type === 'text'" class="chat-text-wrap">
             <text class="chat-text">{{ chatItem.data }}</text>
+          </view>
+          <!-- 图片 -->
+          <view v-else-if="chatItem.type === 'image'" class="chat-image" @click="previewImg(chatItem.data!, [chatItem.data!])">
+            <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="350" />
           </view>
         </div>
       </view>
@@ -82,6 +91,13 @@ const emit = defineEmits<{
   longpress: [x: number, y: number, index: number];
   click: [];
 }>();
+
+/**
+ * 预览图片
+ */
+const previewImg = (curImgUrl: string, imgUrls: string[]) => {
+  uni.previewImage({ current: curImgUrl, urls: imgUrls });
+};
 
 /**
  * 长按事件

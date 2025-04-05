@@ -13,6 +13,7 @@ declare module 'vue' {
     VBadge: typeof import('./components/VBadge/VBadge.vue')['default']
     VDivider: typeof import('./components/VDivider/VDivider.vue')['default']
     VIcon: typeof import('./components/VIcon/VIcon.vue')['default']
+    VImage: typeof import('./components/VImage/VImage.vue')['default']
     VListItem: typeof import('./components/VListItem/VListItem.vue')['default']
     VNavbar: typeof import('./components/VNavbar/VNavbar.vue')['default']
     VPopup: typeof import('./components/VPopup/VPopup.vue')['default']
