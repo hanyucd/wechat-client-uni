@@ -41,38 +41,43 @@ const sizeComputed = computed(() => {
 });
 
 /**
- * 图片加载完毕事件
+ * 图片加载完毕事件（保持宽高比的自适应缩放）
  */
 const onImagLoadEvt = (event: any) => {
-  const { realWidth, realHeight } = event.detail;
-  console.log('onImagLoadEvt', realWidth, realHeight);
+  const { width: realWidth, height: realHeight } = event.detail;
+  // console.log('onImagLoadEvt', realWidth, realHeight);
 
-  let maxWidthPX = 0; // 最大宽度 px
-  let maxHeightPX = 0; // 最大高度 px
-  // #ifdef APP
-  maxWidthPX = uni.upx2px(props.maxWidth);
-  maxHeightPX = uni.upx2px(props.maxHeight);
-  // #endif
-
-  // #ifndef APP
-  // @ts-ignore
-  maxWidthPX = uni.rpx2px(props.maxWidth);
-  // @ts-ignore
-  maxHeightPX = uni.rpx2px(props.maxHeight);
-  // #endif
+  // 转换为像素单位的最大尺寸
+  const maxWidthPX = _convertUnit(props.maxWidth);
+  const maxHeightPX = _convertUnit(props.maxHeight);
+  // console.log('max像素转换：', maxWidthPX, maxHeightPX);
 
   // 实际高度 < 最大高度
   if (realHeight < maxHeightPX) {
     imgHeight.value = realHeight;
     imgWidth.value = (realWidth <= maxWidthPX) ? realWidth : maxWidthPX;
-  // 实际高度 >= 最大高度
+  // 实际高度 >= 最大高度（需要缩放的情况）
   } else {
     imgHeight.value = maxHeightPX;
-    const imgRatioWidth = (realWidth / realHeight) * maxHeightPX;
+    const targetWidth = (realWidth / realHeight) * maxHeightPX;
 
-    imgWidth.value = (imgRatioWidth <= maxWidthPX) ? imgRatioWidth : maxWidthPX;
+    imgWidth.value = (targetWidth <= maxWidthPX) ? targetWidth : maxWidthPX;
   }
 };
+
+// 统一单位转换方法
+const _convertUnit = (value: number) => {
+   let _converUnitPx = 0;
+    // #ifdef APP
+    _converUnitPx = uni.upx2px(value);
+    // #endif
+    
+    // @ts-ignore
+    // #ifndef APP
+    _converUnitPx = uni.rpx2px(value);
+    // #endif
+    return _converUnitPx;
+  };
 
 const emit = defineEmits<{
   click: [];
