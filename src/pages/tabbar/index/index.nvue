@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-// import ConversationItem from './components/ConversationItem/ConversationItem.vue';
+// import ConversationItem from '@/pages/tabbar/index/components/ConversationItem/ConversationItem.vue';
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
 

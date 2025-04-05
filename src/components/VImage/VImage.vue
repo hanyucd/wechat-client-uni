@@ -1,6 +1,6 @@
 <template>
   <image
-    class="v-image bg-hover-light"
+    class="v-image"
     lazy-load
     mode="aspectFill"
     :src="src"
@@ -27,9 +27,9 @@ const props = withDefaults(defineProps<IImage>(), {
   maxHeight: 500,
 });
 
-// 定义图片宽度响应式变量，初始值100 px
+// 定义图片宽度响应式变量，初始值 100px
 const imgWidth = ref(100);
- // 定义高度/宽度响应式变量，初始值100
+ // 定义高度/宽度响应式变量，初始值 100px
 const imgHeight = ref(100);
 
 const sizeComputed = computed(() => {
