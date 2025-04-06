@@ -4,6 +4,9 @@ export interface IChatMsgItem {
   nickname?: string;
   type?: string;
   data: string;
+  options?: {
+    poster?: string;
+  };
   create_time: string;
   isremove: boolean;
 }

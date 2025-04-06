@@ -4,10 +4,8 @@ import type { IChatMsgItem } from '@/types/chat';
  * 音频相关 hook
  */
 export const useAudioHook = () => {
-  const audioManager = ref<UniApp.InnerAudioContext | null>(null);
-
-  // audio 播放状态 0: 结束播放、1: 播放中
-  const audioPlayStatus = ref<0 | 1>(0);
+  const audioManager = ref<UniApp.InnerAudioContext | null>(null); // 全局唯一的音频管理器
+  const audioPlayStatus = ref<0 | 1>(0); // audio 播放状态 0: 结束播放、1: 播放中
 
   onMounted(() => {
     _initAudioManager();
@@ -16,14 +14,13 @@ export const useAudioHook = () => {
   onUnmounted(() => {
     console.log('卸载');
     // 销毁音频管理器
-    // if (audioManager.value) audioManager.value.destroy();
+    if (audioManager.value) audioManager.value.destroy();
   });
 
   /**
    * 初始化音频管理器
    */
   const _initAudioManager = () => {
-    // 获取全局唯一的录音管理器
     audioManager.value = uni.createInnerAudioContext();
 
     /**
@@ -79,11 +76,9 @@ export const useAudioHook = () => {
 
   /**
    * 音频 停止
-   * @param src 音频地址
    */
   const audioManagerStop = () => {
     if (!audioManager.value) return;
-    // audioManager.value.src = src;
     audioManager.value.stop();
   };
   

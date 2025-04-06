@@ -16,6 +16,7 @@ module.exports = {
     getApp: true,
     getCurrentPages: true,
     Component: true,
+    UniApp: true,
   },
   // parser 是 ESLint 配置文件的顶级选项，用于指定整个 ESLint 配置使用的解析器。这是设置解析器的主要方式
   parser: 'vue-eslint-parser',

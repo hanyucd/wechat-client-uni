@@ -23,6 +23,8 @@
          <ChatMsgItem
          :chatItem="item"
          :chatIndex="index"
+         :audioPlayStatus="audioPlayStatus"
+         :chatAudioPlayIndex="chatAudioPlayIndex"
          :prevChatTime="index > 0 ? chatMsgList[index-1].create_time : '0'"
          @longpress="onChatMsgItemLongpressEvt"
          @changeAudioEvt="onChatMsgChangeAudioEvt"
@@ -162,6 +164,9 @@ const chatMsgList = ref([
   { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
   { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'audio', create_time: '1743242041', data: 'https://samplelib.com/lib/preview/mp3/sample-12s.mp3' },
   { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'audio', create_time: '1743242041', data: 'https://samplelib.com/lib/preview/mp3/sample-3s.mp3' },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'audio', create_time: '1743242041', data: 'https://ting8.yymp3.com/new13/xuyuteng2/11.mp3' },
+  { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'video', create_time: '1743242041', data: 'https://v1.kwaicdn.com/ksc2/ymjv6otbCQkufuSFFA7bU4xY5Kq6-ZWMmq7s_lvjXMB4sGFyqDRs4RbZsLwkRvhOQ2VmsQyu3D_B0rnQxzuHv283DzeNakKF6ABTrK_66mVGxS2ik_r5fw7cRJUq2_Q7tATTak8BTOPw8MfSEhOoTtigjQToC8YT1sBFxlxWlrAoZyMw15VUyQwap-rMTI8A.mp4?pkey=AAVBibzO2WNWbVR3F7YyGoX3taYxxq9IYYUJhp1jLhYYWySxXIxD5LGAgBfUxwzk671EHSNzGZwogeEf4Up-MCMtJTMPpKIvIIhHbX-VnQsk5Ijm6zlGYEcbA8OzTI6gN-o&tag=1-1743947670-unknown-0-fywqwhmgif-daf24f891e5a8416&clientCacheKey=3xyn49gwifpqweu_hd15.mp4&di=3a652340&bp=10004&kwai-not-alloc=28&tt=hd15&ss=vp', options: { poster: 'https://p1.a.yximgs.com/upic/2022/08/08/18/BMjAyMjA4MDgxODAzMzFfMTU4NTQ2NjQ5N184MTMxMjY2ODE1NV8wXzM=_ccc_B29599bd317db97d567f08324f94bb1fb.jpg?tag=1-1743947670-xpcwebsearch-0-uticidee1b-93fcf5862edcc91f&clientCacheKey=3xyn49gwifpqweu_ccc.jpg&di=3a652340&bp=10004' } },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'video', create_time: '1743242041', data: 'https://v2.kwaicdn.com/ksc2/d1KCDOTXspS7vFt0rCUN3KoUYsxQY_s8fYH1GuarlltR6mHXdRvDQtEY7Bq9xqtDeQLzTPpCbjWJSJrSdWrEdO7mfWBY-_ZkeFL7bGJr3eqsnk0gbR-VRWr7Aq6HDu7bb-5X7aCuJfxHjU9-SYBqSXwtb-V5DpG9oynlXzmucRIbvuVwQExAmg11tHV3uoPG.mp4?pkey=AAUre9KTfe-RBkJjeG96WtFW4FIJINJpfENcbGQI1QqK8_vHgc3Fh8VReyEsPXuLKAreKM9ZqUaHX_xsPgsiq89YODx4llhzyKX4o2S45imeXlnY7a14XhV29DV-0VmLj-k&tag=1-1743947348-unknown-0-ijztxyvrwn-90e722c3ad61a271&clientCacheKey=3xvthfcxjznqzi6_hd15.mp4&di=3a652340&bp=10004&kwai-not-alloc=28&tt=hd15&ss=vp', options: { poster: 'https://p5.a.yximgs.com/upic/2023/01/26/14/BMjAyMzAxMjYxNDMzMDJfMTU4NTQ2NjQ5N185NDY0OTIwMjQ4Nl8wXzM=_ccc_B6c838d0bfe99aa7f044226f285defce7.jpg?tag=1-1743947648-xpcwebdetail-0-pcdeu5ptlw-e5f36260b6e7d393&clientCacheKey=3xvthfcxjznqzi6_ccc.jpg&di=3a652340&bp=10004' } },
 ]);
 
 const chatModuleRef = ref(null);
@@ -417,17 +422,18 @@ const onChatMsgChangeAudioEvt = (chatItem: IChatMsgItem, chatIndex: number) => {
 
   // 如果当前音频正在播放
   if (audioPlayStatus.value) {
+    // 如果点击的是当前正在播放的音频，则停止播放
     if (chatAudioPlayIndex.value === chatIndex) {
-      audioManagerStop(); // 停止音频文件
+      audioManagerStop();
     } else {
-      audioManagerPlay(chatItem.data); // 播放音频文件
+      audioManagerPlay(chatItem.data);
     }
   // 如果当前无音频播放
   } else {
-    audioManagerPlay(chatItem.data); // 播放音频文件
+    audioManagerPlay(chatItem.data);
   }
 
-  // 同步记录播放位置
+  // 同步记录播放 index
   chatAudioPlayIndex.value = chatIndex;
 
   console.log(chatItem);

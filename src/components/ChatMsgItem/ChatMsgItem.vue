@@ -29,7 +29,17 @@
           <!-- 音频 -->
           <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
             <text class="chat-audio-time">{{ 66 + '"' }}</text>
-            <image class="chat-audio-img" :src="'/static/audio/audio-stop.png'" />
+            <image class="chat-audio-img" :src="(chatAudioPlayIndex === chatIndex && audioPlayStatus === 1) ? '/static/audio/audio-play.gif' : '/static/audio/audio-stop.png'" />
+          </view>
+          <!-- 视频 -->
+          <view v-else-if="chatItem.type === 'video'" class="chat-video-wrap" @click.stop="changeVideoPlay(chatItem, chatIndex)">
+            <video :id="`chatVideo-${ chatIndex }`" class="chat-video" :src="chatItem.data" :show-center-play-btn="false" :direction="0" @fullscreenchange="onVideoFullscreenchangeEvt"></video>
+            <view class="video-cover">
+              <uv-image :src="chatItem.options!.poster" width="350rpx" height="300rpx" :radius="5" />
+              <view class="video-play-btn">
+                <uv-icon name="play-right-fill" color="#fff" size="34" />
+              </view>
+            </view>
           </view>
         </div>
       </view>
@@ -46,14 +56,22 @@
           </view>
           <!-- 图片 -->
           <view v-else-if="chatItem.type === 'image'" class="chat-image-wrap" @click.stop="previewImg(chatItem.data!, [chatItem.data!])">
-            <!-- <uv-image :src="chatItem.data" width="140px" height="140px" radius="5px" /> -->
             <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" />
           </view>
           <!-- 音频 -->
           <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
-            <!-- <image :src=" !audioPlaying ? '/static/audio/audio.png' : '/static/audio/play.gif'" style="width: 50rpx;height: 50rpx;" class="mx-1" /> -->
-            <image class="chat-audio-img" :src="'/static/audio/audio-stop.png'" />
+            <image class="chat-audio-img" :src="(chatAudioPlayIndex === chatIndex && audioPlayStatus === 1) ? '/static/audio/audio-play.gif' : '/static/audio/audio-stop.png'" />
             <text class="chat-audio-time">{{ 5 + '"' }}</text>
+          </view>
+          <!-- 视频 -->
+          <view v-else-if="chatItem.type === 'video'" class="chat-video-wrap" @click.stop="changeVideoPlay(chatItem, chatIndex)">
+            <video :id="`chatVideo-${ chatIndex }`" class="chat-video" :src="chatItem.data" :show-center-play-btn="false" :direction="0" @fullscreenchange="onVideoFullscreenchangeEvt"></video>
+            <view class="video-cover">
+              <uv-image :src="chatItem.options!.poster" width="350rpx" height="300rpx" :radius="5" />
+              <view class="video-play-btn">
+                <uv-icon name="play-right-fill" color="#fff" size="34" />
+              </view>
+            </view>
           </view>
         </div>
       </view>
@@ -69,10 +87,12 @@ const props = defineProps<{
   chatItem: IChatMsgItem;
   chatIndex: number;
   prevChatTime: string;
+  chatAudioPlayIndex: number;
+  audioPlayStatus: 0 | 1;
 }>();
 
-// 是否正在播放音频
-// const audioPlaying = ref(false);
+// 视频管理器
+const videoManager = ref<UniApp.VideoContext | null>(null);
 
 // 是否是自己
 const isSelfComputed = computed(() => {
@@ -95,7 +115,7 @@ const chatTimeDisplayStatus = computed(() => {
 const emit = defineEmits<{
   longpress: [x: number, y: number, index: number];
   click: [];
-  changeAudioEvt: [_chatItem: IChatMsgItem, _chatIndex: number];
+  changeAudioEvt: [chatItem: IChatMsgItem, chatIndex: number];
 }>();
 
 /**
@@ -106,11 +126,30 @@ const previewImg = (curImgUrl: string, imgUrls: string[]) => {
 };
 
 /**
- * 切换-聊天语音-播放/停止
+ * 切换语音-播放/停止
  */
 const changeAudioPlay = (_chatItem: IChatMsgItem, _chatIndex: number) =>{
   emit('changeAudioEvt', _chatItem, _chatIndex);
 };
+
+/**
+ * 切换视频-播放/停止
+ */
+const changeVideoPlay = (_chatItem: IChatMsgItem, _chatIndex: number) =>{
+  videoManager.value = uni.createVideoContext(`chatVideo-${ _chatIndex }`);
+  videoManager.value.play();
+  videoManager.value.requestFullScreen();
+};
+
+/**
+ * 当视频进入和退出全屏时触发
+ */
+const onVideoFullscreenchangeEvt = (event: any) => {
+  console.log(event.detail);
+  const { fullScreen } = event.detail;
+  // @ts-ignore
+  if (!fullScreen) videoManager.value.stop();
+}; 
 
 /**
  * 长按事件
