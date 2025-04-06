@@ -4,5 +4,14 @@
     "pages.json": "jsonc", // pages.json 可以写注释
     "manifest.json": "jsonc", // manifest.json 可以写注释
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "marscode.codeCompletionPro": {
+    "enableCodeCompletionPro": true
+  },
+  "marscode.enableInlineCommand": true,
+  "marscode.enableCodelens": {
+    "enableInlineDocumentation": false,
+    "enableInlineUnitTest": false,
+    "enableInlineExplain": false
+  }
 }

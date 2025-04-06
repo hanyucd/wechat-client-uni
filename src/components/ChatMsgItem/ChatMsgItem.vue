@@ -23,9 +23,13 @@
             <text class="chat-text">{{ chatItem.data }}</text>
           </view>
           <!-- 图片 -->
-          <view v-else-if="chatItem.type === 'image'" class="chat-image" @click="previewImg(chatItem.data!, [chatItem.data!])">
-            <!-- <uv-image :src="chatItem.data" width="140px" height="140px" radius="5px" /> -->
-            <!-- <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" /> -->
+          <view v-else-if="chatItem.type === 'image'" class="chat-image-wrap" @click.stop="previewImg(chatItem.data!, [chatItem.data!])">
+            <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" />
+          </view>
+          <!-- 音频 -->
+          <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
+            <text class="chat-audio-time">{{ 66 + '"' }}</text>
+            <image class="chat-audio-img" :src="'/static/audio/audio-stop.png'" />
           </view>
         </div>
       </view>
@@ -41,8 +45,15 @@
             <text class="chat-text">{{ chatItem.data }}</text>
           </view>
           <!-- 图片 -->
-          <view v-else-if="chatItem.type === 'image'" class="chat-image" @click="previewImg(chatItem.data!, [chatItem.data!])">
-            <!-- <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" /> -->
+          <view v-else-if="chatItem.type === 'image'" class="chat-image-wrap" @click.stop="previewImg(chatItem.data!, [chatItem.data!])">
+            <!-- <uv-image :src="chatItem.data" width="140px" height="140px" radius="5px" /> -->
+            <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" />
+          </view>
+          <!-- 音频 -->
+          <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
+            <!-- <image :src=" !audioPlaying ? '/static/audio/audio.png' : '/static/audio/play.gif'" style="width: 50rpx;height: 50rpx;" class="mx-1" /> -->
+            <image class="chat-audio-img" :src="'/static/audio/audio-stop.png'" />
+            <text class="chat-audio-time">{{ 5 + '"' }}</text>
           </view>
         </div>
       </view>
@@ -52,16 +63,7 @@
 
 <script setup lang="ts">
 import { formatChatTime } from '@/utils/timeUtil';
-
-interface IChatMsgItem {
-  from_user_id?: number;
-  avatar?: string;
-  nickname?: string;
-  data?: string;
-  type?: string;
-  create_time: string;
-  isremove: boolean;
-}
+import type { IChatMsgItem } from '@/types/chat';
 
 const props = defineProps<{
   chatItem: IChatMsgItem;
@@ -69,12 +71,15 @@ const props = defineProps<{
   prevChatTime: string;
 }>();
 
+// 是否正在播放音频
+// const audioPlaying = ref(false);
+
 // 是否是自己
 const isSelfComputed = computed(() => {
   return props.chatItem.from_user_id === 1;
 });
 
-// 计算聊天时间-显隐状态 | 大于 5 分钟显示，小于 5 分钟不显示
+// 聊天时间显示状态（5 分钟内不显示）
 const chatTimeDisplayStatus = computed(() => {
   return (prevChatTime: string, curChatTime: string ) => {
     let _isShow = true;
@@ -90,6 +95,7 @@ const chatTimeDisplayStatus = computed(() => {
 const emit = defineEmits<{
   longpress: [x: number, y: number, index: number];
   click: [];
+  changeAudioEvt: [_chatItem: IChatMsgItem, _chatIndex: number];
 }>();
 
 /**
@@ -97,6 +103,13 @@ const emit = defineEmits<{
  */
 const previewImg = (curImgUrl: string, imgUrls: string[]) => {
   uni.previewImage({ current: curImgUrl, urls: imgUrls });
+};
+
+/**
+ * 切换-聊天语音-播放/停止
+ */
+const changeAudioPlay = (_chatItem: IChatMsgItem, _chatIndex: number) =>{
+  emit('changeAudioEvt', _chatItem, _chatIndex);
 };
 
 /**

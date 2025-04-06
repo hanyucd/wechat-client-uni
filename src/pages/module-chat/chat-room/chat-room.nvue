@@ -25,6 +25,7 @@
          :chatIndex="index"
          :prevChatTime="index > 0 ? chatMsgList[index-1].create_time : '0'"
          @longpress="onChatMsgItemLongpressEvt"
+         @changeAudioEvt="onChatMsgChangeAudioEvt"
         />
       </view>
 
@@ -109,12 +110,17 @@ import dayjs from 'dayjs';
 import * as indexUtil from '@/utils'; 
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
-import { number } from '@climblee/uv-ui/libs/function/test.js';
+import { useAudioHook } from '@/hooks/chatHook';
+
+import type { IChatMsgItem } from '@/types/chat';
+
 // #ifdef APP-NVUE
 const domModule = uni.requireNativePlugin('dom');
 // #endif
 
 const appStore = useAppStore();
+
+const { audioManager, audioPlayStatus, audioManagerPlay, audioManagerStop } = useAudioHook();
 
 type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
@@ -127,12 +133,17 @@ const textareaRef = ref(null);
 const inputMode = ref<TInputMode>('text' as TInputMode);
 // 键盘高度
 const keyboardHeight = ref(0);
+
 // 音频录制状态
 const isRecording = ref(false);
+// 聊天消息 语音 播放下标
+const chatAudioPlayIndex = ref(-1);
+
 // 聊天文本
 const inputValue = ref('');
 // 输入框失去焦点光标位置
 const inputBlurCursor = ref(0);
+
 // 聊天模块高度
 const chatModuleHeight = ref(0);
 // scrollView into id
@@ -149,6 +160,8 @@ const chatMsgList = ref([
   { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
   { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
   { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
+  { from_user_id: 2, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'audio', create_time: '1743242041', data: 'https://samplelib.com/lib/preview/mp3/sample-12s.mp3' },
+  { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'audio', create_time: '1743242041', data: 'https://samplelib.com/lib/preview/mp3/sample-3s.mp3' },
 ]);
 
 const chatModuleRef = ref(null);
@@ -181,6 +194,7 @@ const actionBoxWidth = computed(() => {
 // 长按激活的 chat msg index
 const longpressActiveChatMsgIndex = ref(-1);
 
+// 扩展列表
 const actionList = ref([
   [
     { name: '相册', icon: '/static/images/extends/pic.png', event: 'uploadImage' },
@@ -197,6 +211,7 @@ const actionList = ref([
   ],
 ]);
 
+// emoji 表情列表
 const emojiList = ref(config.emojiData);
 
 watch(keyboardHeight, async (newkboardHeight) => {
@@ -208,7 +223,7 @@ watch(keyboardHeight, async (newkboardHeight) => {
 
 onLoad(() => {
   // console.log('当前时间:', dayjs().format('YYYY年MM月DD日 HH:mm:ss'));
-  // console.log('onLoad:', uni.getSystemInfoSync());
+  console.log('onLoad:', audioManager.value);
 });
 
 onMounted(() => {
@@ -220,6 +235,9 @@ onMounted(() => {
   // #ifdef APP-NVUE
   uni.onKeyboardHeightChange(_keyboardListenerFunc);
   // #endif
+
+  // this._initRecorderManager();
+  // _initAudioManager();
 });
 
 // 组件卸载时移除键盘高度变化监听
@@ -388,6 +406,32 @@ const voiceTouchCancel = () =>{
  */
 const voiceTouchMove = () => {
   console.log('录音手指移动');
+};
+
+/**
+ * 监听切换 音频 播放/停止
+ * @param src 音频地址
+ */
+const onChatMsgChangeAudioEvt = (chatItem: IChatMsgItem, chatIndex: number) => {
+  if (!audioManager.value) return uni.$uv.toast('无音频 manager');
+
+  // 如果当前音频正在播放
+  if (audioPlayStatus.value) {
+    if (chatAudioPlayIndex.value === chatIndex) {
+      audioManagerStop(); // 停止音频文件
+    } else {
+      audioManagerPlay(chatItem.data); // 播放音频文件
+    }
+  // 如果当前无音频播放
+  } else {
+    audioManagerPlay(chatItem.data); // 播放音频文件
+  }
+
+  // 同步记录播放位置
+  chatAudioPlayIndex.value = chatIndex;
+
+  console.log(chatItem);
+  console.log(chatIndex);
 };
 
 /**

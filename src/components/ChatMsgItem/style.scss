@@ -45,6 +45,21 @@
         line-height: 40rpx;
       }
     }
+    .chat-audio-wrap {
+      @include flex-xy-layout;
+      background: #fff;
+      width: 140rpx;
+      padding: 10rpx;
+      border-radius: 10rpx;
+      .chat-audio-img {
+        width: 50rpx;
+        height: 50rpx;
+        margin-left: 10rpx;
+      }
+      .chat-audio-time {
+        font-size: 30rpx;
+      }
+    }
   }
 }
 
@@ -75,6 +90,21 @@
       .chat-text {
         @include font-style(32rpx);
         line-height: 40rpx;
+      }
+    }
+    .chat-audio-wrap {
+      @include flex-xy-layout;
+      background: $main-bg-color;
+      width: 140rpx;
+      padding: 10rpx;
+      border-radius: 10rpx;
+      .chat-audio-img {
+        width: 50rpx;
+        height: 50rpx;
+        margin-right: 10rpx;
+      }
+      .chat-audio-time {
+        font-size: 30rpx;
       }
     }
   }
