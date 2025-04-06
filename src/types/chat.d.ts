@@ -6,6 +6,7 @@ export interface IChatMsgItem {
   data: string;
   options?: {
     poster?: string;
+    time?: number;
   };
   create_time: string;
   isremove: boolean;

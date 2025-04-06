@@ -67,17 +67,17 @@ const onImagLoadEvt = (event: any) => {
 
 // 统一单位转换方法
 const _convertUnit = (value: number) => {
-   let _converUnitPx = 0;
-    // #ifdef APP
-    _converUnitPx = uni.upx2px(value);
-    // #endif
-    
-    // @ts-ignore
-    // #ifndef APP
-    _converUnitPx = uni.rpx2px(value);
-    // #endif
-    return _converUnitPx;
-  };
+  let _converUnitPx = 0;
+  // #ifdef APP
+  _converUnitPx = uni.upx2px(value);
+  // #endif
+  
+  // @ts-ignore
+  // #ifndef APP
+  _converUnitPx = uni.rpx2px(value);
+  // #endif
+  return _converUnitPx;
+};
 
 const emit = defineEmits<{
   click: [];

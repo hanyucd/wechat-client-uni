@@ -28,7 +28,7 @@
           </view>
           <!-- 音频 -->
           <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
-            <text class="chat-audio-time">{{ 66 + '"' }}</text>
+            <text class="chat-audio-time">{{ chatItem.options!.time + '"' }}</text>
             <image class="chat-audio-img" :src="(chatAudioPlayIndex === chatIndex && audioPlayStatus === 1) ? '/static/audio/audio-play.gif' : '/static/audio/audio-stop.png'" />
           </view>
           <!-- 视频 -->
@@ -61,7 +61,7 @@
           <!-- 音频 -->
           <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
             <image class="chat-audio-img" :src="(chatAudioPlayIndex === chatIndex && audioPlayStatus === 1) ? '/static/audio/audio-play.gif' : '/static/audio/audio-stop.png'" />
-            <text class="chat-audio-time">{{ 5 + '"' }}</text>
+            <text class="chat-audio-time">{{ chatItem.options!.time + '"' }}</text>
           </view>
           <!-- 视频 -->
           <view v-else-if="chatItem.type === 'video'" class="chat-video-wrap" @click.stop="changeVideoPlay(chatItem, chatIndex)">
