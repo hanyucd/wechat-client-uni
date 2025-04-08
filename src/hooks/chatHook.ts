@@ -12,13 +12,12 @@ export const useAudioHook = () => {
   });
 
   onUnmounted(() => {
-    console.log('卸载');
     // 销毁音频管理器
     if (audioManager.value) audioManager.value.destroy();
   });
 
   /**
-   * 初始化音频管理器
+   * 初始化 音频 manager
    */
   const _initAudioManager = () => {
     audioManager.value = uni.createInnerAudioContext();
@@ -87,5 +86,33 @@ export const useAudioHook = () => {
     audioPlayStatus,
     audioManagerPlay,
     audioManagerStop,
+  };
+};
+
+/**
+ * 录音相关 hook
+ */
+export const useRecorderHook = () => {
+  const recorderManager = ref<UniApp.RecorderManager | null>(null); // 全局唯一的录音管理器
+  // const audioPlayStatus = ref<0 | 1>(0); // audio 播放状态 0: 结束播放、1: 播放中
+
+  onMounted(() => {
+    _initRecorderManager();
+  });
+
+  onUnmounted(() => {
+    // 销毁音频管理器
+    // if (audioManager.value) audioManager.value.destroy();
+  });
+
+  /**
+   * 初始化 录音 manager
+   */
+  const _initRecorderManager = () => {
+    recorderManager.value = uni.getRecorderManager();
+  };
+
+  return {
+    recorderManager,
   };
 };

@@ -24,7 +24,13 @@
           </view>
           <!-- 图片 -->
           <view v-else-if="chatItem.type === 'image'" class="chat-image-wrap" @click.stop="previewImg(chatItem.data!, [chatItem.data!])">
+            <!-- #ifdef MP-WEIXIN -->
+            <uv-image :src="chatItem.data" width="300rpx" height="300rpx" :radius="5" />
+            <!-- #endif -->
+
+            <!-- #ifndef MP-WEIXIN -->
             <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" />
+            <!-- #endif -->
           </view>
           <!-- 音频 -->
           <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">
@@ -56,7 +62,13 @@
           </view>
           <!-- 图片 -->
           <view v-else-if="chatItem.type === 'image'" class="chat-image-wrap" @click.stop="previewImg(chatItem.data!, [chatItem.data!])">
+            <!-- #ifdef MP-WEIXIN -->
+            <uv-image :src="chatItem.data" width="300rpx" height="300rpx" :radius="5" />
+            <!-- #endif -->
+
+            <!-- #ifndef MP-WEIXIN -->
             <VImage :src="chatItem.data" :radius="5" :maxWidth="300" :maxHeight="450" />
+            <!-- #endif -->
           </view>
           <!-- 音频 -->
           <view v-else-if="chatItem.type === 'audio'" class="chat-audio-wrap" @click.stop="changeAudioPlay(chatItem, chatIndex)">

@@ -112,7 +112,7 @@ import dayjs from 'dayjs';
 import * as indexUtil from '@/utils'; 
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
-import { useAudioHook } from '@/hooks/chatHook';
+import { useAudioHook, useRecorderHook } from '@/hooks/chatHook';
 
 import type { IChatMsgItem } from '@/types/chat';
 
@@ -123,6 +123,7 @@ const domModule = uni.requireNativePlugin('dom');
 const appStore = useAppStore();
 
 const { audioManager, audioPlayStatus, audioManagerPlay, audioManagerStop } = useAudioHook();
+const { recorderManager } = useRecorderHook();
 
 type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
