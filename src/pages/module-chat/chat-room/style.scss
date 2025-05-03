@@ -35,6 +35,16 @@
       @include flex-xy-layout(flex-start, stretch);
       flex: 1;
       margin: 0 10rpx;
+      .audio-btn {
+        @include flex-xy-layout;
+        flex: 1;
+        border-radius: 10rpx;
+        height: 80rpx;
+        background: #fff;
+        .audio-btn-text {
+          font-size: 30rpx;
+        }
+      }
       .input-textarea {
         flex: 1;
         /* #ifndef APP-NVUE */

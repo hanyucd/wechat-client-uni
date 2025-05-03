@@ -84,7 +84,6 @@ onMounted(() => {});
 watch([() => props.bodyWidth, () => props.bodyHeight, () => props.tabbarHeight], ([newBodyWidth, newBodyHeight, newTabbarHeight]) => {
   // console.log(`bodyWidth: ${newBodyWidth}, bodyHeight: ${newBodyHeight}, tabbarHeight: ${newTabbarHeight}`);
   const systemInfo = uni.getSystemInfoSync();
-  // console.log(systemInfo);
   
   // 计算弹窗: 最大 left x 和 top y
   const spacingPX = 10;

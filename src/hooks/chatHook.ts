@@ -94,7 +94,6 @@ export const useAudioHook = () => {
  */
 export const useRecorderHook = () => {
   const recorderManager = ref<UniApp.RecorderManager | null>(null); // 全局唯一的录音管理器
-  // const audioPlayStatus = ref<0 | 1>(0); // audio 播放状态 0: 结束播放、1: 播放中
 
   onMounted(() => {
     _initRecorderManager();

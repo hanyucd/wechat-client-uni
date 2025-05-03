@@ -166,7 +166,7 @@ const onVideoFullscreenchangeEvt = (event: any) => {
 /**
  * 长按事件
  */
-const onChatDivLongpressEvt = (event: any) =>{
+const onChatDivLongpressEvt = (event: any) => {
   // console.log('长按事件', event);
   let _leftX = 0;
   let _topY = 0;

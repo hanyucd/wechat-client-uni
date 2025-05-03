@@ -40,13 +40,13 @@
   <view ref="inputModuleRef" class="input-module" :style="{ paddingBottom: (keyboardHeight || appStore.sysSafeAreaHeight) + 'px' }">
     <!-- 输入栏-区域 -->
     <view class="input-box">
-      <VIcon v-if="inputMode === 'audio'" :size="45" :icon="'\ue607'" />
-      <VIcon v-else :size="45" :icon="'\ue606'" />
+      <VIcon v-if="inputMode === 'audio'" :size="45" :icon="'\ue607'" @click="changeInputMode('text')" />
+      <VIcon v-else :size="45" :icon="'\ue606'" @click="changeInputMode('audio')" />
       <!-- 输入框 -->
       <view class="input-wrap">
         <!-- 录音按钮 -->
-        <view v-if="inputMode === 'audio'" class="rounded flex align-center justify-center" style="height: 80rpx;" :class="isRecording?'bg-hover-light':'bg-white'" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
-          <text class="font">{{ isRecording ? '松开 结束':'按住 说话' }}</text>
+        <view v-if="inputMode === 'audio'" class="audio-btn" :class="isRecording ? 'bg-hover-light' : 'bg-white'" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
+          <text class="audio-btn-text">{{ isRecording ? '松开 结束':'按住 说话' }}</text>
         </view>
         
         <textarea
@@ -66,9 +66,9 @@
       </view>
 
       <!-- 表情icon -->
-      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="changeActionOrEmoji('emoji')" />
+      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="changeInputMode('emoji')" />
       <!-- 扩展icon -->
-      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="changeActionOrEmoji('action')" />
+      <VIcon v-if="!inputValue.length" :icon="'\ue603'" :size="45" @click="changeInputMode('action')" />
       <!-- 发送按钮 -->
       <view v-else class="send-btn" @click="sendChatMsg('text', inputValue.trim())">
         <text class="send-btn-text">发 送</text>
@@ -191,7 +191,7 @@ const chatMenuHeight = computed(() => {
   return chatMenuListComputed.value.length * _menuItemHeight;
 });
 
-// chat 菜单列表高度 rpx
+// chat 菜单列表宽度 rpx
 const actionBoxWidth = computed(() => {
   // const _menuItemHeight = 100;
   return appStore.systemInfo.windowWidth / 4;
@@ -452,13 +452,14 @@ const chatModuleTouchendEvt = () =>{
 };
 
 /**
- * 打开扩展菜单 / 表情菜单
+ * 切换输入模式
+ * text文字, emoji表情, action操作, audio音频
  */
-const	changeActionOrEmoji = (mode: TInputMode) => {
+const	changeInputMode = (mode: TInputMode) => {
   if (inputMode.value !== mode) {
     inputMode.value = mode;
   } else {
-    inputMode.value = ('' as TInputMode);
+    inputMode.value = ('text' as TInputMode);
   }
 
   // 隐藏软键盘
