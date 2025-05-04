@@ -94,6 +94,12 @@ export const useAudioHook = () => {
  */
 export const useRecorderHook = () => {
   const recorderManager = ref<UniApp.RecorderManager | null>(null); // 全局唯一的录音管理器
+  // 音频录制状态
+  const isRecording = ref(false);
+  // 是否取消录音
+  const isCancelRecord = ref(false);
+  // 录制开始的 Y 轴坐标
+  const recordStartY = ref(0);
 
   onMounted(() => {
     _initRecorderManager();
@@ -113,5 +119,8 @@ export const useRecorderHook = () => {
 
   return {
     recorderManager,
+    isRecording,
+    isCancelRecord,
+    recordStartY,
   };
 };

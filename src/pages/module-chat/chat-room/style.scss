@@ -35,13 +35,16 @@
       @include flex-xy-layout(flex-start, stretch);
       flex: 1;
       margin: 0 10rpx;
-      .audio-btn {
+      .record-btn {
         @include flex-xy-layout;
         flex: 1;
         border-radius: 10rpx;
         height: 80rpx;
         background: #fff;
-        .audio-btn-text {
+        &.record-btn-hover {
+          background-color: #dae0e5;
+        }
+        .record-btn-text {
           font-size: 30rpx;
         }
       }
@@ -106,6 +109,32 @@
       .emoji-text {
         font-size: 40rpx;
       }
+    }
+  }
+}
+
+.record-popup {
+  @include flex-xy-layout;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  .record-view {
+    @include flex-y-layout;
+    width: 360rpx;
+    height: 360rpx;
+    border-radius: 8rpx;
+    background-color: rgba(0,0,0,0.5);
+    .record-img {
+      width: 150rpx;
+      height: 150rpx;
+    }
+    .record-text {
+      font-size: 30rpx;
+      margin-top: 30rpx;
+      color: #fff;
     }
   }
 }

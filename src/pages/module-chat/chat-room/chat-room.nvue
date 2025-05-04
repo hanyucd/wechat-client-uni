@@ -45,8 +45,8 @@
       <!-- 输入框 -->
       <view class="input-wrap">
         <!-- 录音按钮 -->
-        <view v-if="inputMode === 'audio'" class="audio-btn" :class="isRecording ? 'bg-hover-light' : 'bg-white'" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
-          <text class="audio-btn-text">{{ isRecording ? '松开 结束':'按住 说话' }}</text>
+        <view v-if="inputMode === 'audio'" class="record-btn" :class="isRecording ? 'record-btn-hover' : ''" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
+          <text class="record-btn-text">{{ isRecording ? '松开 结束':'按住 说话' }}</text>
         </view>
         
         <textarea
@@ -104,6 +104,14 @@
       </view>
     </view>
   </VPopup>
+
+  <!-- 录音提示 -->
+	<view v-if="isRecording" class="record-popup    position-fixed   top-0 left-0 right-0 flex align-center justify-center" style="bottom: 105rpx;">
+		<view class="record-view">
+			<image class="record-img" src="@/static/audio/recording.gif" />
+			<text class="record-text">{{ isCancelRecord ? '松开手指，取消发送' : '手指上滑，取消发送' }}</text>
+		</view>
+	</view>
 </template>
 
 <script setup lang="ts">
@@ -123,7 +131,7 @@ const domModule = uni.requireNativePlugin('dom');
 const appStore = useAppStore();
 
 const { audioManager, audioPlayStatus, audioManagerPlay, audioManagerStop } = useAudioHook();
-const { recorderManager } = useRecorderHook();
+const { recorderManage, isRecording, isCancelRecord, recordStartY } = useRecorderHook();
 
 type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
@@ -138,7 +146,7 @@ const inputMode = ref<TInputMode>('text' as TInputMode);
 const keyboardHeight = ref(0);
 
 // 音频录制状态
-const isRecording = ref(false);
+// const isRecording = ref(false);
 // 聊天消息 语音 播放下标
 const chatAudioPlayIndex = ref(-1);
 
@@ -389,14 +397,30 @@ const	onTextareaBlurEvt = (event: any) => {
 /**
  * 录音开始
  */
-const voiceTouchStart = () =>{
-  console.log('录音开始');
+const voiceTouchStart = (event: any) =>{
+  console.log('录音开始:', event);
+  isRecording.value = true;
+  // 重置取消录音状态
+  isCancelRecord.value = false;
+
+  // #ifdef APP
+  recordStartY.value = event.changedTouches[0].screenY;
+  // #endif
+
+  // #ifdef WEB
+  recordStartY.value = event.changedTouches[0].pageY;
+  // #endif
+
+  // #ifdef MP
+  recordStartY.value = event.detail.y;
+  // #endif
 };
 
 /**
  * 录音结束
  */
 const voiceTouchEnd = () =>{
+  isRecording.value = false;
   console.log('录音结束');
 };
 
@@ -404,14 +428,34 @@ const voiceTouchEnd = () =>{
  * 录音被打断
  */
 const voiceTouchCancel = () =>{
+  isRecording.value = false;
   console.log('录音被打断');
 };
 
 /**
  * 录音手指移动
  */
-const voiceTouchMove = () => {
-  console.log('录音手指移动');
+const voiceTouchMove = (event: any) => {
+  console.log('录音手指移动:', event);
+
+  let recordMoveY = 0;
+  
+  // #ifdef APP
+  recordMoveY = event.changedTouches[0].screenY;
+  // #endif
+
+  // #ifdef WEB
+  recordMoveY = event.changedTouches[0].pageY;
+  // #endif
+
+  // #ifdef MP
+  recordMoveY = event.detail.y;
+  // #endif
+  
+  const diffY = Math.abs(recordMoveY - recordStartY.value);
+  isCancelRecord.value = (diffY >= 50);
+
+  // console.log('Y:', diffY);
 };
 
 /**
