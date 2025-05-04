@@ -76,6 +76,14 @@
 		{
 			"path": "pages/module-chat/chat-room/chat-room",
 			"style": {}
+		},
+		{
+			"path": "pages/module-chat/chat-set/chat-set",
+			"style": {
+				"app-plus": {
+					"background": "#EDEDED"
+				}
+			}
 		}
 	]
 }

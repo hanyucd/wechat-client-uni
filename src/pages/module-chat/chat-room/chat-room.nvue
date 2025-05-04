@@ -606,7 +606,7 @@ const clickActionItem = async (eventName: string) => {
  */
 const navToChatSetRoute = () =>{
   console.log('进入聊天设置页面');
-  // uni.$uv.route('/pages/module-chat/chat/chat', { name: 'uvui', age: 1 });
+  uni.$uv.route('/pages/module-chat/chat-set/chat-set', { name: 'uvui', age: 1 });
 };
 </script>
 

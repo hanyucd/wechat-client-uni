@@ -1,0 +1,43 @@
+<template>
+  <VNavbar title="聊天设置" />
+  
+  <!-- 成员模块 -->
+  <view class="member-module">
+    <!-- 成员列表 -->
+    <view v-for="(item,index) in 2" :key="index" class="member-item" :style="{ width: `${ memberItemWidth }px` }">
+      <VAvatar :size="110" :src="''" :radius="8" />
+      <text class="member-text">{{ '昵称' }}</text>
+    </view>
+
+    <!-- 添加成员 -->
+    <view class="member-item" :style="{ width: `${ memberItemWidth }px` }">
+      <view class="member-plus" hover-class="bg-light">
+        <uv-icon name="plus" bold color="#6c757d" size="20" />
+      </view>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+import { useAppStore } from '@/store';
+
+const appStore = useAppStore();
+// const list = ref([])
+
+// 成员item 宽度 px
+const memberItemWidth = computed(() => {
+  return appStore.systemInfo.windowWidth / 5;
+});
+</script>
+
+<style>
+/* #ifndef APP */
+page {
+  background: #EDEDED;
+}
+/* #endif */
+</style>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

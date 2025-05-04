@@ -1,0 +1,24 @@
+.member-module {
+  @include flex-xy-layout(flex-start, flex-start);
+  flex-wrap: wrap;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  background-color: #fff;
+  .member-item {
+    @include flex-y-layout;
+    margin-bottom: 20rpx;
+    .member-text {
+      font-size: 30rpx;
+      color: #6c757d;
+      margin-top: 10rpx;
+    }
+    .member-plus {
+      @include flex-xy-layout;
+      width: 110rpx;
+      height: 110rpx;
+      border-width: 2rpx;
+      border-style: dashed;
+      border-color: #dee2e6;
+    } 
+  }
+}
