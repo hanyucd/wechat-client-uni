@@ -141,6 +141,7 @@ export const useRecorderHook = (options: any = {}) => {
      * 监听录音-错误事件
      */
     recordManager.value.onError(res => {
+      console.log('录音错误：', res);
     });
 
     /**

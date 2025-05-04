@@ -500,7 +500,7 @@ const voiceTouchMove = (event: any) => {
 
 /**
  * 监听切换 音频 播放/停止
- * @param src 音频地址
+ * @param chatItem 音频
  */
 const onChatMsgChangeAudioEvt = (chatItem: IChatMsgItem, chatIndex: number) => {
   if (!audioManager.value) return uni.$uv.toast('无音频 manager');
@@ -520,15 +520,12 @@ const onChatMsgChangeAudioEvt = (chatItem: IChatMsgItem, chatIndex: number) => {
 
   // 同步记录播放 index
   chatAudioPlayIndex.value = chatIndex;
-
-  console.log(chatItem);
-  console.log(chatIndex);
 };
 
 /**
  * 聊天页面 touchend 事件
  */
-const chatModuleTouchendEvt = () =>{
+const chatModuleTouchendEvt = () => {
   // #ifdef APP-NVUE
   // @ts-ignore
   textareaRef.value.blur();
@@ -571,12 +568,16 @@ const clickActionItem = async (eventName: string) => {
 
   // 发送图片
   if (eventName === 'uploadImage') {
-    const imgRes = await uni.chooseImage({ count: 9 });
-    console.log(imgRes);
-    // TODO: 上传图片
-    (imgRes.tempFilePaths as string[]).forEach((imgItem: string) => {
-      sendChatMsg('image', imgItem);
-    });
+    try {
+      const imgRes = await uni.chooseImage({ count: 9 });
+      console.log(imgRes);
+      // TODO: 上传图片
+      (imgRes.tempFilePaths as string[]).forEach((imgItem: string) => {
+        sendChatMsg('image', imgItem);
+      });
+    } catch (error) {
+      console.log('选图错误：', error);
+    }
 
     // console.log(imgRes);
     // imgUrl = await fileUtil.uploadFile(imgPath);
@@ -584,15 +585,19 @@ const clickActionItem = async (eventName: string) => {
 
   // 发送视频
   if (eventName === 'uploadVideo') {
-    const videoRes = await uni.chooseImage({ count: 9 });
-    console.log(videoRes);
-    // TODO: 上传图片
-    // imgRes.tempFilePaths
+    try {
+      const videoRes = await uni.chooseVideo({
+        sourceType: ['album', 'camera'],
+        maxDuration: 60,
+        camera: 'back'
+      });
+      console.log(videoRes);
 
-    // uni.showLoading({ title: '', mask: true });
-    // const imgPath = imgRes.tempFiles[0].tempFilePath;
-    // console.log(imgRes);
-    // imgUrl = await fileUtil.uploadFile(imgPath);
+      // TODO: 上传视频
+      sendChatMsg('video', videoRes.tempFilePath);
+    } catch (error) {
+      console.log('录像错误：', error);
+    }
   }
 };
 
