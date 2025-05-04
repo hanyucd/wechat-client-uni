@@ -167,7 +167,7 @@ const onVideoFullscreenchangeEvt = (event: any) => {
  * 长按事件
  * touches: 当前位于屏幕上的所有手指的列表
  * targetTouches: 绑定事件的 DOM元素 上手指的列表
- * changedTouches: 涉及当前事件手指的列表
+ * changedTouches: 涉及当前(引发)事件的触摸点的列表
  */
 const onChatDivLongpressEvt = (event: any) => {
   console.log('长按事件', event);

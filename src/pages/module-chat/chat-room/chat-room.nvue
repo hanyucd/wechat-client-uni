@@ -45,8 +45,8 @@
       <!-- 输入框 -->
       <view class="input-wrap">
         <!-- 录音按钮 -->
-        <view v-if="inputMode === 'audio'" class="record-btn" :class="isRecording ? 'record-btn-hover' : ''" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
-          <text class="record-btn-text">{{ isRecording ? '松开 结束':'按住 说话' }}</text>
+        <view v-if="inputMode === 'audio'" class="record-btn" :class="recordStatus ? 'record-btn-hover' : ''" @touchstart="voiceTouchStart" @touchend="voiceTouchEnd" @touchcancel="voiceTouchCancel" @touchmove="voiceTouchMove">
+          <text class="record-btn-text">{{ recordStatus ? '松开 结束':'按住 说话' }}</text>
         </view>
         
         <textarea
@@ -106,7 +106,7 @@
   </VPopup>
 
   <!-- 录音提示 -->
-	<view v-if="isRecording" class="record-popup    position-fixed   top-0 left-0 right-0 flex align-center justify-center" style="bottom: 105rpx;">
+	<view v-if="recordStatus" class="record-popup    position-fixed   top-0 left-0 right-0 flex align-center justify-center" style="bottom: 105rpx;">
 		<view class="record-view">
 			<image class="record-img" src="@/static/audio/recording.gif" />
 			<text class="record-text">{{ isCancelRecord ? '松开手指，取消发送' : '手指上滑，取消发送' }}</text>
@@ -131,7 +131,6 @@ const domModule = uni.requireNativePlugin('dom');
 const appStore = useAppStore();
 
 const { audioManager, audioPlayStatus, audioManagerPlay, audioManagerStop } = useAudioHook();
-const { recorderManage, isRecording, isCancelRecord, recordStartY } = useRecorderHook();
 
 type VPopupType = InstanceType<typeof VPopup>;
 // 会话菜单 popup ref
@@ -145,8 +144,6 @@ const inputMode = ref<TInputMode>('text' as TInputMode);
 // 键盘高度
 const keyboardHeight = ref(0);
 
-// 音频录制状态
-// const isRecording = ref(false);
 // 聊天消息 语音 播放下标
 const chatAudioPlayIndex = ref(-1);
 
@@ -162,7 +159,7 @@ const scrollViewIntoId = ref('');
 const scrollViewIntoTimer = ref<number | null>(null);
 
 // 聊天消息列表
-const chatMsgList = ref([
+const chatMsgList = ref<IChatMsgItem[]>([
   { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '艾伦沃克', type: 'text', create_time: '1643252041', data: '😀你好，我是艾伦沃克，我有成名歌曲 Faded 活遍全球，你应该还没有听过吧？' },
   { from_user_id: 2, isremove: true, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242041', data: '是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯是马丁盖瑞斯' },
   { from_user_id: 1, isremove: false, avatar: 'https://img.yzcdn.cn/vant/cat.jpeg', nickname: '马丁盖瑞斯', type: 'text', create_time: '1743242021', data: '沃克，沃克牛逼' },
@@ -395,11 +392,47 @@ const	onTextareaBlurEvt = (event: any) => {
 };
 
 /**
- * 录音开始
+ * 发送聊天消息：文本、图片、语音、视频、表情
+ * @param msgType 消息类型
+ * @param msgData 消息数据
+ * @param msgOpt 消息选项
+ */
+ const sendChatMsg = async (msgType = 'text', msgData = '', msgOpt = {}) => {
+  let msgObj = {
+    from_user_id: 1,
+    isremove: false,
+    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    nickname: '艾伦沃克',
+    create_time: '1643252041',
+    type: msgType,
+    data: '',
+    options: msgOpt
+  };
+  
+  msgObj.data = msgData;
+
+  console.log('消息类型:', msgType, msgObj);
+
+  chatMsgList.value.push(msgObj);
+
+  // 发送文字成功，清空输入框
+  if (msgType === 'text') inputValue.value = '';
+
+  await indexUtil.sleepWait(100); // 等待 100ms
+  _scrollViewToIntoView(); // scrollView 滚动到底部
+};
+
+const { recordManager, recordStatus, isCancelRecord, recordStartY, recordManagerStart, recordManagerStop } = useRecorderHook({ sendRecordChatMsgFunc: sendChatMsg });
+
+/**
+ * TouchStart 事件 | 录音开始
  */
 const voiceTouchStart = (event: any) =>{
-  console.log('录音开始:', event);
-  isRecording.value = true;
+  // console.log('录音开始:', event);
+  if (!recordManager.value) return uni.$uv.toast('无录音 manager');
+
+  // 开启录音状态
+  recordStatus.value = 1;
   // 重置取消录音状态
   isCancelRecord.value = false;
 
@@ -412,31 +445,40 @@ const voiceTouchStart = (event: any) =>{
   // #endif
 
   // #ifdef MP
-  recordStartY.value = event.detail.y;
+  recordStartY.value = event.changedTouches[0].screenY;
   // #endif
+
+  // 先停止正在播放的音频
+  audioManagerStop();
+  // 开始-录音
+  recordManagerStart();
 };
 
 /**
- * 录音结束
+ * TouchEnd 事件 | 录音结束
  */
 const voiceTouchEnd = () =>{
-  isRecording.value = false;
-  console.log('录音结束');
+  // 停止-录音
+  recordManagerStop();
+  recordStatus.value = 0;
 };
 
 /**
- * 录音被打断
+ * TouchCancel 事件 | 录音被打断
  */
 const voiceTouchCancel = () =>{
-  isRecording.value = false;
-  console.log('录音被打断');
+  // 停止录音
+  recordManagerStop();
+  recordStatus.value = 0;
+  // 取消录音
+  isCancelRecord.value = true;
 };
 
 /**
- * 录音手指移动
+ * TouchMove 事件 | 录音手指移动
  */
 const voiceTouchMove = (event: any) => {
-  console.log('录音手指移动:', event);
+  // console.log('录音手指移动:', event);
 
   let recordMoveY = 0;
   
@@ -449,13 +491,11 @@ const voiceTouchMove = (event: any) => {
   // #endif
 
   // #ifdef MP
-  recordMoveY = event.detail.y;
+  recordMoveY = event.changedTouches[0].screenY;
   // #endif
   
   const diffY = Math.abs(recordMoveY - recordStartY.value);
   isCancelRecord.value = (diffY >= 50);
-
-  // console.log('Y:', diffY);
 };
 
 /**
@@ -554,34 +594,6 @@ const clickActionItem = async (eventName: string) => {
     // console.log(imgRes);
     // imgUrl = await fileUtil.uploadFile(imgPath);
   }
-};
-
-/**
- * 发送聊天消息：文本、图片、语音、视频、表情
- * @param msgType 消息类型
- * @param msgData 消息数据
- * @param msgOpt 消息选项
- */
-const sendChatMsg = async (msgType = 'text', msgData = '', msgOpt = {}) =>{
-  let msgObj = {
-    from_user_id: 1,
-    isremove: false,
-    avatar: 'https://img.yzcdn.cn/vant/cat.jpeg',
-    nickname: '艾伦沃克',
-    create_time: '1643252041',
-    type: msgType,
-    data: ''
-  };
-  
-  msgObj.data = msgData;
-
-  chatMsgList.value.push(msgObj);
-
-  // 发送文字成功，清空输入框
-  if (msgType === 'text') inputValue.value = '';
-
-  await indexUtil.sleepWait(100); // 等待 100ms
-  _scrollViewToIntoView(); // scrollView 滚动到底部
 };
 
 /**
