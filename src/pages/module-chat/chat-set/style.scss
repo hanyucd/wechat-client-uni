@@ -22,3 +22,18 @@
     } 
   }
 }
+
+.list-item-text {
+  font-size: 30rpx;
+  color: #6c757d;
+}
+
+.quit-btn {
+  @include flex-xy-layout;
+  background-color: #fff;
+  padding: 30rpx 0;
+  .quit-btn-text {
+    font-size: 35rpx;
+    color: #dc3545;
+  }
+}

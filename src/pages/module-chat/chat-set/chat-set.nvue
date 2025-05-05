@@ -4,7 +4,7 @@
   <!-- 成员模块 -->
   <view class="member-module">
     <!-- 成员列表 -->
-    <view v-for="(item,index) in 2" :key="index" class="member-item" :style="{ width: `${ memberItemWidth }px` }">
+    <view v-for="(item,index) in 16" :key="index" class="member-item" :style="{ width: `${ memberItemWidth }px` }">
       <VAvatar :size="110" :src="''" :radius="8" />
       <text class="member-text">{{ '昵称' }}</text>
     </view>
@@ -16,18 +16,100 @@
       </view>
     </view>
   </view>
+
+  <VDivider />
+
+  <!-- 群聊设置 -->
+  <template v-if="1">
+    <VListItem title="群聊名称" :showLeftIcon="false" showRight>
+      <template #right>
+        <text class="list-item-text">{{ '复仇者联盟' }}</text>
+      </template>
+    </VListItem>
+
+    <VListItem title="群二维码" :showLeftIcon="false" showRight>
+      <template #right>
+        <text class="iconfont">&#xe647;</text>
+      </template>
+    </VListItem>
+
+    <VListItem title="群公告" :showLeftIcon="false" showRight />
+
+    <VDivider />
+  </template>
+
+  <VListItem title="查找聊天记录" :showLeftIcon="false" showRight />
+
+  <VDivider />
+
+  <VListItem title="消息免打扰" :showLeftIcon="false" showRight :showRightIcon="false">
+    <template #right>
+      <uv-switch v-model="isSwitch" activeColor="#08C060" />
+    </template>
+  </VListItem>
+
+  <VListItem title="置顶聊天" :showLeftIcon="false" showRight :showRightIcon="false">
+    <template #right>
+      <uv-switch v-model="isSwitch" activeColor="#08C060" />
+    </template>
+  </VListItem>
+
+  <VListItem title="强提醒" :showLeftIcon="false" showRight :showRightIcon="false">
+    <template #right>
+      <uv-switch v-model="isSwitch" activeColor="#08C060" />
+    </template>
+  </VListItem>
+
+  <VDivider />
+
+  <!-- 群聊设置 -->
+  <template v-if="1">
+    <VListItem title="我在本群的昵称" :showLeftIcon="false" showRight>
+      <template #right>
+        <text class="list-item-text">{{ '钢铁侠' }}</text>
+      </template>
+    </VListItem>
+
+    <VListItem title="显示群成员昵称" :showLeftIcon="false" showRight :showRightIcon="false">
+      <template #right>
+        <uv-switch v-model="isSwitch" activeColor="#08C060" />
+      </template>
+    </VListItem>
+
+    <VDivider />
+  </template>
+
+  <VListItem title="清空聊天记录" :showLeftIcon="false" showRight />
+
+  <VDivider />
+
+  <VListItem title="投诉" :showLeftIcon="false" showRight />
+
+  <VDivider />
+
+  <view v-if="1" class="quit-btn" hover-class="bg-light" @click="quitGroup">
+    <text class="quit-btn-text">删除并退出</text>
+  </view>
+
+  <view style="height: 200rpx;" />
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store';
 
 const appStore = useAppStore();
-// const list = ref([])
+
+const isSwitch = ref(false);
 
 // 成员item 宽度 px
 const memberItemWidth = computed(() => {
   return appStore.systemInfo.windowWidth / 5;
 });
+
+// 删除并退出群聊
+const quitGroup = () => {
+  console.log('删除并退出');
+};
 </script>
 
 <style>

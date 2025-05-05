@@ -7,7 +7,7 @@
     </template>
   </VNavbar>
 
-  <VListItem :cover="'/static/images/userpic.png'" show-right>
+  <VListItem :cover="'/static/images/userpic.png'" showRight>
     <view class="user-info-wrap">
       <text class="user-name">{{ '艾伦-沃克' }}</text>
       <text class="user-wechat text-light-muted font mt-2">仿微信号：{{ 'hy-woke' }}</text>
@@ -20,7 +20,7 @@
 
   <VDivider />
 
-  <VListItem title="支付" show-right>
+  <VListItem title="支付" showRight>
     <template #icon>
       <text class="iconfont list-item-icon">&#xe66c;</text>
     </template>
@@ -28,19 +28,19 @@
 
   <VDivider />
 
-  <VListItem title="收藏" show-right>
+  <VListItem title="收藏" showRight>
     <template #icon>
       <text class="iconfont list-item-icon">&#xea2d;</text>
     </template>
   </VListItem>
 
-  <VListItem title="相册" show-right>
+  <VListItem title="相册" showRight>
     <template #icon>
       <text class="iconfont list-item-icon">&#xe608;</text>
     </template>
   </VListItem>
 
-  <VListItem title="设置" show-right>
+  <VListItem title="设置" showRight>
     <template #icon>
       <text class="iconfont list-item-icon">&#xe612;</text>
     </template>
