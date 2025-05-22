@@ -1,11 +1,11 @@
 <template>
-  <VNavbar title="用户主页" bgColor="#fff">
+  <VNavbar bgColor="#fff">
     <template #right>
       <VIcon :icon="'\ue6fd'" />
     </template>
   </VNavbar>
   
-  <!-- 成员模块 -->
+  <!-- 信息模块 -->
   <view class="info-module">
     <VAvatar :size="120" :src="'https://img.yzcdn.cn/vant/cat.jpeg'" :radius="8" />
 

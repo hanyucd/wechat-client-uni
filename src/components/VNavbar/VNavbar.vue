@@ -48,7 +48,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: config.appName,
+  // title: config.appName,
   fixed: true,
   placeholder: true,
   bgColor: '#F8F9FA',

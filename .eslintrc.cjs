@@ -1,5 +1,6 @@
 module.exports = {
-  root: true, // 当前配置为根配置，将不再从上级文件夹查找配置 
+  // 当前配置为根配置，将不再从上级文件夹查找配置 
+  root: true,
   // 环境定义了预定义的全局变量
   env: {
     browser: true,
@@ -41,7 +42,14 @@ module.exports = {
       // parser: 'vue-eslint-parser',
       rules: {
         'vue/comment-directive': 'off', // 忽略条件编译注释
-        'vue/no-v-html': 'off' // nvue 不支持 v-html
+        'vue/no-v-html': 'off', // nvue 不支持 v-html
+        // 在 <template> 中强制一致的缩进
+        'vue/html-indent': ['error', 2, {
+          'attribute': 1,
+          'baseIndent': 1,
+          'closeBracket': 0,
+          'alignAttributesVertically': false
+        }],
       }
     },
   ],
@@ -52,6 +60,7 @@ module.exports = {
    */
   rules: {
     // eslint (http://eslint.cn/docs/rules)
+    indent: ['error', 2, { 'SwitchCase': 1 }], // 缩进使用 2个空格
     semi: ['error', 'always'], // 强制在语句末尾使用分号
     quotes: ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
     'no-unused-vars': 'off', // 禁止使用未声明的变量
@@ -92,6 +101,13 @@ module.exports = {
     'vue/v-on-event-hyphenation': 'off', // 禁止对模板中的自定义组件强制执行 v-on 事件命名样式
     'vue/prop-name-casing': 'off', // 关闭 组件的 prop 名称大小写
     'vue/attribute-hyphenation': 'off',
+    // 在 <template> 中强制一致的缩进
+    'vue/html-indent': ['error', 2, {
+      'attribute': 1,
+      'baseIndent': 1,
+      'closeBracket': 0,
+      'alignAttributesVertically': false
+    }],
     // 控制一/多行可接受的属性量
     'vue/max-attributes-per-line': [
       'error',
