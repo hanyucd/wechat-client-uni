@@ -1,7 +1,7 @@
 <template>
   <VNavbar title="聊天">
     <template #right>
-      <view class="right-icons">
+      <view>
         <VIcon :icon="'\ue6fd'" @click="navToChatSetRoute" />
       </view>
     </template>
@@ -21,13 +21,13 @@
 
       <view v-for="(item, index) in chatMsgList" :id="`chatMsgItem-${ index }`" :key="index">
          <ChatMsgItem
-         :chatItem="item"
-         :chatIndex="index"
-         :audioPlayStatus="audioPlayStatus"
-         :chatAudioPlayIndex="chatAudioPlayIndex"
-         :prevChatTime="index > 0 ? chatMsgList[index-1].create_time : '0'"
-         @longpress="onChatMsgItemLongpressEvt"
-         @changeAudioEvt="onChatMsgChangeAudioEvt"
+          :chatItem="item"
+          :chatIndex="index"
+          :audioPlayStatus="audioPlayStatus"
+          :chatAudioPlayIndex="chatAudioPlayIndex"
+          :prevChatTime="index > 0 ? chatMsgList[index-1].create_time : '0'"
+          @longpress="onChatMsgItemLongpressEvt"
+          @changeAudioEvt="onChatMsgChangeAudioEvt"
         />
       </view>
 

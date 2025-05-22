@@ -1,0 +1,49 @@
+<template>
+  <VNavbar title="用户主页" bgColor="#fff">
+    <template #right>
+      <VIcon :icon="'\ue6fd'" />
+    </template>
+  </VNavbar>
+  
+  <!-- 成员模块 -->
+  <view class="info-module">
+    <VAvatar :size="120" :src="'https://img.yzcdn.cn/vant/cat.jpeg'" :radius="8" />
+
+    <view class="info-wrap">
+      <view class="nickname-wrap">
+        <text class="nickname">{{ '张王' }}</text>
+        <image v-if="1" src="/static/images/star.png" style="width: 40rpx; height: 40rpx;" />
+      </view>
+      <text class="account">账号：{{ '184766747t' }}</text>
+    </view>
+  </view>
+
+  <VListItem title="标签" :showLeftIcon="false" showRight />
+  <VDivider />
+  
+  <VListItem title="朋友圈" :showLeftIcon="false" showRight />
+  <VListItem title="更多信息" :showLeftIcon="false" showRight />
+  <VDivider />
+
+  <!-- 按钮 -->
+  <view class="action-btn" hover-class="bg-light">
+    <text class="iconfont icon-msg">&#xe64e;</text>
+    <text class="font-md">{{ 0 ? '移出黑名单' : '发信息' }}</text>
+  </view>
+</template>
+
+<script setup lang="ts">
+
+</script>
+
+<style>
+/* #ifndef APP */
+page {
+  background: #EDEDED;
+}
+/* #endif */
+</style>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

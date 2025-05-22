@@ -1,0 +1,33 @@
+.info-module {
+  @include flex-xy-layout(flex-start, flex-start);
+  padding: 40rpx 30rpx;
+  background: #fff;
+  .info-wrap {
+    flex: 1;
+    margin-left: 30rpx;
+    .nickname-wrap {
+      @include flex-xy-layout(flex-start, center);
+      margin-bottom: 5rpx;
+      .nickname {
+        font-size: 35rpx;
+        font-weight: 600;
+      }
+    }
+    .account {
+      font-size: 30rpx;
+      color: #A9A5A0;
+    }
+  }
+}
+
+.action-btn {
+  @include flex-xy-layout;
+  padding: 30rpx 0;
+  font-size: 35rpx;
+  color: #007bff;
+  background: #fff;
+  .icon-msg {
+    color: #007bff;
+    margin-right: 10rpx;
+  }
+}

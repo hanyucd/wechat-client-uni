@@ -53,18 +53,22 @@
 		]
 	},
 	"pages": [
+		// tabbar 首页
 		{
 			"path": "pages/tabbar/index/index",
 			"style": {}
 		},
+		// tabbar 通讯录
 		{
 			"path": "pages/tabbar/contact/contact",
 			"style": {}
 		},
+		// tabbar 朋友圈
 		{
 			"path": "pages/tabbar/find/find",
 			"style": {}
 		},
+		// tabbar 我的
 		{
 			"path": "pages/tabbar/profile/profile",
 			"style": {
@@ -73,12 +77,23 @@
 				}
 			}
 		},
+		// 聊天室
 		{
 			"path": "pages/module-chat/chat-room/chat-room",
 			"style": {}
 		},
+		// 聊天设置
 		{
 			"path": "pages/module-chat/chat-set/chat-set",
+			"style": {
+				"app-plus": {
+					"background": "#EDEDED"
+				}
+			}
+		},
+		// 用户主页
+		{
+			"path": "pages/module-common/user-main/user-main",
 			"style": {
 				"app-plus": {
 					"background": "#EDEDED"

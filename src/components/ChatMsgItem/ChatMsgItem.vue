@@ -15,7 +15,7 @@
       <!-- 消息-右边 (别人) -->
       <view v-if="!isSelfComputed" class="chat-right">
         <view class="user-avatar">
-          <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
+          <VAvatar :size="70" :src="chatItem.avatar" :radius="8" @click="navToUserMainPage" />
         </view>
         <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
           <!-- 文字 -->
@@ -53,7 +53,7 @@
       <!-- 消息-左边 (自己) -->
       <view v-else class="chat-left">
         <view class="user-avatar">
-          <VAvatar :size="70" :src="chatItem.avatar" :radius="8" />
+          <VAvatar :size="70" :src="chatItem.avatar" :radius="8" @click="navToUserMainPage" />
         </view>
         <div class="chat-msg-wrap" @longpress="onChatDivLongpressEvt">
           <!-- 文字 -->
@@ -140,14 +140,14 @@ const previewImg = (curImgUrl: string, imgUrls: string[]) => {
 /**
  * 切换语音-播放/停止
  */
-const changeAudioPlay = (_chatItem: IChatMsgItem, _chatIndex: number) =>{
+const changeAudioPlay = (_chatItem: IChatMsgItem, _chatIndex: number) => {
   emit('changeAudioEvt', _chatItem, _chatIndex);
 };
 
 /**
  * 切换视频-播放/停止
  */
-const changeVideoPlay = (_chatItem: IChatMsgItem, _chatIndex: number) =>{
+const changeVideoPlay = (_chatItem: IChatMsgItem, _chatIndex: number) => {
   videoManager.value = uni.createVideoContext(`chatVideo-${ _chatIndex }`);
   videoManager.value.play();
   videoManager.value.requestFullScreen();
@@ -161,7 +161,14 @@ const onVideoFullscreenchangeEvt = (event: any) => {
   const { fullScreen } = event.detail;
   // @ts-ignore
   if (!fullScreen) videoManager.value.stop();
-}; 
+};
+
+/**
+ * 点击头像，进入用户主页
+ */
+const navToUserMainPage = () => {
+  uni.$uv.route({ url: '/pages/module-common/user-main/user-main', params: { userId: props.chatItem.from_user_id } });
+};
 
 /**
  * 长按事件
