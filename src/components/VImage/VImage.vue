@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<IImage>(), {
 
 // 定义图片宽度响应式变量，初始值 100px
 const imgWidth = ref(100);
- // 定义高度/宽度响应式变量，初始值 100px
+// 定义高度/宽度响应式变量，初始值 100px
 const imgHeight = ref(100);
 
 const sizeComputed = computed(() => {
@@ -90,7 +90,7 @@ const onClickEvent = () => {
 
 const onLongpressEvt = (event: any) => {
   emit('longpress');
- };
+};
 </script>
 
 <style lang="scss" scoped>

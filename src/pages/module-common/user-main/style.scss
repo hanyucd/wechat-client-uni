@@ -20,6 +20,33 @@
   }
 }
 
+.tag-wrap {
+  @include flex-xy-layout(flex-start, flex-start);
+  .tag-title {
+    font-size: 35rpx;
+    color: #343a40;
+    margin-right: 30rpx;
+  }
+  .tag-item {
+    font-size: 35rpx;
+    color: #A9A5A0;
+    margin-right: 20rpx;
+  }
+  .null-tag {
+    font-size: 35rpx;
+    color: #A9A5A0;
+  }
+}
+
+.friend-wrap {
+  @include flex-xy-layout(flex-start, flex-start);
+  .friend-title {
+    font-size: 35rpx;
+    color: #343a40;
+    margin-right: 30rpx;
+  }
+}
+
 .action-btn {
   @include flex-xy-layout;
   padding: 30rpx 0;
@@ -30,4 +57,14 @@
     color: #007bff;
     margin-right: 10rpx;
   }
+}
+
+// .menu-scrollview {
+//   // height: 600rpx;
+//   background: #fff;
+//   border-radius: 10rpx;
+// }
+
+.menu-popup {
+  background: #fff;
 }

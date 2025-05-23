@@ -264,10 +264,10 @@ onUnmounted(() => {
  */
 const _keyboardListenerFunc = (res: any)=> {
   // #ifdef APP-NVUE
-    if (res.height === 0) {
-      // @ts-ignore
-      textareaRef.value.blur();
-    }
+  if (res.height === 0) {
+    // @ts-ignore
+    textareaRef.value.blur();
+  }
   // #endif
 };
 
@@ -298,22 +298,22 @@ const _calcChatModuleHeight = () => {
   // #ifndef APP-NVUE
   const chatModuleNode = uni.createSelectorQuery().select('.chat-module');
   chatModuleNode.boundingClientRect((rect1: any) => {
-      // 底部模块选择器节点
-      const bottomModuleNode = uni.createSelectorQuery().select('.input-module');
-      bottomModuleNode.boundingClientRect((rect2: any) => {
-        inputModuleHeight.value = rect2.height;
-        chatModuleHeight.value = windowHeight - rect1.top - rect2.height;
-        // scrollView 滚动到底部
-        _scrollViewToIntoView();
-      }).exec();
+    // 底部模块选择器节点
+    const bottomModuleNode = uni.createSelectorQuery().select('.input-module');
+    bottomModuleNode.boundingClientRect((rect2: any) => {
+      inputModuleHeight.value = rect2.height;
+      chatModuleHeight.value = windowHeight - rect1.top - rect2.height;
+      // scrollView 滚动到底部
+      _scrollViewToIntoView();
     }).exec();
+  }).exec();
   // #endif
 };
 
 /**
  * scrollView 滚动指定位置（默认底部）
  */
- const _scrollViewToIntoView = (id = 'chatMsgItem-last') =>{
+const _scrollViewToIntoView = (id = 'chatMsgItem-last') =>{
   // 首先清除上一次的定时器
   if (scrollViewIntoTimer.value) clearTimeout(scrollViewIntoTimer.value);
 
@@ -376,7 +376,7 @@ const clickChatMenuItem = (eventName: string) => {
 /**
  * 输入框聚焦点时触发
  */
- const onTextareaFocusEvt = (event: any) => {
+const onTextareaFocusEvt = (event: any) => {
   inputMode.value = 'text';
   keyboardHeight.value = event.detail.height;
   console.log('焦时触发:', event);
@@ -397,7 +397,7 @@ const	onTextareaBlurEvt = (event: any) => {
  * @param msgData 消息数据
  * @param msgOpt 消息选项
  */
- const sendChatMsg = async (msgType = 'text', msgData = '', msgOpt = {}) => {
+const sendChatMsg = async (msgType = 'text', msgData = '', msgOpt = {}) => {
   let msgObj = {
     from_user_id: 1,
     isremove: false,

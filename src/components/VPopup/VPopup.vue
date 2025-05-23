@@ -1,5 +1,5 @@
 <template>
-  <view v-if="status" style="z-index:9999; overflow:hidden;">
+  <view v-if="status" style="z-index: 9999; overflow: hidden;">
     <!-- 蒙版 -->
     <view v-if="mask" class="popup-mask" :style="getMaskColor" @click="closeVPopup" />
     <!-- 弹出框内容 -->
@@ -48,7 +48,7 @@ const appStore = useAppStore();
 // popup body ref
 const popupBodyRef = ref(null);
 
- // 是否显示 popup
+// 是否显示 popup
 const status = ref(false);
 // 自定义位置 left px
 const leftX = ref(-1);
@@ -73,10 +73,14 @@ const popupBodyClass = computed(() => {
 
 // 自定义位置的情况下
 const popupCostomPosition = computed(() => {
-  return {
-    left: (props.mode === 'custom' && leftX.value > -1) ? `${ leftX.value }px` : 'none',
-    top: (props.mode === 'custom' && topY.value > -1) ? `${ topY.value }px` : 'none',
-  };
+  if (props.mode === 'custom') {
+    return {
+      left: (props.mode === 'custom' && leftX.value > -1) ? `${ leftX.value }px` : '0',
+      top: (props.mode === 'custom' && topY.value > -1) ? `${ topY.value }px` : '0',
+    };
+  } else {
+    return {};
+  }
 });
 
 onMounted(() => {});
@@ -128,8 +132,8 @@ const openVPopup = async (_leftX = 0, _topY = 0) => {
     },
     duration: 500, //ms
     timingFunction: 'ease',
-    }, () => {
-      console.log('动画执行结束');
+  }, () => {
+    console.log('动画执行结束');
   });
   // #endif
 };
@@ -150,9 +154,9 @@ const closeVPopup = () => {
     },
     duration: 100, //ms
     timingFunction: 'ease',
-    }, ()=> {
-      status.value = false;
-      console.log('动画执行结束');
+  }, ()=> {
+    status.value = false;
+    console.log('动画执行结束');
   });
   // #endif
 };
