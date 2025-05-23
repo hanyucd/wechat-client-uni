@@ -93,7 +93,7 @@
 		},
 		// 用户主页
 		{
-			"path": "pages/module-common/user-main/user-main",
+			"path": "pages/module-common/user-mine/user-mine",
 			"style": {
 				"app-plus": {
 					"background": "#EDEDED"

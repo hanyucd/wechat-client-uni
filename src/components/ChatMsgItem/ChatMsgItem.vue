@@ -167,7 +167,7 @@ const onVideoFullscreenchangeEvt = (event: any) => {
  * 点击头像，进入用户主页
  */
 const navToUserMainPage = () => {
-  uni.$uv.route({ url: '/pages/module-common/user-main/user-main', params: { userId: props.chatItem.from_user_id } });
+  uni.$uv.route({ url: '/pages/module-common/user-mine/user-mine', params: { userId: props.chatItem.from_user_id } });
 };
 
 /**
