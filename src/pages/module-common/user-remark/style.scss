@@ -1,0 +1,55 @@
+.send-btn {
+  @include flex-xy-layout;
+  background: $main-color;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  .send-btn-text {
+    font-size: 30rpx;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+.remark-module {
+	display: flex;
+  flex-direction: column;
+  .remark-title {
+    font-size: 25rpx;
+    color: #6c757d;
+    padding: 20rpx 30rpx;
+  }
+  .remark-input {
+    background: #fff;
+    font-size: 35rpx;
+    border: 1rpx solid #dee2e6;
+    padding: 0 30rpx;
+  }
+}
+
+.tag-module {
+  display: flex;
+  flex-direction: column;
+  .tag-title {
+    font-size: 25rpx;
+    color: #6c757d;
+    padding: 20rpx 30rpx;
+  }
+  .tag-wrap {
+    @include flex-xy-layout(flex-start);
+    flex-wrap: wrap;
+    border: 1rpx solid #dee2e6;
+    padding: 20rpx 30rpx;
+    background: #fff;
+    .tag-item {
+      border: 1rpx solid $main-color;
+      border-radius: 100rpx;
+      padding: 10rpx 20rpx;
+      margin-right: 10rpx;
+      margin-bottom: 10rpx;
+      .tag-text {
+        font-size: 30rpx;
+        color: $main-color;
+      }
+    }
+  }
+}

@@ -99,6 +99,15 @@
 					"background": "#EDEDED"
 				}
 			}
+		},
+		// 用户备注
+		{
+			"path": "pages/module-common/user-remark/user-remark",
+			"style": {
+				"app-plus": {
+					"background": "#EDEDED"
+				}
+			}
 		}
 	]
 }

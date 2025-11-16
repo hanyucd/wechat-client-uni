@@ -106,7 +106,7 @@
   </VPopup>
 
   <!-- 录音提示 -->
-	<view v-if="recordStatus" class="record-popup    position-fixed   top-0 left-0 right-0 flex align-center justify-center" style="bottom: 105rpx;">
+	<view v-if="recordStatus" class="record-popup" style="bottom: 105rpx;">
 		<view class="record-view">
 			<image class="record-img" src="@/static/audio/recording.gif" />
 			<text class="record-text">{{ isCancelRecord ? '松开手指，取消发送' : '手指上滑，取消发送' }}</text>
@@ -427,7 +427,7 @@ const { recordManager, recordStatus, isCancelRecord, recordStartY, recordManager
 /**
  * TouchStart 事件 | 录音开始
  */
-const voiceTouchStart = (event: any) =>{
+const voiceTouchStart = (event: any) => {
   // console.log('录音开始:', event);
   if (!recordManager.value) return uni.$uv.toast('无录音 manager');
 

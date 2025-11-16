@@ -107,7 +107,7 @@
       flex-direction: column;
       align-items: flex-start;
       padding: 20rpx;
-      background: $main-bg-color;
+      background: $main-color;
       border-radius: 10rpx;
       min-width: 60rpx;
       .chat-text {
@@ -117,7 +117,7 @@
     }
     .chat-audio-wrap {
       @include flex-xy-layout;
-      background: $main-bg-color;
+      background: $main-color;
       width: 160rpx;
       padding: 10rpx 0;
       border-radius: 10rpx;

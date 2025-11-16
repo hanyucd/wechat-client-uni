@@ -63,6 +63,7 @@
         :showRight="false"
         :border="false"
         class="menu-item"
+        @click="handleMenuClick(mItem)"
       >
         <template #icon>
           <text class="iconfont icon-menu">{{ mItem.icon }}</text>
@@ -83,7 +84,7 @@ const userDetail = ref();
 // 菜单 popup 列表
 const menuPopupList = computed(() => {
   return [
-    { icon: '\ue6b3', title: '设置备注和标签', type: 'navigate', path: '' },
+    { icon: '\ue6b3', title: '设置备注和标签', type: 'navigate', path: 'pages/module-common/user-remark/user-remark' },
     { icon: '\ue6b0', title: userDetail.value ? '取消星标好友' : '设为星标朋友', type: 'event', event: 'setStar' },
     {
       icon: '\ue613',
@@ -120,12 +121,31 @@ const menuPopupList = computed(() => {
     { icon: '\ue638', title: '删除', type: 'event', event: 'deleteItem' }
   ];
 });
+
 /**
  * 打开菜单 popup
  */
 const openMenuPopup = async () => {
   // 打开会话菜单 popup
   menuVPopupRef.value!.openVPopup();
+};
+
+/**
+ * 点击菜单
+ */
+const handleMenuClick = async (menuItem: any) => {
+  // 打开会话菜单 popup
+  console.log(menuItem);
+
+  switch (menuItem.type){
+    case 'navigate':
+      uni.$uv.route({ url: menuItem.path, params: { userId: 120 } });
+      break;
+    case 'event':
+      console.log('事件');
+      // this[e.event](e);
+      break;
+  }
 };
 </script>
 

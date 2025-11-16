@@ -1,0 +1,53 @@
+<template>
+  <VNavbar bgColor="#fff" title="设置备注和标签">
+    <template #right>
+      <view class="send-btn">
+        <text class="send-btn-text">完成</text>
+      </view>
+    </template>
+  </VNavbar>
+
+  <!-- 备注名 -->
+  <view class="remark-module">
+    <text class="remark-title">备注名</text>
+    <input v-model="nickname" class="remark-input" type="text" placeholder="请填写备注名" style="height: 100rpx;" />
+  </view>
+
+  <!-- 标签列表 -->
+  <view class="tag-module flex flex-column">
+    <text class="tag-title">标签</text>
+    <view class="tag-wrap" @click="navTagSetRoute">
+      <view v-for="(item, index) in 10" :key="index" class="tag-item">
+        <text class="tag-text">{{ '张君宝' }}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+const userDetail = ref();
+
+// 备注
+const nickname = ref('');
+// 标签列表
+const tagList = ref([]);
+
+/**
+ * 进入标签设置页
+ */
+const navTagSetRoute = async () => {
+  console.log('进入标签设置页');
+};
+</script>
+
+<style>
+/* #ifndef APP */
+page {
+  background: #EDEDED;
+}
+/* #endif */
+</style>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

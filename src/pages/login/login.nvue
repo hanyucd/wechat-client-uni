@@ -14,7 +14,4 @@ onLoad(() => {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  color: $main-text-color;;
-}
 </style>
