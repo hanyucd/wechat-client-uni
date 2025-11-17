@@ -99,15 +99,7 @@ const menuPopupList = computed(() => {
         }
       }))
     },
-    {
-      icon: '\ue667',
-      title: '设置朋友圈和动态权限',
-      type: 'navigate',
-      path: 'mail/user-moments-auth/user-moments-auth?user_id=' + 1 + '&params=' + JSON.stringify({
-        lookme: '',
-        lookhim: '',
-      })
-    },
+    { icon: '\ue667', title: '设置朋友圈和动态权限', type: 'navigate', path: 'pages/module-common/user-find-auth/user-find-auth' },
     { icon: '\ue638', title: userDetail.value ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
     {
       icon: '\ue61c',
@@ -133,7 +125,7 @@ const openMenuPopup = async () => {
 /**
  * 点击菜单
  */
-const handleMenuClick = async (menuItem: any) => {
+const handleMenuClick = async (menuItem: typeof menuPopupList.value[0]) => {
   // 打开会话菜单 popup
   console.log(menuItem);
 

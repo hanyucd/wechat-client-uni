@@ -1,0 +1,39 @@
+<template>
+  <VNavbar bgColor="#fff" title="设置朋友圈动态权限" />
+
+  <VListItem title="不让他看我" :showLeftIcon="false" showRight :showRightIcon="false">
+    <template #right>
+      <uv-switch v-model="isLookMe" activeColor="#08C060" @change="onNotLookMeChangeEvt" />
+    </template>
+  </VListItem>
+
+  <VListItem title="不看他" :showLeftIcon="false" showRight :showRightIcon="false">
+    <template #right>
+      <uv-switch v-model="isLookHe" activeColor="#08C060" @change="onNotLookHeChangeEvt" />
+    </template>
+  </VListItem>
+</template>
+
+<script setup lang="ts">
+const userId = ref(0);
+// 不让他看我
+const isLookMe = ref(false);
+// 不看他
+const isLookHe = ref(false);
+
+// onNotLookMeChangeEvt 不让他看我
+const onNotLookMeChangeEvt = (val: any) => {
+  // isLookMe.value = val;
+  console.log(val);
+};
+
+// onNotLookHeChangeEvt 不看他
+const onNotLookHeChangeEvt = (val: any) => {
+  // isLookHe.value = val;
+  console.log(val);
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

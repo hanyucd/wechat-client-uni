@@ -21,10 +21,10 @@
 		}
 	},
 	"tabBar": {
-		"color":"#000000",
-		"selectedColor":"#08C261",
+		"color": "#000000",
+		"selectedColor": "#08C261",
 		"borderStyle": "white",
-		"backgroundColor":"#F7F7F7",
+		"backgroundColor": "#F7F7F7",
 		"list": [
 			{
 				"text": "首页",
@@ -36,13 +36,13 @@
 				"text": "通讯录",
 				"pagePath": "pages/tabbar/contact/contact",
 				"iconPath": "static/tabbar/contact.png",
-				"selectedIconPath":"static/tabbar/contact-select.png"
+				"selectedIconPath": "static/tabbar/contact-select.png"
 			},
 			{
 				"text": "发现",
 				"pagePath": "pages/tabbar/find/find",
-				"iconPath":"static/tabbar/find.png",
-				"selectedIconPath":"static/tabbar/find-select.png"
+				"iconPath": "static/tabbar/find.png",
+				"selectedIconPath": "static/tabbar/find-select.png"
 			},
 			{
 				"text": "我的",
@@ -113,9 +113,13 @@
 		{
 			"path": "pages/module-common/user-tag-set/user-tag-set",
 			"style": {
-				"app-plus": {
-					// "background": "#EDEDED"
-				}
+				"app-plus": {}
+			}
+		},
+		{
+			"path": "pages/module-common/user-find-auth/user-find-auth",
+			"style": {
+				"app-plus": {}
 			}
 		}
 	]
