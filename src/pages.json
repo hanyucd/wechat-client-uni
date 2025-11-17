@@ -116,6 +116,7 @@
 				"app-plus": {}
 			}
 		},
+		// 设置朋友圈动态权限
 		{
 			"path": "pages/module-common/user-find-auth/user-find-auth",
 			"style": {

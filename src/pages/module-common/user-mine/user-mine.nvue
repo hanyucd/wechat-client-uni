@@ -79,7 +79,7 @@ import VPopup from '@/components/VPopup/VPopup.vue';
 type VPopupType = InstanceType<typeof VPopup>;
 const menuVPopupRef = ref<VPopupType | null>(null);
 
-const userDetail = ref();
+const userDetail = ref({} as any);
 
 // 菜单 popup 列表
 const menuPopupList = computed(() => {
@@ -110,7 +110,7 @@ const menuPopupList = computed(() => {
         type: 'user'
       })
     },
-    { icon: '\ue638', title: '删除', type: 'event', event: 'deleteItem' }
+    { icon: '\ue638', title: '删除', type: 'event', event: 'delFriend' }
   ];
 });
 
@@ -129,14 +129,47 @@ const handleMenuClick = async (menuItem: typeof menuPopupList.value[0]) => {
   // 打开会话菜单 popup
   console.log(menuItem);
 
-  switch (menuItem.type){
+  switch (menuItem.type) {
     case 'navigate':
       uni.$uv.route({ url: menuItem.path, params: { userId: 120 } });
       break;
     case 'event':
-      console.log('事件');
-      // this[e.event](e);
+      menuItem.event === 'setStar' && setStar();
+      menuItem.event === 'setBlack' && setBlack();
+      menuItem.event === 'delFriend' && delFriend();
       break;
+  }
+
+  menuVPopupRef.value?.closeVPopup();
+};
+
+// 设置星标好友
+const setStar = async () => {
+  console.log('设置星标');
+};
+
+// 设置黑名单
+const setBlack = async () => {
+  const modalContent = userDetail.value.isblack ? '移出黑名单' : '加入黑名单';
+  try {
+    const modalRes = await uni.showModal({ title: '提示', content: modalContent });
+    if (!modalRes.confirm) return;
+
+    uni.$uv.toast(`${ modalContent }成功`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 删除好友
+const delFriend = async () => {
+  try {
+    const modalRes = await uni.showModal({ title: '提示', content: '是否要删除该好友？' });
+    if (!modalRes.confirm) return;
+
+    uni.$uv.toast('删除好友成功');
+  } catch (error) {
+    console.log(error);
   }
 };
 </script>
