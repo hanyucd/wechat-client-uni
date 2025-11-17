@@ -1,0 +1,80 @@
+<template>
+  <VNavbar bgColor="#fff" title="添加标签">
+    <template #right>
+      <view class="send-btn" @click="saveTag">
+        <text class="send-btn-text">保存</text>
+      </view>
+    </template>
+  </VNavbar>
+
+  <!-- 选中的标签 -->
+  <view class="tag-module">
+    <view v-for="(item,index) in tagList" :key="index" class="tag-item" @click="removeTag(index)">
+      <text class="tag-text">{{ item }}</text>
+    </view>
+    
+    <input v-model="tagInput" type="text" class="tag-input" placeholder="添加标签" style="width: 180rpx;" confirm-type="send" @confirm="addTag" />
+  </view>
+
+  <!-- 快捷标签 -->
+  <view class="fastTag-module">
+    <text class="fastTag-title">快捷标签</text>
+    <view class="fastTag-wrap">
+      <view v-for="(item, index) in fastTagList" :key="index" class="fastTag-item" @click="fastAddTag(item)">
+        <text class="tag-text">{{ item }}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+// 标签名
+const tagInput = ref('');
+const tagList = ref<string[]>([]);
+// 快捷标签列表
+const fastTagList = ref<string[]>(['家人','亲戚','朋友','好友']);
+
+// 移除标签
+const removeTag = (index: number) => {
+  uni.showModal({
+    content: '是否要删除该标签？',
+    success: res => {
+      if (res.confirm) {
+        tagList.value.splice(index,1);
+      }
+    }
+  });
+};
+
+// 快捷增加标签
+const fastAddTag = (item: string) => {
+  if (tagList.value.indexOf(item) !== -1) {
+    return uni.$uv.toast('标签已存在');
+  }
+  tagList.value.push(item);
+};
+
+// 添加标签
+const addTag = () => {
+  if (tagInput.value.trim() === '') return;
+  if(tagList.value.indexOf(tagInput.value.trim()) !== -1) {
+    tagInput.value = '';
+    return uni.$uv.toast('标签已存在');
+  }
+
+  tagList.value.push(tagInput.value.trim());
+  tagInput.value = '';
+};
+
+/**
+ * 保存标签
+ */
+const saveTag = () => {
+  uni.$emit('updateTagEvt', tagList.value);
+  uni.$uv.route({ type: 'back' });
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

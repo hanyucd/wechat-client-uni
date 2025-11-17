@@ -108,6 +108,15 @@
 					"background": "#EDEDED"
 				}
 			}
+		},
+		// 用户标签设置
+		{
+			"path": "pages/module-common/user-tag-set/user-tag-set",
+			"style": {
+				"app-plus": {
+					// "background": "#EDEDED"
+				}
+			}
 		}
 	]
 }

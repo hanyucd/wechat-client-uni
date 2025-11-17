@@ -1,0 +1,66 @@
+.send-btn {
+  @include flex-xy-layout;
+  background: $main-color;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  .send-btn-text {
+    font-size: 30rpx;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+.tag-module {
+  @include flex-xy-layout(flex-start);
+  flex-wrap: wrap;
+  padding: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #dee2e6;
+  .tag-item {
+    @include flex-xy-layout;
+    border: 1rpx solid $main-color;
+    border-radius: 100rpx;
+    padding: 10rpx 20rpx;
+    margin-right: 10rpx;
+    margin-bottom: 10rpx;
+    .tag-text {
+      font-size: 30rpx;
+      color: $main-color;
+    }
+  }
+  .tag-input {
+    border: 1rpx solid $main-color;
+    border-radius: 100rpx;
+    text-align: center;
+    font-size: 30rpx;
+    height: 60rpx;
+  }
+}
+
+.fastTag-module {
+  display: flex;
+  flex-direction: column;
+  .fastTag-title {
+    padding: 20rpx 30rpx;
+    padding-bottom: 0;
+    font-size: 25rpx;
+    color: #6c757d;
+  }
+  .fastTag-wrap {
+    @include flex-xy-layout(flex-start);
+    flex-wrap: wrap;
+    padding: 20rpx 30rpx;
+    .fastTag-item {
+      @include flex-xy-layout;
+      border: 1rpx solid $main-color;
+      border-radius: 100rpx;
+      padding: 10rpx 20rpx;
+      margin-right: 10rpx;
+      margin-bottom: 10rpx;
+      .tag-text {
+        font-size: 30rpx;
+        color: #343a40;
+      }
+    }
+  }
+}
