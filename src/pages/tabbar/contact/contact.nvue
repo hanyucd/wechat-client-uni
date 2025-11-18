@@ -61,7 +61,7 @@ const contactModuleHeight = ref(0);
 // scrollView into id
 const scrollViewIntoId = ref('');
 // 当前激活的字母
-const curActiveLetter = ref('A');
+const curActiveLetter = ref('');
 
 // 侧边栏top高度
 const letterSidebarTopHeight = ref(0);
@@ -149,22 +149,20 @@ const _calcConcatModuleHeight = () => {
 
 // 侧边栏touch start 事件
 const onSidebarTouchStartEvt = (event: any) => {
-  // console.log('start: ', event);
   _changeScrollViewInto(event);
 };
 
 // 侧边栏 touch move 事件
 const onSidebarTouchMoveEvt = (event: any) => {
-  // console.log('move: ', event);
   _changeScrollViewInto(event);
 };
 
 //  侧边栏 touch end 事件
 const onSidebarTouchEndEvt = (event: any) => {
-  // console.log('end: ', event);
   curActiveLetter.value = '';
 };
 
+// 改变 scroll-view 滚动到的位置
 const _changeScrollViewInto = (event: any) => {
   let pageY = 0;
 
@@ -187,7 +185,7 @@ const _changeScrollViewInto = (event: any) => {
   // console.log('contactItem: ', contactItem);
 
   if (contactItem) {
-    scrollViewIntoId.value = 'cItem-' + contactItem.title;
+    scrollViewIntoId.value = `cItem-${ contactItem.title }`;
     curActiveLetter.value = contactItem.title;
   }
 };

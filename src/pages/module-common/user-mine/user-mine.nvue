@@ -90,14 +90,10 @@ const menuPopupList = computed(() => {
       icon: '\ue613',
       title: '把他推荐给朋友',
       type: 'navigate',
-      path: 'chat/chat-list/chat-list?params=' + encodeURIComponent(JSON.stringify({
+      path: `pages/module-common/share-friend/share-friend?params=${ encodeURIComponent(JSON.stringify({
         type: 'card',
-        data: '',
-        options: {
-          avatar: '',
-          id: 0
-        }
-      }))
+        num: 10
+      }))}`
     },
     { icon: '\ue667', title: '设置朋友圈和动态权限', type: 'navigate', path: 'pages/module-common/user-find-auth/user-find-auth' },
     { icon: '\ue638', title: userDetail.value ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
@@ -126,9 +122,6 @@ const openMenuPopup = async () => {
  * 点击菜单
  */
 const handleMenuClick = async (menuItem: typeof menuPopupList.value[0]) => {
-  // 打开会话菜单 popup
-  console.log(menuItem);
-
   switch (menuItem.type) {
     case 'navigate':
       uni.$uv.route({ url: menuItem.path, params: { userId: 120 } });

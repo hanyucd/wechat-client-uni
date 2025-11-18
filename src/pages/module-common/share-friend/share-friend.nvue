@@ -1,0 +1,92 @@
+<template>
+  <VNavbar title="选择">
+    <template #right>
+      <view class="send-btn" @click="sendFriend">
+        <text class="send-btn-text">发送({{ checkedFriendList.length }})</text>
+      </view>
+    </template>
+  </VNavbar>
+
+  <view style="height: 140rpx;" />
+
+  <!-- 搜索框 -->
+  <view class="search-module" :style="{ top: `${ searchModuleTop }px` }">
+    <input v-model="keyword" type="text" placeholder="搜索" class="search-input" placeholder-class="search-input-placeholder" />
+  </view>
+
+  <VListItem
+    v-for="(item, index) in friendList" 
+    :key="index"
+    :title="item.name" 
+    :cover="item.avatar || '/static/images/userpic.png'"
+    showRight
+    :showRightIcon="false"
+    @click="selectFriend(item)"
+  >
+    <template #right>
+      <view class="checkbox">
+				<view v-if="item.checked" class="checkbox-full" />
+			</view>
+    </template>
+  </VListItem>
+</template>
+
+<script setup lang="ts">
+
+const keyword = ref('');
+const searchModuleTop = ref(0);
+
+// 朋友列表
+const friendList = ref([
+  { id: 1, name: '张飞', avatar: '', checked: false },
+  { id: 2, name: '关羽', avatar: '', checked: true },
+  { id: 3, name: '赵云', avatar: '', checked: false },
+  { id: 4, name: '黄忠', avatar: '', checked: true },
+  { id: 5, name: '马超', avatar: '', checked: false },
+  { id: 6, name: '黄忠', avatar: '', checked: false },
+]);
+
+// 选中的朋友列表
+const checkedFriendList = computed(() => {
+  return friendList.value.filter(item => item.checked);
+});
+
+onLoad((option: any) => {
+  console.log(option);
+
+  if (option.params) {
+    const _params = JSON.parse(decodeURIComponent(option.params));
+    console.log(_params);
+  }
+});
+
+onMounted(() => {
+  _calcSearchModuleTop();
+});
+
+// 计算搜索模块的top值 = 导航栏的高度 + 状态栏的高度
+const _calcSearchModuleTop = () => {
+  const systemInfo = uni.getSystemInfoSync();
+  const navbarHeight = 45;
+  searchModuleTop.value = navbarHeight + systemInfo.statusBarHeight!;
+};
+
+// 选择朋友
+const selectFriend = (fItem: any) => {
+  if (!fItem.checked && checkedFriendList.value.length >= 3) return uni.$uv.toast('最多选择 3 个');
+  fItem.checked = !fItem.checked;
+};
+
+// 发送朋友
+const sendFriend = () => {
+  const checkedFriendCount = checkedFriendList.value.length;
+  
+  if (checkedFriendCount === 0) return uni.$uv.toast('请选择朋友');
+  
+  uni.$uv.toast(`发送了 ${ checkedFriendCount } 个朋友`);
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

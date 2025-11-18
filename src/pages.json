@@ -122,6 +122,13 @@
 			"style": {
 				"app-plus": {}
 			}
+		},
+		// 推荐给好友
+		{
+			"path": "pages/module-common/share-friend/share-friend",
+			"style": {
+				"app-plus": {}
+			}
 		}
 	]
 }

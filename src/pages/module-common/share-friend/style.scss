@@ -1,0 +1,47 @@
+.send-btn {
+  @include flex-xy-layout;
+  background: $main-color;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  .send-btn-text {
+    font-size: 30rpx;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+.search-module {
+  position: fixed;
+  // position: sticky;
+  left: 0;
+  right: 0;
+  /*  #ifndef APP-NVUE  */
+  z-index: 2;
+  /*  #endif  */
+  background-color: #f8f9fa;
+  padding: 30rpx;
+  .search-input {
+    background: #fff;
+    border-radius: 8rpx;
+    height: 80rpx;
+    padding: 0 20rpx;
+  }
+  .search-input-placeholder {
+    text-align: center;
+  }
+}
+
+.checkbox {
+  @include flex-xy-layout;
+  border: 1rpx solid #dee2e6;;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 100rpx;
+  .checkbox-full {
+    background: $main-color;
+    width: 30rpx;
+    height: 30rpx;
+    border-radius: 100rpx;
+    margin: 25rpx
+  }
+}
