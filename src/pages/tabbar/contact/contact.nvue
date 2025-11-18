@@ -1,30 +1,72 @@
 <template>
   <VNavbar title="通讯录" :show-back="false" />
   
-  <!-- 通讯录菜单 -->
-  <VListItem
-    v-for="item in contactMenuList"
-    :key="item.id"
-    :title="item.title"
-    :cover="item.cover"
-  />
+  <!-- 通讯录列表 -->
+  <scroll-view
+    ref="concactModuleRef"
+    class="contact-module"
+    scroll-y
+    :style="{ height: `${ contactModuleHeight }px` }"
+    :scroll-into-view="scrollViewIntoId"
+    >
+    <!-- 通讯录菜单 -->
+    <VListItem
+      v-for="item in contactMenuList"
+      :key="item.id"
+      :title="item.title"
+      :cover="item.cover"
+    />
 
-  <!-- 联系人列表 -->
-  <view v-for="(cItem, cIndex) in contactList" :key="cIndex">
-    <view v-if="cItem.list.length" class="contact-item-letter">
-      <text class="contact-letter font-md text-dark">{{ cItem.title }}</text>
+    <!-- 联系人列表 -->
+    <view v-for="(cItem, cIndex) in contactList" :id="`cItem-${ cItem.title }`" :key="cIndex">
+      <view v-if="cItem.list.length" class="contact-item-letter">
+        <text class="contact-letter font-md text-dark">{{ cItem.title }}</text>
+      </view>
+  
+      <VListItem
+        v-for="(item, index) in cItem.list" 
+        :key="index"
+        :title="item" 
+        :cover="'/static/images/userpic.png'"
+      />
     </view>
 
-    <VListItem
-      v-for="(item, index) in cItem.list" 
-      :key="index"
-      :title="item" 
-      :cover="'/static/images/userpic.png'"
-    />
+    <view style="height: 50rpx;" />
+  </scroll-view>
+
+  <!-- 侧边字母导航条 -->
+  <view class="letter-sidebar" :style="{ top: `${ letterSidebarTopHeight }px` }" @touchstart="onSidebarTouchStartEvt" @touchmove="onSidebarTouchMoveEvt" @touchend="onSidebarTouchEndEvt">
+    <view v-for="(item, index) in contactList" :key="index" class="letter-item flex-1 flex align-center justify-center">
+      <text class="letter-item-text font-sm text-muted">{{ item.title }}</text>
+    </view>
+  </view>
+
+  <!-- 激活的字母 -->
+  <view v-if="curActiveLetter" class="active-letter" :style="letterPosition">
+    <text class="active-letter-text">{{ curActiveLetter }}</text>
   </view>
 </template>
 
 <script setup lang="ts">
+import type { ScrollView } from '@uni-helper/uni-app-types';
+import { useAppStore } from '@/store';
+// #ifdef APP-NVUE
+const domModule = uni.requireNativePlugin('dom');
+// #endif
+
+const appStore = useAppStore();
+
+// 通讯模块高度
+const contactModuleHeight = ref(0);
+// scrollView into id
+const scrollViewIntoId = ref('');
+// 当前激活的字母
+const curActiveLetter = ref('A');
+
+// 侧边栏top高度
+const letterSidebarTopHeight = ref(0);
+
+const concactModuleRef = ref<ScrollView | null>(null);
 
 // 通讯录菜单
 const contactMenuList = ref([
@@ -51,7 +93,104 @@ const contactList = ref([
     title: 'M',
     list: ['马丁-盖瑞斯', '棉花糖']
   },
+  {
+    title: 'X',
+    list: ['XLLENIUM', '蛇叔']
+  },
 ]);
+
+const letterItemHeight = computed(() => {
+  const count = contactList.value.length;
+  if(count < 1) return 0;
+
+  return contactModuleHeight.value / count;
+});
+
+// 中间字母的位置
+const letterPosition = computed(() => {
+  const _letterLeft = (appStore.systemInfo.screenWidth - (150 / 2)) / 2;
+  const _letterTop = (appStore.systemInfo.screenHeight - (150 / 2)) / 2;
+  
+  return {
+    left: `${ _letterLeft }px`,
+    top: `${ _letterTop }px`,
+  };
+});
+
+onMounted(() => {
+  _calcConcatModuleHeight();
+});
+
+/**
+ * 计算通讯录模块高度
+ */
+const _calcConcatModuleHeight = () => {
+  const systemInfo = uni.getSystemInfoSync();
+  const windowHeight = systemInfo.windowHeight;
+
+  // #ifdef APP-NVUE
+  setTimeout(() => {
+    // 获取消息节点信息
+    domModule.getComponentRect(concactModuleRef.value, (dom1: any) => {
+      contactModuleHeight.value = windowHeight - dom1.size.top;
+      letterSidebarTopHeight.value = dom1.size.top;
+    });
+  }, 100);
+  // #endif
+
+  // #ifndef APP-NVUE
+  const chatModuleNode = uni.createSelectorQuery().select('.contact-module');
+  chatModuleNode.boundingClientRect((rect1: any) => {
+    contactModuleHeight.value = windowHeight - rect1.top;
+    letterSidebarTopHeight.value = rect1.top;
+  }).exec();
+  // #endif
+};
+
+// 侧边栏touch start 事件
+const onSidebarTouchStartEvt = (event: any) => {
+  // console.log('start: ', event);
+  _changeScrollViewInto(event);
+};
+
+// 侧边栏 touch move 事件
+const onSidebarTouchMoveEvt = (event: any) => {
+  // console.log('move: ', event);
+  _changeScrollViewInto(event);
+};
+
+//  侧边栏 touch end 事件
+const onSidebarTouchEndEvt = (event: any) => {
+  // console.log('end: ', event);
+  curActiveLetter.value = '';
+};
+
+const _changeScrollViewInto = (event: any) => {
+  let pageY = 0;
+
+  // #ifdef APP-NVUE
+  pageY = event.changedTouches[0].screenY;
+  // #endif
+
+  // #ifdef WEB
+  pageY = event.changedTouches[0].pageY;
+  // #endif
+
+  // #ifdef MP
+  pageY = event.detail.y;
+  // #endif
+
+  const letterTopY = pageY - letterSidebarTopHeight.value;
+
+  let letterIndex = Math.floor(letterTopY / letterItemHeight.value);
+  let contactItem = contactList.value[letterIndex];
+  // console.log('contactItem: ', contactItem);
+
+  if (contactItem) {
+    scrollViewIntoId.value = 'cItem-' + contactItem.title;
+    curActiveLetter.value = contactItem.title;
+  }
+};
 </script>
 
 <style lang="scss" scoped>

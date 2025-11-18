@@ -9,3 +9,40 @@
     color: #343a40;
   }
 }
+
+.letter-sidebar {
+  position: fixed;
+  right: 0;
+  /*  #ifdef  WEB  */
+  bottom: 100rpx;
+  /*  #endif  */
+  /*  #ifdef APP-NVUE || MP  */
+  bottom: 0;
+  /*  #endif  */
+  background-color: rgba(248, 249, 250, 1);
+  display: flex;
+  width: 40rpx;
+  flex-direction: column;
+  .letter-item {
+    @include flex-xy-layout;
+    flex: 1;
+    .letter-item-text {
+      font-size: 25rpx;
+      color: #6c757d;
+    }
+  }
+}
+
+.active-letter {
+  @include flex-xy-layout;
+  position: fixed;
+  width: 150rpx;
+  height: 150rpx;
+  background-color: rgba(248, 249, 250, .6);
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 20rpx;
+  .active-letter-text {
+    font-size: 40rpx;
+  }
+}
