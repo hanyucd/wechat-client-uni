@@ -1,0 +1,25 @@
+.find-wall {
+  position: relative;
+  height: 620rpx;
+  .wall-bgimg {
+    height: 590rpx;
+    // width: 100%;
+    background-color: #6c757d;
+  }
+  .wall-avatar {
+    position: absolute;
+    background-color: #6c757d;
+    right: 30rpx;
+    bottom: 0;
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 8rpx;
+  }
+  .wall-name {
+    position: absolute;
+    right: 160rpx;
+    bottom: 45rpx;
+    // color: #fff;
+    font-size: 40rpx;
+  }
+}

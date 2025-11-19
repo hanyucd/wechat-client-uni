@@ -1,7 +1,7 @@
 <template>
   <VNavbar title="发现" :show-back="false" />
 
-  <VListItem title="朋友圈" show-right>
+  <VListItem title="朋友圈" show-right @click="navToFriendFind">
     <template #icon>
       <text class="iconfont list-item-icon">&#xe667;</text>
     </template>
@@ -52,6 +52,10 @@
 </template>
 
 <script setup lang="ts">
+
+const navToFriendFind = () => {
+  uni.$uv.route('pages/module-find/firend-find/firend-find');
+};
 </script>
 
 <style lang="scss" scoped>

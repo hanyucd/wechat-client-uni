@@ -1,0 +1,68 @@
+<template>
+  <VNavbar :bgColor="`rgba(255, 255, 255, ${ navOpacityNum })`" title="朋友圈" :placeholder="false">
+    <template #right>
+      <view class="send-btn" @click="navToChatSetRoute">
+        <VIcon :icon="'\ue682'" />
+      </view>
+    </template>
+  </VNavbar>
+
+  <!-- 墙 -->
+  <view class="find-wall">
+    <image src="@/static/images/illenium-1.jpg" mode="aspectFill" :style="{ width: `${ appStore.systemInfo.windowWidth }px` }" class="wall-bgimg" />
+    <image src="@/static/images/illenium-1.jpg" class="wall-avatar" />
+    <text class="wall-name">{{ '凤凰之子' }}</text>
+  </view>
+
+  <view style="height: 10000px; background: #333;" />
+</template>
+
+<script setup lang="ts">
+import { useAppStore } from '@/store';
+const appStore = useAppStore();
+
+const pageScrollTop = ref(0);
+
+// 计算导航栏透明度
+const navOpacityNum = computed(() => {
+  let _navOpacityNum = 0;
+  let pageStartLen = 0;
+  let pageEndLen = 0;
+
+  // #ifdef APP
+  pageStartLen = uni.upx2px(500);
+  pageEndLen = uni.upx2px(620);
+  // #endif
+
+  // #ifndef APP
+  // @ts-ignore
+  pageStartLen = uni.rpx2px(500);
+  // @ts-ignore
+  pageEndLen = uni.rpx2px(620);
+  // #endif
+
+  const diffLen = pageEndLen - pageStartLen;
+
+  if (pageScrollTop.value > pageStartLen) {
+    _navOpacityNum = (pageScrollTop.value - pageStartLen) / diffLen;
+    // _navOpacityNum = pageScrollTop.value / pageEndLen;
+  }
+
+  _navOpacityNum = _navOpacityNum > 1 ? 1 : _navOpacityNum;
+
+  return _navOpacityNum;
+});
+
+onPageScroll((res) => {
+  // console.log(res);
+  pageScrollTop.value = res.scrollTop;
+});
+
+const navToChatSetRoute = () => {
+  uni.$uv.route({ type: 'back' });
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

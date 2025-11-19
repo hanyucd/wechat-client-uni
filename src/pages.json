@@ -134,7 +134,14 @@
 		{
 			"path": "pages/module-common/user-report/user-report",
 			"style": {
-				"navigationBarTitleText": "user-report"
+				"app-plus": {}
+			}
+		},
+		// 朋友圈动态
+		{
+			"path": "pages/module-find/firend-find/firend-find",
+			"style": {
+				"app-plus": {}
 			}
 		}
 	]
