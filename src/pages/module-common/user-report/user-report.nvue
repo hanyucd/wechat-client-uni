@@ -1,0 +1,57 @@
+<template>
+  <VNavbar bgColor="#fff" title="用户投诉">
+    <template #right>
+      <view class="send-btn" @click="submitReport">
+        <text class="send-btn-text">投诉</text>
+      </view>
+    </template>
+  </VNavbar>
+
+  <VListItem :title="reportCategory ? reportCategory : '请选择分类'" :showLeftIcon="false" showRight @click="onReportTypeClickEvt" />
+
+  <textarea v-model="reportContent" placeholder="请填写投诉内容..." class="textarea bg-white p-2 font-md"></textarea>
+
+  <uv-picker ref="pickerRef" activeColor="#08d869" confirmColor="#08d869" :columns="reportCategoryColumns" @confirm="onPickerConfirmEvt" />
+</template>
+
+<script setup lang="ts">
+
+const pickerRef = ref(null);
+const reportCategoryColumns = ref([['色情低俗','政治敏感','广告营销','其他']]);
+// 举报类型
+const reportCategory = ref('');
+// 举报内容
+const reportContent = ref('');
+
+onLoad((option: any) => {
+  console.log(option);
+
+  if (option.params) {
+    const _params = JSON.parse(decodeURIComponent(option.params));
+    console.log(_params);
+  }
+});
+
+const onReportTypeClickEvt = () => {
+  (pickerRef.value as any).open();
+};
+
+// 提交举报
+const onPickerConfirmEvt = (event: any) => {
+  console.log(event);
+  reportCategory.value = event.value[0];
+};
+
+// 提交举报
+const submitReport = () => {
+  if (!reportCategory.value) return uni.$uv.toast('请选择分类');
+  if (!reportContent.value.trim()) return uni.$uv.toast('请填写投诉内容');
+
+  uni.$uv.toast('提交成功');
+  // uni.$uv.route({ type: 'back' });
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

@@ -101,10 +101,9 @@ const menuPopupList = computed(() => {
       icon: '\ue61c',
       title: '投诉',
       type: 'navigate',
-      path: 'mail/user-report/user-report?params=' + JSON.stringify({
-        user_id: 1,
+      path: `pages/module-common/user-report/user-report?params=${ encodeURIComponent(JSON.stringify({
         type: 'user'
-      })
+      }))}`
     },
     { icon: '\ue638', title: '删除', type: 'event', event: 'delFriend' }
   ];

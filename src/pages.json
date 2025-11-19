@@ -129,6 +129,13 @@
 			"style": {
 				"app-plus": {}
 			}
+		},
+		// 用户投诉
+		{
+			"path": "pages/module-common/user-report/user-report",
+			"style": {
+				"navigationBarTitleText": "user-report"
+			}
 		}
 	]
 }

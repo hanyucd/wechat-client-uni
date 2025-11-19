@@ -33,6 +33,13 @@
   <view v-if="keyword !== '' && searchFirendList.length === 0" class="search-empty">
     <text class="search-empty-text">暂无搜索结果</text>
   </view>
+
+  <!-- 待确认 modal -->
+  <uv-modal ref="confirmModalRef" title="发送" confirmColor="#08d869" showCancelButton @confirm="onModalConfirmEvt">
+    <view class="slot-content">
+      自定义内容
+    </view>
+  </uv-modal>
 </template>
 
 <script setup lang="ts">
@@ -48,6 +55,8 @@ const friendList = ref([
   { id: 5, name: '马超111', avatar: '', checked: false },
   { id: 6, name: '黄忠', avatar: '', checked: false },
 ]);
+
+const confirmModalRef = ref(null);
 
 // 选中的朋友列表
 const checkedFriendList = computed(() => {
@@ -95,7 +104,14 @@ const sendFriend = () => {
   
   if (checkedFriendCount === 0) return uni.$uv.toast('请选择朋友');
   
+  (confirmModalRef.value as any).open();
+};
+
+const onModalConfirmEvt = () => {
+  const checkedFriendCount = checkedFriendList.value.length;
   uni.$uv.toast(`发送了 ${ checkedFriendCount } 个朋友`);
+
+  console.log('onModalConfirmEvt');
 };
 </script>
 
