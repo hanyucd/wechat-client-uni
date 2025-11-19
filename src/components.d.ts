@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ChatMsgItem: typeof import('./components/ChatMsgItem/ChatMsgItem.vue')['default']
+    FriendFindItem: typeof import('./components/FriendFindItem/FriendFindItem.vue')['default']
     VAvatar: typeof import('./components/VAvatar/VAvatar.vue')['default']
     VBadge: typeof import('./components/VBadge/VBadge.vue')['default']
     VDivider: typeof import('./components/VDivider/VDivider.vue')['default']

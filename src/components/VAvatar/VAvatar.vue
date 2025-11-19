@@ -31,8 +31,12 @@ const sizeComputed = computed(() => {
   };
 });
 
+const emit = defineEmits<{
+  click: [];
+}>();
+
 const clickEvent = () => {
-  console.log('click 头像' );
+  emit('click');
 };
 </script>
 

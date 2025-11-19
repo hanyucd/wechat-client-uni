@@ -14,12 +14,17 @@
     <text class="wall-name">{{ '凤凰之子' }}</text>
   </view>
 
-  <view style="height: 10000px; background: #333;" />
+  <FriendFindItem />
+
+  <!-- <view style="height: 10000px; background: #333;" /> -->
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store';
 const appStore = useAppStore();
+
+// 朋友圈动态列表
+const findList = ref([]);
 
 const pageScrollTop = ref(0);
 

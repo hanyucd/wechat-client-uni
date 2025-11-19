@@ -1,0 +1,11 @@
+.find-div {
+  @include flex-xy-layout(flex-start, flex-start);
+  padding: 30rpx;
+  border-bottom: 1px solid #E9E8E5;
+  .find-right {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20rpx;
+    flex: 1;
+  }
+}
