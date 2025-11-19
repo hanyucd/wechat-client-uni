@@ -45,3 +45,12 @@
     margin: 25rpx
   }
 }
+
+.search-empty {
+  @include flex-xy-layout;
+  height: 200rpx;
+  .search-empty-text {
+    font-size: 30rpx;
+    color: #A9A5A0;
+  }
+}

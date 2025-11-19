@@ -15,7 +15,7 @@
   </view>
 
   <VListItem
-    v-for="(item, index) in friendList" 
+    v-for="(item, index) in keyword != '' ? searchFirendList : friendList" 
     :key="index"
     :title="item.name" 
     :cover="item.avatar || '/static/images/userpic.png'"
@@ -29,26 +29,38 @@
 			</view>
     </template>
   </VListItem>
+
+  <view v-if="keyword !== '' && searchFirendList.length === 0" class="search-empty">
+    <text class="search-empty-text">暂无搜索结果</text>
+  </view>
 </template>
 
 <script setup lang="ts">
-
 const keyword = ref('');
 const searchModuleTop = ref(0);
 
 // 朋友列表
 const friendList = ref([
-  { id: 1, name: '张飞', avatar: '', checked: false },
-  { id: 2, name: '关羽', avatar: '', checked: true },
-  { id: 3, name: '赵云', avatar: '', checked: false },
-  { id: 4, name: '黄忠', avatar: '', checked: true },
-  { id: 5, name: '马超', avatar: '', checked: false },
+  { id: 1, name: '张飞1', avatar: '', checked: false },
+  { id: 2, name: '关羽2', avatar: '', checked: false },
+  { id: 3, name: '赵云1', avatar: '', checked: false },
+  { id: 4, name: '黄忠22', avatar: '', checked: false },
+  { id: 5, name: '马超111', avatar: '', checked: false },
   { id: 6, name: '黄忠', avatar: '', checked: false },
 ]);
 
 // 选中的朋友列表
 const checkedFriendList = computed(() => {
   return friendList.value.filter(item => item.checked);
+});
+
+// 搜索列表
+const searchFirendList = computed(() => {
+  return friendList.value.filter(item => item.name.includes(keyword.value));
+});
+
+watch(keyword, (newVal, oldVal) => {
+  friendList.value.forEach(item => item.checked = false);
 });
 
 onLoad((option: any) => {
