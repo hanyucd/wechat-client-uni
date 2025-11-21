@@ -50,5 +50,71 @@
         }
       }
     }
+    .commment-module {
+      background-color: #f8f9fa;
+      margin-top: 20rpx;
+      .like-wrap {
+        @include flex-xy-layout(flex-start, flex-start);
+        padding: 20rpx;
+        border-bottom: 1rpx solid #dee2e6;
+        .icon-like {
+          font-size: 26rpx;
+          color: #0056b3;
+        }
+        .like-user {
+          display: flex;
+          flex-direction: row;
+          flex: 1;
+          flex-wrap: wrap;
+          margin-left: 10rpx;
+          .like-user-name {
+            font-size: 26rpx;
+            color: #0056b3;
+            margin-left: 10rpx;
+          }
+        }
+      }
+      .comment-wrap {
+        @include flex-xy-layout(flex-start, flex-start);
+        padding: 20rpx;
+        .icon-comment {
+          font-size: 30rpx;
+          color: #0056b3;
+        }
+        .comment-list {
+          flex: 1;
+          margin-left: 20rpx;
+          .comment-item {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row;
+            margin-bottom: 20rpx;
+            .comment-user {
+              font-size: 26rpx;
+              color: #0056b3;
+            }
+            .comment-user-reply {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              .comment-user {
+                font-size: 26rpx;
+                color: #0056b3;
+              }
+              .comment-reply {
+                font-size: 26rpx;
+                color: #6c757d;
+                margin: 0 4rpx;
+              }
+            }
+            .comment-content {
+              flex: 1;
+              font-size: 26rpx;
+              color: #343a40;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -39,6 +39,32 @@
           <text class="iconfont action-icon">&#xe62a;</text>
         </view>
       </view>
+
+      <!-- 点赞列表|评论列表 -->
+      <view class="commment-module">
+        <!-- 点赞 -->
+        <view class="like-wrap">
+          <text class="icon-like iconfont">&#xe637;</text>
+          <view class="like-user">
+            <text v-for="(lItem, lIndex) in 6" :key="lIndex" class="like-user-name">{{ '装修工' }}</text>
+          </view>
+        </view>
+        <!-- 评论 -->
+        <view class="comment-wrap">
+          <text class="icon-comment iconfont">&#xe64e;</text>
+          <view class="comment-list">
+            <view v-for="(c, ci) in 3" :key="ci" class="comment-item">
+              <text v-if="0" class="comment-user">{{ '张三' }}：</text>
+              <view v-else class="comment-user-reply">
+                <text class="comment-user">{{ '李四' }} </text>
+                <text class="comment-reply">回复</text>
+                <text class="comment-user">{{ '王五' }}：</text>
+              </view>
+              <text class="comment-content">{{ '长按图片显示操作菜单，如不填默认为保存相册' }}</text>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
