@@ -1,11 +1,54 @@
 .find-div {
   @include flex-xy-layout(flex-start, flex-start);
   padding: 30rpx;
-  border-bottom: 1px solid #E9E8E5;
   .find-right {
     display: flex;
     flex-direction: column;
     padding-left: 20rpx;
     flex: 1;
+    .find-nickname {
+      font-size: 35rpx;
+      color: #0056b3;
+      margin-bottom: 10rpx;
+    }
+    .find-content {
+      font-size: 35rpx;
+      color: #343a40;
+      margin-bottom: 10rpx;
+    }
+    .find-images {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      // padding: 0 20rpx;
+      .single-image {
+        width: 500rpx;
+        height: 300rpx;
+      }
+      .multi-image {
+        width: 180rpx;
+        height: 180rpx;
+        margin-right: 20rpx;
+        margin-bottom: 20rpx;
+      }
+    }
+    .find-video {
+      padding: 20rpx 0;
+    }
+    .time-module {
+      @include flex-xy-layout(space-between);
+      .time-text {
+        font-size: 25rpx;
+        color: #A9A5A0;
+      }
+      .action-wrap {
+        padding: 0 10rpx;
+        background-color: #f8f9fa;
+        .action-icon {
+          font-size: 30rpx;
+          color: #0056b3;
+        }
+      }
+    }
   }
 }

@@ -14,9 +14,10 @@
     <text class="wall-name">{{ '凤凰之子' }}</text>
   </view>
 
-  <FriendFindItem />
+  <!-- 动态列表 -->
+  <FriendFindItem v-for="(item, index) in 5" :key="index" :findItem="{} as any" :findIndex="index" />
 
-  <!-- <view style="height: 10000px; background: #333;" /> -->
+  <view style="height: 10000px; background: #333;" />
 </template>
 
 <script setup lang="ts">
