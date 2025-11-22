@@ -1,0 +1,80 @@
+<template>
+  <VNavbar title="个人信息" bg-color="#fff" />
+
+  <VListItem title="头像" showRight @click="updateAvatar">
+    <template #right>
+      <VAvatar :size="70" :src="'/static/images/userpic.png'" :radius="8" />
+    </template>
+  </VListItem>
+
+  <VListItem title="昵称" showRight @click="openUpdateNicknameModal">
+    <template #right>
+      <text class="iconfont icon-saosao">{{ '凤凰' }}</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="账号" showRight>
+    <template #right>
+      <text class="iconfont icon-saosao">{{ '1234566' }}</text>
+    </template>
+  </VListItem>
+
+  <VListItem title="我的二维码" showRight>
+    <template #right>
+      <text class="iconfont font-md">&#xe647;</text>
+    </template>
+  </VListItem>
+
+  <!-- 昵称 modal -->
+  <uv-modal ref="nicknameUpdateModalRef" title="修改昵称" confirmColor="#08d869" showCancelButton @confirm="onNicknameModalConfirmEvt">
+    <uv-input v-model="nicknameInput" placeholder="请输入新的昵称" border="surround" />
+  </uv-modal>
+</template>
+
+<script setup lang="ts">
+import * as indexUtil from '@/utils';
+
+const nicknameUpdateModalRef = ref(null);
+const nicknameInput = ref('');
+
+// 修改头像
+const updateAvatar = async () => {
+  try {
+    const imgRes = await uni.chooseImage({ count: 1 });
+    console.log(imgRes);
+    const imgPath = imgRes.tempFilePaths[0];
+    console.log(imgPath);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 打开修改昵称 modal
+const openUpdateNicknameModal = () => {
+  (nicknameUpdateModalRef.value as any).open();
+};
+
+// 确定修改昵称 事件
+const onNicknameModalConfirmEvt = async () => {
+  if (!nicknameInput.value.trim()) {
+    uni.$uv.toast('请输入新的昵称');
+    // 等待 100ms 再打开 popup
+    await indexUtil.sleepWait(500);
+    (nicknameUpdateModalRef.value as any).open();
+    return;
+  }
+  console.log('新昵称：', nicknameInput.value);
+};
+</script>
+
+<style>
+/* #ifndef APP */
+/* page {
+  background: #EDEDED;
+} */
+/* #endif */
+</style>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

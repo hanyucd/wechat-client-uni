@@ -117,7 +117,7 @@
 <script setup lang="ts">
 import config from '@/config';
 import dayjs from 'dayjs';
-import * as indexUtil from '@/utils'; 
+import * as indexUtil from '@/utils';
 import VPopup from '@/components/VPopup/VPopup.vue';
 import { useAppStore } from '@/store';
 import { useAudioHook, useRecorderHook } from '@/hooks/chatHook';

@@ -8,7 +8,7 @@
   </VNavbar>
 
   <VListItem :cover="'/static/images/userpic.png'" showRight>
-    <view class="user-info-wrap">
+    <view class="user-info-wrap" @click="navToProfileInfoRoute">
       <text class="user-name">{{ '艾伦-沃克' }}</text>
       <text class="user-wechat text-light-muted font mt-2">仿微信号：{{ 'hy-woke' }}</text>
     </view>
