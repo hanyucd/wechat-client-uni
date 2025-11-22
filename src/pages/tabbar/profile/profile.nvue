@@ -14,7 +14,7 @@
     </view>
     
     <template #right>
-      <text class="iconfont icon-saosao">&#xe614;</text>
+      <text class="iconfont icon-saosao" @click="navToProfileInfoRoute">&#xe614;</text>
     </template>
   </VListItem>
 
@@ -48,6 +48,11 @@
 </template>
 
 <script setup lang="ts">
+// 导航到个人信息
+const navToProfileInfoRoute = () => {
+  uni.$uv.route('/pages/module-profile/profile-info/profile-info');
+};
+
 </script>
 
 <style>
