@@ -35,7 +35,7 @@
       <!-- 时间|操作 -->
       <view class="time-module">
         <text class="time-text">{{ '2020年10月10日' }}</text>
-        <view class="action-wrap">
+        <view class="action-wrap" @click="clickAction(findItem, findIndex)">
           <text class="iconfont action-icon">&#xe62a;</text>
         </view>
       </view>
@@ -91,6 +91,15 @@ const navToUserMainPage = () => {
   uni.$uv.route({ url: '/pages/module-common/user-mine/user-mine', params: { userId: 111 } });
 };
 
+const emit = defineEmits<{
+  action: [findItem: any, findIndex: number];
+  reply: [value: string];
+}>();
+
+// 点击 ... 操作
+const clickAction = (findItem: any, findIndex: number) => {  
+  emit('action', findItem, findIndex);
+};
 </script>
 
 <style lang="scss" scoped>

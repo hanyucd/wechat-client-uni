@@ -15,19 +15,63 @@
   </view>
 
   <!-- 动态列表 -->
-  <FriendFindItem v-for="(item, index) in 5" :key="index" :findItem="({} as any)" :findIndex="index" />
+  <FriendFindItem
+    v-for="(item, index) in 5"
+    :key="index"
+    :findItem="({} as any)"
+    :findIndex="index"
+    @action="onActionEvt"
+  />
 
-  <!-- <view style="height: 10000px; background: #333;" /> -->
+  <!-- 评论 popup 弹窗 -->
+  <VPopup ref="findCommentVPopupRef" mode="bottom">
+    <view class="comment-input-wrap">
+      <textarea
+        v-model="commentContent"
+        fixed
+        class="input-textarea"
+        style="height: 80rpx; width: 480rpx;"
+        :focus="true"
+        ></textarea>
+
+      <!-- 表情icon -->
+      <VIcon :icon="'\ue605'" :iconStyle="{ 'marginRight': '20rpx' }" :size="45" @click="switchEmojiPanel" />
+      <!-- 发送按钮 -->
+      <view class="send-btn" @click="sendFindComment">
+        <text class="send-btn-text">发 送</text>
+      </view>
+    </view>
+
+    <!-- 表情 scroll -->
+    <scroll-view v-if="isShowEmojiPanel" scroll-y class="emoji-scroll">
+      <view v-for="(eItem, eIndex) in emojiList" :key="eIndex" class="emoji-view">
+        <text class="emoji-text" @click="selectEmojiItem(eItem)">{{ eItem }}</text>
+      </view>
+    </scroll-view>
+  </VPopup>
 </template>
 
 <script setup lang="ts">
+import config from '@/config';
 import { useAppStore } from '@/store';
+import VPopup from '@/components/VPopup/VPopup.vue';
 const appStore = useAppStore();
 
 // 朋友圈动态列表
 const findList = ref([]);
-
 const pageScrollTop = ref(0);
+
+type VPopupType = InstanceType<typeof VPopup>;
+// 评论 popup ref
+const findCommentVPopupRef = ref<VPopupType | null>(null);
+
+// 评论内容
+const commentContent = ref('');
+// 是否显示表情面板
+const isShowEmojiPanel = ref(false);
+
+// emoji 表情列表
+const emojiList = ref(config.emojiData);
 
 // 计算导航栏透明度
 const navOpacityNum = computed(() => {
@@ -60,12 +104,64 @@ const navOpacityNum = computed(() => {
 });
 
 onPageScroll((res) => {
-  // console.log(res);
   pageScrollTop.value = res.scrollTop;
 });
 
 const navToChatSetRoute = () => {
   uni.$uv.route({ type: 'back' });
+};
+
+// 监听 action 操作事件
+const onActionEvt = (findItem: any, findIndex: number) => {
+  uni.showActionSheet({
+    itemList: ['点赞','评论'],
+    success: res => {
+      console.log(res);
+      if (res.tapIndex === 0){
+        sendFindLike(findItem, findIndex);
+      } else {
+        // this.content = '';
+        // this.faceModal = false;
+
+        // this.commentIndex = e.index;
+        // this.reply_user = false;
+        // this.$refs.action.show();
+
+        commentContent.value = '';
+        isShowEmojiPanel.value = false;
+
+        // 打开会话菜单 popup
+        findCommentVPopupRef.value!.openVPopup();
+      }
+    },
+  });
+};
+
+// 切换表情面板
+const switchEmojiPanel = () => {
+  uni.hideKeyboard();
+  setTimeout(()=>{
+    isShowEmojiPanel.value = !isShowEmojiPanel.value;
+  }, 100);
+};
+
+/**
+ * 选择表情
+ */
+const selectEmojiItem = (emoji: any) => {
+  commentContent.value = commentContent.value += emoji;
+};
+
+// 动态点赞
+const sendFindLike = (findItem: any, findIndex: number) => {
+  console.log('点赞');
+};
+
+// 动态评论
+const sendFindComment = () => {
+  console.log('发送评论');
+
+  findCommentVPopupRef.value!.closeVPopup();
 };
 </script>
 

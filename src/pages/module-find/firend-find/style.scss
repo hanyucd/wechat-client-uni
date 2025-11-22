@@ -23,3 +23,46 @@
     font-size: 40rpx;
   }
 }
+
+.comment-input-wrap {
+  display: flex;
+	flex-direction: row;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1rpx solid #dee2e6;
+  padding: 0 30rpx;
+  height: 105rpx;
+  .input-textarea {
+    flex: 1;
+    background: #fff;
+    padding: 20rpx;
+    border-radius: 8rpx;
+    font-size: 35rpx;
+  }
+  .send-btn {
+    @include flex-xy-layout;
+    background: $main-color;
+    padding: 10rpx 20rpx;
+    border-radius: 8rpx;
+    .send-btn-text {
+      font-size: 30rpx;
+      font-weight: 500;
+      color: #fff;
+    }
+  }
+}
+
+.emoji-scroll {
+  @include flex-xy-layout(flex-start, flex-start);
+  flex-wrap: wrap;
+  height: 400rpx;
+  .emoji-view {
+    /* #ifndef APP-NVUE */
+    display: inline-block;
+    /* #endif */
+    padding: 20rpx;
+  }
+  .emoji-text {
+    font-size: 40rpx;
+  }
+}
