@@ -1,0 +1,38 @@
+.card-module {
+  padding: 40rpx;
+  margin: 50rpx;
+  background: #fff;
+  border-radius: 10rpx;
+  .user-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 40rpx;
+    .user-name {
+      padding-left: 30rpx;
+      .user-name-text {
+        font-size: 32rpx;
+      }
+      .user-loc-text {
+        font-size: 28rpx;
+        color: #999;
+      }
+    }
+  }
+  .qrcode-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .qrcode-img {
+      width: 550rpx;
+      height: 550rpx;
+      background-color: #6c757d;
+      margin-bottom: 40rpx;
+    }
+    .qrcode-text {
+      font-size: 30rpx;
+      color: #A9A5A0;
+    }
+  }
+}

@@ -19,7 +19,7 @@
     </template>
   </VListItem>
 
-  <VListItem title="我的二维码" showRight>
+  <VListItem title="我的二维码" showRight @click="navToProfileQrcodeRoute">
     <template #right>
       <text class="iconfont font-md">&#xe647;</text>
     </template>
@@ -65,15 +65,12 @@ const onNicknameModalConfirmEvt = async () => {
   }
   console.log('新昵称：', nicknameInput.value);
 };
-</script>
 
-<style>
-/* #ifndef APP */
-/* page {
-  background: #EDEDED;
-} */
-/* #endif */
-</style>
+// 导航到二维码名片
+const navToProfileQrcodeRoute = () => {
+  uni.$uv.route('pages/module-profile/porfile-qrcode/porfile-qrcode', { type: 'user' });
+};
+</script>
 
 <style lang="scss" scoped>
 @import './style.scss';

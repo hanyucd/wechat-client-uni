@@ -1,0 +1,40 @@
+<template>
+  <VNavbar title="二维码名片" bg-color="#fff" />
+
+  <view class="card-module">
+    <view class="user-wrap">
+      <VAvatar :size="70" :src="'/static/images/illenium-1.jpg'" :radius="8" />
+
+      <view class="user-name">
+        <text class="user-name-text">{{ '凤凰之子' }}</text>
+        <text class="user-loc-text">地区：杭州</text>
+      </view>
+    </view>
+    
+    <view class="qrcode-wrap flex flex-column align-center justify-center">
+      <image :src="qrcodeSrc" class="qrcode-img bg-secondary mb-4" />
+      <text class="qrcode-text font text-light-muted">扫一扫上边二维码图案，加我的 V信</text>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+
+const qrcodeSrc = ref('/static/images/illenium-1.jpg');
+
+onLoad((option: any) => {
+  console.log(option);
+});
+</script>
+
+<style>
+/* #ifndef APP */
+page {
+  background: #EDEDED;
+}
+/* #endif */
+</style>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

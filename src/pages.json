@@ -150,6 +150,15 @@
 			"style": {
 				"app-plus": {}
 			}
+		},
+		// 二维码名片
+		{
+			"path": "pages/module-profile/porfile-qrcode/porfile-qrcode",
+			"style": {
+				"app-plus": {
+					"background": "#EDEDED"
+				}
+			}
 		}
 	]
 }
