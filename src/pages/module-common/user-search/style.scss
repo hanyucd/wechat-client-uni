@@ -1,0 +1,24 @@
+.navbar-input-wrap {
+  width: 600rpx;
+}
+
+.search-tip {
+  @include flex-xy-layout;
+  padding: 50rpx 0;
+  .search-tip-text {
+    font-size: 30rpx;
+    color: #A9A5A0;
+  }
+}
+
+.search-type-wrap {
+  @include flex-xy-layout;
+  padding: 0 40rpx;
+  .search-type-item {
+    margin: 0 40rpx;
+    .search-type-text {
+      font-size: 30rpx;
+      color: #0056b3;
+    }
+  }
+}

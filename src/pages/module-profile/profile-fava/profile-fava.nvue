@@ -1,0 +1,16 @@
+<template>
+  <VNavbar title="我的收藏" bg-color="#fff" />
+
+  <view v-for="(item, index) in 2" :key="index" class="fava-item">
+    收藏
+  </view>
+</template>
+
+<script setup lang="ts">
+// 收藏列表
+const favaList = ref([]);
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

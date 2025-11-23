@@ -2,7 +2,7 @@
   <VNavbar title="首页" :show-back="false">
     <template #right>
       <view class="right-icons">
-        <VIcon :icon="'\ue6e3'" :icon-style="{ marginRight: '40rpx' }" />
+        <VIcon :icon="'\ue6e3'" :icon-style="{ marginRight: '40rpx' }" @click="navToSearchRoute" />
         <VIcon :icon="'\ue682'" @click="openExtendPopup" />
       </view>
     </template>
@@ -189,6 +189,11 @@ const navToChatRoute = () =>{
  */
 const navToChat = () =>{
   uni.$uv.route('/pages/module-chat/chat-room/chat-room');
+};
+
+// 进入搜索页面
+const navToSearchRoute = () => {
+  uni.$uv.route('/pages/module-common/user-search/user-search');
 };
 </script>
 

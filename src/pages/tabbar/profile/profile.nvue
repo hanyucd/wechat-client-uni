@@ -28,13 +28,13 @@
 
   <VDivider />
 
-  <VListItem title="收藏" showRight>
+  <VListItem title="收藏" showRight @click="navToProfileFavaRoute">
     <template #icon>
       <text class="iconfont list-item-icon">&#xea2d;</text>
     </template>
   </VListItem>
 
-  <VListItem title="相册" showRight>
+  <VListItem title="相册" showRight @click="navToFriendFind">
     <template #icon>
       <text class="iconfont list-item-icon">&#xe608;</text>
     </template>
@@ -53,6 +53,15 @@ const navToProfileInfoRoute = () => {
   uni.$uv.route('/pages/module-profile/profile-info/profile-info');
 };
 
+// 导航到收藏
+const navToProfileFavaRoute = () => {
+  uni.$uv.route('/pages/module-profile/profile-fava/profile-fava');
+};
+
+// 导航到朋友圈
+const navToFriendFind = () => {
+  uni.$uv.route('pages/module-find/firend-find/firend-find');
+};
 </script>
 
 <style>
