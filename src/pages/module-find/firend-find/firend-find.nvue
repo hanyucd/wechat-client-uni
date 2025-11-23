@@ -1,7 +1,7 @@
 <template>
   <VNavbar :bgColor="`rgba(255, 255, 255, ${ navOpacityNum })`" title="朋友圈" :placeholder="false">
     <template #right>
-      <view class="send-btn" @click="navToChatSetRoute">
+      <view class="send-btn" @click="navToFindPublishRoute">
         <VIcon :icon="'\ue682'" />
       </view>
     </template>
@@ -107,8 +107,22 @@ onPageScroll((res) => {
   pageScrollTop.value = res.scrollTop;
 });
 
-const navToChatSetRoute = () => {
-  uni.$uv.route({ type: 'back' });
+/**
+ * 跳转至发动态页面
+ */
+const navToFindPublishRoute = () => {
+  const typeList = [
+    { name: '图文', key: 'image' },
+    { name: '短视频', key: 'video' },
+    // { name: '文字', key: 'content' }
+  ];
+
+  uni.showActionSheet({
+    itemList: typeList.map(item => item.name),
+    success: res => {
+      uni.$uv.route('/pages/module-find/friend-find-publish/friend-find-publish', { type: typeList[res.tapIndex].key });
+    }
+  });
 };
 
 // 监听 action 操作事件

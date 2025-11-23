@@ -1,0 +1,61 @@
+<template>
+  <VNavbar bgColor="#fff" title="发布朋友圈">
+    <template #right>
+      <view class="send-btn" @click="publishFind">
+        <text class="send-btn-text">发布</text>
+      </view>
+    </template>
+  </VNavbar>
+
+  <!-- 文字 -->
+  <textarea v-model="findContent" class="content-input" placeholder="这一刻的想法..."></textarea>
+
+  <!-- 图片上传 -->
+  <view class="image-module">
+    <ImageUpload :imageList="findImageList" />
+  </view>
+
+  <VListItem title="提醒谁看" showRight>
+    <template #right>
+    </template>
+  </VListItem>
+
+  <VListItem title="谁可以看" showRight>
+    <template #right>
+      <text>{{ '公开' }}</text>
+    </template>
+  </VListItem>
+</template>
+
+<script setup lang="ts">
+type TPublishType = 'image' | 'video';
+
+// 发布类型
+const publishType = ref<TPublishType>('image');
+
+// 内容
+const findContent = ref('');
+// 图片
+const findImageList = ref([
+  '/static/images/illenium-1.jpg',
+  '/static/images/illenium-1.jpg',
+  '/static/images/illenium-1.jpg',
+  '/static/images/illenium-1.jpg',
+]);
+
+onLoad((option: any) => {
+  publishType.value = option.type;
+});
+
+/*
+ * 发布朋友圈
+ */
+const publishFind = () => {
+  uni.$uv.route({ type: 'back' });
+};
+
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

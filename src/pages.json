@@ -144,6 +144,13 @@
 				"app-plus": {}
 			}
 		},
+		// 朋友圈发布
+		{
+			"path": "pages/module-find/friend-find-publish/friend-find-publish",
+			"style": {
+				"app-plus": {}
+			}
+		},
 		// 个人信息
 		{
 			"path": "pages/module-profile/profile-info/profile-info",

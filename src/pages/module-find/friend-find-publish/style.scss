@@ -1,0 +1,21 @@
+.send-btn {
+  @include flex-xy-layout;
+  background: $main-color;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  .send-btn-text {
+    font-size: 30rpx;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+.content-input {
+  padding: 20rpx;
+  font-size: 35rpx;
+  margin-bottom: 30rpx;
+}
+
+.image-module {
+  padding: 30rpx; 
+}

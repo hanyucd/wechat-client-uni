@@ -34,7 +34,9 @@ const tagList = ref<string[]>([]);
 // 快捷标签列表
 const fastTagList = ref<string[]>(['家人','亲戚','朋友','好友']);
 
-// 移除标签
+/*
+ * 删除标签
+ */
 const removeTag = (index: number) => {
   uni.showModal({
     content: '是否要删除该标签？',
@@ -46,7 +48,9 @@ const removeTag = (index: number) => {
   });
 };
 
-// 快捷增加标签
+/*
+ * 快速添加标签
+ */
 const fastAddTag = (item: string) => {
   if (tagList.value.indexOf(item) !== -1) {
     return uni.$uv.toast('标签已存在');
@@ -54,7 +58,9 @@ const fastAddTag = (item: string) => {
   tagList.value.push(item);
 };
 
-// 添加标签
+/* 
+ * 添加标签
+ */
 const addTag = () => {
   if (tagInput.value.trim() === '') return;
   if(tagList.value.indexOf(tagInput.value.trim()) !== -1) {
