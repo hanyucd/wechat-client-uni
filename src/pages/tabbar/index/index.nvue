@@ -38,6 +38,7 @@
   </VPopup>
 
   <uv-button type="primary" text="确定" @click="navToChat" />
+  <uv-button type="primary" text="登录" @click="navToLogin" />
 </template>
 
 <script setup lang="ts">
@@ -189,6 +190,13 @@ const navToChatRoute = () =>{
  */
 const navToChat = () =>{
   uni.$uv.route('/pages/module-chat/chat-room/chat-room');
+};
+
+/**
+ * 进入登录页面
+ */
+const navToLogin = () =>{
+  uni.$uv.route('/pages/login/login');
 };
 
 // 进入搜索页面

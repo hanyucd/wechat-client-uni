@@ -1,0 +1,56 @@
+.page-loading {
+  @include flex-y-layout;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #f8f9fa;
+  .page-loading-text {
+    font-size: 40rpx;
+    color: #6c757d;
+    margin-top: 20rpx
+  }
+}
+
+.login-logo {
+  @include flex-xy-layout;
+  height: 350rpx;
+  .logo-text {
+    font-size: 50rpx;
+  }
+}
+
+.login-form {
+  padding: 0 30rpx;
+  .form-input {
+    font-size: 30rpx;
+    padding: 0 30rpx;
+    margin-bottom: 20rpx;
+    height: 100rpx;
+    background-color: #f8f9fa;
+  }
+}
+
+.login-btn {
+  @include flex-xy-layout;
+  background: $main-color;
+  border-radius: 8rpx;
+  padding: 30rpx;
+  margin: 0 30rpx;
+  margin-top: 50rpx;
+  .login-btn-text {
+    font-size: 30rpx;
+    color: #fff;
+  }
+}
+
+.login-p {
+  @include flex-xy-layout;
+  margin-top: 30rpx;
+  .login-p-text {
+    font-size: 30rpx;
+    color: #A9A5A0;
+    padding: 20rpx;
+  }
+}

@@ -53,6 +53,11 @@
 		]
 	},
 	"pages": [
+		// 登录
+		{
+			"path": "pages/login/login",
+			"style": {}
+		},
 		// tabbar 首页
 		{
 			"path": "pages/tabbar/index/index",
@@ -80,7 +85,9 @@
 		// 聊天室
 		{
 			"path": "pages/module-chat/chat-room/chat-room",
-			"style": {}
+			"style": {
+				"app-plus": {}
+			}
 		},
 		// 聊天设置
 		{

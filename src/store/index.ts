@@ -15,4 +15,4 @@ export default pinia;
 
 // 模块统一导出
 export * from './modules/appModule';
-// export * from './modules/userModule';
+export * from './modules/userModule';

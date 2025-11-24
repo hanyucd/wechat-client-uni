@@ -1,17 +1,86 @@
 <template>
-  <text class="title">{{ title }}</text>
-  <text>{{ title }}</text>
-
-  <view>eee</view>
+  <view v-if="isLoading" class="page-loading">
+    <uv-loading-icon size="60rpx" />
+    <text class="page-loading-text">加载中...</text>
+  </view>
+  
+  <template v-else>
+    <view class="login-logo">
+      <text class="logo-text">YOU-LOGO</text>
+    </view>
+  
+    <!-- 登录表单 -->
+    <view class="login-form">
+      <input v-model="loginForm.username" type="text" class="form-input" placeholder="请输入用户名" />
+      <input v-model="loginForm.password" type="text" class="form-input" placeholder="请输入密码" />
+      <input v-if="loginType === 'reg'" v-model="loginForm.repassword" type="text" class="form-input" placeholder="请输入确认密码" />
+    </view>
+  
+    <!-- 登录按钮 -->
+    <view class="login-btn" @click="handleLogin">
+      <text class="login-btn-text">{{ loginType === 'login' ? '登 录' : '注 册' }}</text>
+    </view>
+  
+    <view class="login-p">
+      <text class="login-p-text" @click="changeLoginType">{{ loginType === 'login' ? '注册账号' : '马上登录' }}</text>
+      <text class="login-p-text" style="padding: 0;">|</text>
+      <text class="login-p-text">忘记密码</text>
+    </view>
+  </template>
 </template>
 
 <script setup lang="ts">
-const title = ref('登录 App');
+import { useUserStore } from '@/store';
+
+const userStore = useUserStore();
+
+// 登录类型
+const loginType = ref<'login' | 'reg'>('login');
+// 登录表单
+const loginForm = reactive({
+  username: '',
+  password: '',
+  repassword: '',
+});
+
+const isLoading = ref(true); // 加载状态
 
 onLoad(() => {
-  console.log('页面加载完成');
+  // const userToken = userStore.userToken;
+  const userToken = 'userStore.userToken';
+  
+  console.log('登录页面 token:', userToken);
+
+  if (userToken) {
+    uni.$uv.route({ type: 'tab', url: 'pages/tabbar/index/index' });
+  } else {
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 1000);
+  }
 });
+
+/**
+ * 切换登录类型
+ */
+const changeLoginType = () => {
+  loginType.value = loginType.value === 'login' ? 'reg' : 'login';
+
+  loginForm.password = '';
+  loginForm.repassword = '';
+  if (loginType.value === 'reg') {
+    loginForm.username = '';
+  }
+};
+
+/**
+ * 处理登录
+ */
+const handleLogin = async () => {
+  userStore.userLoginAction(loginForm);
+};
 </script>
 
 <style lang="scss" scoped>
+@import './style.scss';
 </style>
