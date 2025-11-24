@@ -12,7 +12,7 @@
 
   <!-- 图片上传 -->
   <view class="image-module">
-    <ImageUpload :imageList="findImageList" />
+    <ImageUpload :imageList="findImageList" @updateImage="onUpdateImageEvt" />
   </view>
 
   <VListItem title="提醒谁看" showRight>
@@ -36,8 +36,8 @@ const publishType = ref<TPublishType>('image');
 // 内容
 const findContent = ref('');
 // 图片
-const findImageList = ref([
-  '/static/images/illenium-1.jpg',
+const findImageList = ref<string[]>([
+  // '/static/images/illenium-1.jpg',
   '/static/images/illenium-1.jpg',
   '/static/images/illenium-1.jpg',
   '/static/images/illenium-1.jpg',
@@ -46,6 +46,13 @@ const findImageList = ref([
 onLoad((option: any) => {
   publishType.value = option.type;
 });
+
+/**
+ * 监听图片选择事件
+ */
+const onUpdateImageEvt = (images: string[]) => {
+  findImageList.value = images;
+};
 
 /*
  * 发布朋友圈

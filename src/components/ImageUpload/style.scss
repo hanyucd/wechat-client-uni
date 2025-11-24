@@ -27,4 +27,19 @@
       }
     }
   }
+  .image-upload {
+    width: 230rpx;
+    padding-top: 20rpx;
+    .upload-wrap {
+      @include flex-xy-layout;
+      width: 210rpx;
+      height: 210rpx;
+      background-color: #f8f9fa;
+      border-radius: 8rpx;
+      .icon-upload {
+        font-size: 80rpx;
+        color: #A9A5A0;
+      }
+    }
+  }
 }
