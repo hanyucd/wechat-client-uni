@@ -15,6 +15,21 @@
     <ImageUpload :imageList="findImageList" @updateImage="onUpdateImageEvt" />
   </view>
 
+  <!-- 视频上传 -->
+  <view v-if="findType === 'video'" class="video-module">
+    <view v-if="!findVideo.src" class="video-upload" @click="chooseVideo">
+			<text class="video-upload-icon">+</text>
+		</view>
+    <template v-if="findVideo.src">
+      <view class="video-wrap">
+        <video :src="findVideo.src" class="video" controls></video>
+      </view>
+      <view class="choose-video-btn" @click="chooseVideo">
+        <text class="choose-video-btn-text">点击切换视频</text>
+      </view>
+    </template>
+  </view>
+
   <VListItem title="提醒谁看" showRight>
     <template #right>
     </template>
@@ -29,22 +44,19 @@
 
 <script setup lang="ts">
 type TPublishType = 'image' | 'video';
+type TFindVideo = { src: string; poster: string };
 
-// 发布类型
-const publishType = ref<TPublishType>('image');
-
+// 动态类型
+const findType = ref<TPublishType>('video');
 // 内容
 const findContent = ref('');
 // 图片
-const findImageList = ref<string[]>([
-  // '/static/images/illenium-1.jpg',
-  '/static/images/illenium-1.jpg',
-  '/static/images/illenium-1.jpg',
-  '/static/images/illenium-1.jpg',
-]);
+const findImageList = ref<string[]>([]);
+// 视频
+const findVideo = ref<TFindVideo>({} as TFindVideo);
 
 onLoad((option: any) => {
-  publishType.value = option.type;
+  findType.value = option.type;
 });
 
 /**
@@ -52,6 +64,19 @@ onLoad((option: any) => {
  */
 const onUpdateImageEvt = (images: string[]) => {
   findImageList.value = images;
+};
+
+/**
+ * 选择视频
+ */
+const chooseVideo = async () => {
+  try {
+    const videoRes = await uni.chooseVideo({ maxDuration: 60, });
+    console.log(videoRes);
+    findVideo.value.src = videoRes.tempFilePath;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /*

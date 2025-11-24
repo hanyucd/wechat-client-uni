@@ -19,3 +19,35 @@
 .image-module {
   padding: 30rpx; 
 }
+
+.video-module {
+  padding: 30rpx; 
+  .video-upload {
+    @include flex-xy-layout;
+    height: 350rpx;
+    background-color: #f8f9fa;
+    border-radius: 8rpx;
+    .video-upload-icon {
+      color: #A9A5A0;
+      font-size: 80rpx;
+    }
+  }
+  .video-wrap {
+    display: flex;
+    flex-direction: row;
+    .video {
+      flex: 1;
+      height: 350rpx;
+    }
+  }
+  .choose-video-btn {
+    @include flex-xy-layout;
+    height: 90rpx;
+    margin: 30rpx 0;
+    background-color: #f8f9fa;
+    .choose-video-btn-text {
+      font-size: 30rpx;
+      color: #A9A5A0;
+    }
+  }
+}
