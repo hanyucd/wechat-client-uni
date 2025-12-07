@@ -25,7 +25,7 @@ http.interceptors.request.use(config => {
 
   return config;
 }, config => {
-  console.log('http 请求拦截错误：', config);
+  // console.log('http 请求拦截错误：', config);
   return Promise.reject(config);
 });
 
@@ -44,8 +44,9 @@ http.interceptors.response.use(response => {
 
   return resData;
 }, errResponse => {
-  console.log('http 响应拦截错误:', errResponse);
+  // console.log('http 响应拦截错误:', errResponse);
   const errData = errResponse.data;
+  uni.hideLoading();
 
   // 401 未授权
   if (errResponse.statusCode === 401) {
@@ -54,7 +55,6 @@ http.interceptors.response.use(response => {
     return Promise.reject(errData);
   }
 
-  uni.hideLoading();
   uni.showToast({ icon: 'none', title: `${ errData.msg || '服务器出错' }` });
   return Promise.reject(errData);
 });

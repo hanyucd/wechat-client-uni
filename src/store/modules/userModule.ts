@@ -13,10 +13,9 @@ export const useUserStore = defineStore('userModule', () => {
    */
   const userRegisterAction = async (param: IRegisterParams) => {
     try {
-      const resp = await $api.userRegisterApi(param);
-      // userInfo.value = userLoginInfoRes.data;
-      // _loginSuccess();
-      console.log(param);
+      const regRes = await $api.userRegisterApi(param);
+      uni.$uv.toast('注册成功');
+      return regRes.data;
     } catch (err) {
       console.log(err);
     }
@@ -51,6 +50,7 @@ export const useUserStore = defineStore('userModule', () => {
       // 清除用户信息
       await $api.userLogoutApi();
       userInfo.value = {} as IUser;
+      uni.$uv.toast('已退出登录');
       uni.$uv.route({ type: 'launch', url: 'pages/login/login' });
     } catch (error) {
       console.log(error);

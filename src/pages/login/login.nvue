@@ -11,7 +11,7 @@
   
     <!-- 登录表单 -->
     <view class="login-form">
-      <input v-model="loginForm.username" type="text" class="form-input" placeholder="请输入用户名" />
+      <input v-model="loginForm.username" type="text" class="form-input" placeholder="请输入账号" />
       <input v-model="loginForm.password" type="text" class="form-input" placeholder="请输入密码" />
       <input v-if="loginType === 'reg'" v-model="loginForm.repassword" type="text" class="form-input" placeholder="请输入确认密码" />
     </view>
@@ -46,8 +46,8 @@ const loginForm = reactive({
 const isLoading = ref(true); // 加载状态
 
 onLoad(() => {
-  const userToken = userStore.userToken;
-  // const userToken = '';
+  // const userToken = userStore.userToken;
+  const userToken = '';
 
   if (userToken) {
     uni.$uv.route({ type: 'tab', url: 'pages/tabbar/index/index' });
@@ -79,13 +79,25 @@ const handleLogin = async () => {
   const _password = loginForm.password.trim();
   const _repassword = loginForm.repassword.trim();
 
-  if (_username === '' || _password === '') return uni.$uv.toast('请输入用户名或密码');
+  if (!_username) return uni.$uv.toast('请输入账号');
+  if (!_password) return uni.$uv.toast('请输入密码');
   if (loginType.value === 'reg' && _password !== _repassword) return uni.$uv.toast('两次密码不一致');
 
-  // 注册
-  // if (loginType.value === 'reg') userStore.userRegisterAction({ username: _username, password: _password, repassword: _repassword }); 
   // 登录
-  if (loginType.value === 'login') userStore.userLoginAction({ username: _username, password: _password }); 
+  if (loginType.value === 'login') {
+    userStore.userLoginAction({ username: _username, password: _password });
+  }
+
+  // 注册
+  if (loginType.value === 'reg') {
+    const regResult = await userStore.userRegisterAction({ username: _username, password: _password, repassword: _repassword });
+    if (regResult) {
+      loginType.value = 'login';
+      loginForm.username = regResult.username;
+      loginForm.password = '';
+      loginForm.repassword = '';
+    }
+  }
 };
 </script>
 
