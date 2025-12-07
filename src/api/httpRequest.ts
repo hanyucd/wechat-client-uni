@@ -22,7 +22,6 @@ http.interceptors.request.use(config => {
   const userStore = useUserStore();
   const userToken = userStore.userToken;
   (userToken) && (config.header!['Authorization'] = `Bearer ${ userToken }`);
-  // console.log(config);
 
   return config;
 }, config => {

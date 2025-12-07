@@ -3,10 +3,9 @@ export type TLoginParams = {
   password: string;
 };
 
-// export type ILoginParams = IPageParams & {
-//   username: string;
-//   password: string;
-// };
+export type IRegisterParams = TLoginParams & {
+  repassword: string;
+};
 
 export interface IUser {
   id: number;

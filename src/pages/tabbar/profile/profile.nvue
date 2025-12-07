@@ -45,9 +45,15 @@
       <text class="iconfont list-item-icon">&#xe612;</text>
     </template>
   </VListItem>
+
+  <uv-button type="primary" text="退出登录" @click="handlogout" />
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/store';
+
+const userStore = useUserStore();
+
 // 导航到个人信息
 const navToProfileInfoRoute = () => {
   uni.$uv.route('/pages/module-profile/profile-info/profile-info');
@@ -61,6 +67,21 @@ const navToProfileFavaRoute = () => {
 // 导航到朋友圈
 const navToFriendFind = () => {
   uni.$uv.route('pages/module-find/firend-find/firend-find');
+};
+
+/**
+ * 进入登录页面
+ */
+const handlogout = async () =>{
+  try {
+    const modalRes = await uni.showModal({ title: '提示', content: '确定退出登录吗？' });
+    if (!modalRes.confirm) return;
+
+    userStore.userLogoutAction();
+  } catch (error) {
+    console.log(error);
+  }
+  // uni.$uv.route('/pages/login/login');
 };
 </script>
 
