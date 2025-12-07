@@ -11,4 +11,15 @@ declare global {
     // };
     $uv: any;
   }
+
+  interface IResponse<T = any> {
+    code: number | string;
+    msg: string;
+    data: T | null;
+  }
+
+  interface IPageParams {
+    page: number;
+    size: number;
+  }
 }

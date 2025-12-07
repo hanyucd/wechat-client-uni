@@ -13,7 +13,7 @@ export const useAppStore = defineStore('appModule', () => {
   };
 }, {
   persist: {
-    key: 'v-app-store',
+    key: 'vapp-app-store',
     paths: ['systemInfo']
   }
 });

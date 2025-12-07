@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { IUser } from '@/types/user';
+import type { IUser, TLoginParams } from '@/types/user';
 import $api from '@/api';
 
 export const useUserStore = defineStore('userModule', () => {
@@ -9,13 +9,11 @@ export const useUserStore = defineStore('userModule', () => {
   const userToken = computed(() => userInfo.value?.token || '');
 
   /**
-   * 用户名、密码登录
+   * 用户注册
    */
-  const userLoginAction = async (param: any) => {
+  const userRegisterAction = async (param: TLoginParams) => {
     try {
-      // const resp = await $api.userLoginApi(param);
-      // 获取用户登录信息
-      // const userLoginInfoRes = await $api.getUserLoginInfoApi({ username: param.userName, appType: 3 });
+      // const resp = await $api.userRegisterApi(param);
       // userInfo.value = userLoginInfoRes.data;
       // _loginSuccess();
       console.log(param);
@@ -24,14 +22,41 @@ export const useUserStore = defineStore('userModule', () => {
     }
   };
 
+  /**
+   * 用户登录
+   */
+  const userLoginAction = async (param: TLoginParams) => {
+    try {
+      const loginRes = await $api.userLoginApi(param);
+      userInfo.value = loginRes.data!;
+      // _loginSuccess();
+      console.log(loginRes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /**
+   * 退出登录
+   */
+  const userLogoutAction = async () => {
+    // 清除用户信息
+    userInfo.value = {} as IUser;
+    console.log('退出登录');
+
+    // uni.redirectTo({ url: '/pages/login/index' });
+  };
+
   return {
     userInfo,
     userToken,
-    userLoginAction
+    userRegisterAction,
+    userLoginAction,
+    userLogoutAction
   };
 }, {
   persist: {
-    key: 'v-user-store',
+    key: 'vapp-user-store',
     paths: ['userInfo']
   }
 });

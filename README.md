@@ -1,4 +1,4 @@
-# 移动端: uniapp-wechat（进行中...）
+# 移动端: wechat-client-uniapp
 
 技术栈：Vue3 + Typescript + Pinia + Vite + Uv-ui + Scss + Pnpm + Husky + Eslint
 
@@ -6,6 +6,11 @@
 - pinia-plugin-persistedstate 适用于 Pinia 的持久化存储插件
 - unplugin-vue-components 按需自动导入组件
 - unplugin-auto-import 按需自动导入 API
+
+## 全栈项目
+
+- 前端：https://github.com/hanyucd/wechat-client-uni
+- 后端：https://github.com/hanyucd/wechat-searver-egg
 
 ### nvue 页面结构同 vue, 由 template、style、script 构成
 
