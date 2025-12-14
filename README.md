@@ -10,7 +10,7 @@
 ## 全栈项目
 
 - 前端：https://github.com/hanyucd/wechat-client-uni
-- 后端：https://github.com/hanyucd/wechat-searver-egg
+- 后端：https://github.com/hanyucd/wechat-server-egg
 
 ### nvue 页面结构同 vue, 由 template、style、script 构成
 

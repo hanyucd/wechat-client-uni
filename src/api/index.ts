@@ -9,5 +9,7 @@ export default {
   // 用户登录
   userLoginApi: (param: TLoginParams) => httpRequest<IUser>(`${ serverUrl }/api/user/login`, param, 'post'),
   // 退出登录
-  userLogoutApi: () => httpRequest(`${ serverUrl }/api/user/logout`, {}, 'post')
+  userLogoutApi: () => httpRequest<string>(`${ serverUrl }/api/user/logout`, {}, 'post'),
+  // 用户搜索
+  userSearchApi: (keyword: string) => httpRequest<IUser>(`${ serverUrl }/api/user/search`, { keyword })
 };
