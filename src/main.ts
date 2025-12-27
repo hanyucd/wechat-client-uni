@@ -21,5 +21,5 @@ export function createApp() {
 }
 
 // console.log(uni.$uv);
-// console.log('当前环境:', import.meta.env);
+console.log('当前环境:', import.meta.env);
 

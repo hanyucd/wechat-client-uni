@@ -3,7 +3,7 @@ export type TLoginParams = {
   password: string;
 };
 
-export type IRegisterParams = TLoginParams & {
+export type TRegisterParams = TLoginParams & {
   repassword: string;
 };
 

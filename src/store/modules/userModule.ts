@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
-import type { IUser, TLoginParams, IRegisterParams } from '@/types/user';
+import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
 import $api from '@/api';
 
 export const useUserStore = defineStore('userModule', () => {
-  const userInfo = ref<IUser>({} as IUser); // 用户信息
+  // 用户信息
+  const userInfo = ref<IUser>({} as IUser);
 
   // 用户 token 
   const userToken = computed(() => userInfo.value?.token || '');
@@ -11,7 +12,7 @@ export const useUserStore = defineStore('userModule', () => {
   /**
    * 用户注册
    */
-  const userRegisterAction = async (param: IRegisterParams) => {
+  const userRegisterAction = async (param: TRegisterParams) => {
     try {
       const regRes = await $api.userRegisterApi(param);
       uni.$uv.toast('注册成功');

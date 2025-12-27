@@ -1,11 +1,12 @@
 # 移动端: wechat-client-uniapp
 
-技术栈：Vue3 + Typescript + Pinia + Vite + Uv-ui + Scss + Pnpm + Husky + Eslint
+技术栈：Vue3 + Typescript + Pinia + Luch-request + Vite + Uv-ui + Scss + Pnpm + Husky + Eslint
 
-次要：
+其他：
 - pinia-plugin-persistedstate 适用于 Pinia 的持久化存储插件
 - unplugin-vue-components 按需自动导入组件
 - unplugin-auto-import 按需自动导入 API
+- luch-request 是一个基于 Promise 开发的 uni-app 跨平台 http 请求库
 
 ## 全栈项目
 

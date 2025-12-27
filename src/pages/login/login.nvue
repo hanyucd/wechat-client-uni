@@ -46,8 +46,8 @@ const loginForm = reactive({
 const isLoading = ref(true); // 加载状态
 
 onLoad(() => {
-  // const userToken = userStore.userToken;
-  const userToken = '';
+  const userToken = userStore.userToken;
+  // const userToken = '';
 
   if (userToken) {
     uni.$uv.route({ type: 'tab', url: 'pages/tabbar/index/index' });
