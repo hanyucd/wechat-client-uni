@@ -1,0 +1,36 @@
+<template>
+  <VNavbar title="设置" bg-color="#fff" />
+
+  <uv-cell-group>
+		<uv-cell title="个人设置" />
+		<uv-cell title="App版本" value="v1.0.0" />
+	</uv-cell-group>
+
+  <view class="set-module">
+    <uv-button :custom-style="{ backgroundColor: '#08C060', color: '#fff' }" text="退出登录" @click="handlogout" />
+  </view>
+</template>
+
+<script setup lang="ts">
+import { useUserStore } from '@/store';
+
+const userStore = useUserStore();
+
+/**
+ * 进入登录页面
+ */
+const handlogout = async () =>{
+  try {
+    const modalRes = await uni.showModal({ title: '提示', content: '确定退出登录吗？' });
+    if (!modalRes.confirm) return;
+
+    userStore.userLogoutAction();
+  } catch (error) {
+    console.log(error);
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

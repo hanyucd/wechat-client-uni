@@ -187,6 +187,11 @@
 			"style": {
 				"app-plus": {}
 			}
+		},
+		// 我的设置
+		{
+			"path": "pages/module-profile/profile-set/profile-set",
+			"style": {}
 		}
 	]
 }

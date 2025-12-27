@@ -40,13 +40,11 @@
     </template>
   </VListItem>
 
-  <VListItem title="设置" showRight>
+  <VListItem title="设置" showRight @click="navToProfileSetRoute">
     <template #icon>
       <text class="iconfont list-item-icon">&#xe612;</text>
     </template>
   </VListItem>
-
-  <uv-button type="primary" text="退出登录" @click="handlogout" />
 </template>
 
 <script setup lang="ts">
@@ -69,19 +67,9 @@ const navToFriendFind = () => {
   uni.$uv.route('pages/module-find/firend-find/firend-find');
 };
 
-/**
- * 进入登录页面
- */
-const handlogout = async () =>{
-  try {
-    const modalRes = await uni.showModal({ title: '提示', content: '确定退出登录吗？' });
-    if (!modalRes.confirm) return;
-
-    userStore.userLogoutAction();
-  } catch (error) {
-    console.log(error);
-  }
-  // uni.$uv.route('/pages/login/login');
+// 导航到设置
+const navToProfileSetRoute = () => {
+  uni.$uv.route('/pages/module-profile/profile-set/profile-set');
 };
 </script>
 

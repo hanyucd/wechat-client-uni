@@ -1,7 +1,7 @@
 import httpRequest from './httpRequest';
 import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
 
-const serverUrl = import.meta.env.VITE_API_BASE_URL;
+const serverUrl = import.meta.env.VITE_API_URL;
 
 export default {
   // 用户注册
