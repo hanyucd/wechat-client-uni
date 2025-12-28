@@ -2,7 +2,7 @@
   <VNavbar title="设置" bg-color="#fff" />
 
   <uv-cell-group>
-		<uv-cell title="个人设置" />
+		<uv-cell title="关于我们" />
 		<uv-cell title="App版本" value="v1.0.0" />
 	</uv-cell-group>
 

@@ -9,8 +9,8 @@
 
   <VListItem :cover="'/static/images/userpic.png'" showRight>
     <view class="user-info-wrap" @click="navToProfileInfoRoute">
-      <text class="user-name">{{ '艾伦-沃克' }}</text>
-      <text class="user-wechat text-light-muted font mt-2">仿微信号：{{ 'hy-woke' }}</text>
+      <text class="user-name">{{ userStore.userInfo.nickname }}</text>
+      <text class="user-wechat">微聊号：{{ userStore.userInfo.username }}</text>
     </view>
     
     <template #right>

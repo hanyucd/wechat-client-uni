@@ -98,7 +98,7 @@
 				}
 			}
 		},
-		// 用户主页
+		// 用户(好友)主页
 		{
 			"path": "pages/module-common/user-mine/user-mine",
 			"style": {

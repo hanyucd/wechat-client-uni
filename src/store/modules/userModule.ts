@@ -1,8 +1,15 @@
 import { defineStore } from 'pinia';
 import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
 import $api from '@/api';
+import WsClient from '@/utils/webSocketUtil';
 
 export const useUserStore = defineStore('userModule', () => {
+  // webSocket 地址
+  const wsURL = ref(import.meta.env.VITE_SOCKET_URL);
+  // webSocket 客户端
+  const wsClient = ref<WsClient | null>(null);
+  // const wsClient = ref<WsClient>(new WsClient({ url: wsURL.value, }));
+
   // 用户信息
   const userInfo = ref<IUser>({} as IUser);
 
@@ -41,6 +48,8 @@ export const useUserStore = defineStore('userModule', () => {
   const _loginSuccess = () => {
     uni.$uv.toast('登录成功');
     uni.$uv.route({ type: 'tab', url: 'pages/tabbar/index/index' });
+
+    initWebSocketAction();
   };
 
   /**
@@ -58,12 +67,30 @@ export const useUserStore = defineStore('userModule', () => {
     }
   };
 
+  /**
+   * 初始化 websocket 连接
+   */
+  const initWebSocketAction = async () => {
+    try {
+      wsClient.value = new WsClient({
+        url: wsURL.value,
+      });
+
+      wsClient.value.connect();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
+    wsURL,
+    wsClient,
     userInfo,
     userToken,
     userRegisterAction,
     userLoginAction,
-    userLogoutAction
+    userLogoutAction,
+    initWebSocketAction
   };
 }, {
   persist: {

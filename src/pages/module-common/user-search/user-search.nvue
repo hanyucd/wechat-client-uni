@@ -1,59 +1,58 @@
 <template>
   <VNavbar bg-color="#fff">
     <view class="navbar-input-wrap">
-      <uv-input v-model="searchInput" prefixIcon="search" :placeholder="placeholder" border="surround" @confirm="confirmSearch" />
+      <uv-input v-model="searchInput" prefixIcon="search" placeholder="搜索用户" border="surround" @confirm="confirmSearch" />
     </view>
   </VNavbar>
 
-  <template v-if="1">
-    <view class="search-tip">
-      <text class="search-tip-text">搜索指定内容</text>
-    </view>
-    
-    <view class="search-type-wrap px-4 flex flex-wrap">
-      <view v-for="(item, index) in searchTypeList" :key="index" class="search-type-item   flex align-center justify-center mb-3 border-left border-right" @click="changeSearchType(item)">
-        <text class="search-type-text">{{ item.name }}</text>
-      </view>
-    </view>
-  </template>
+  <view v-if="searchList.length" class="search-module">
+    <VListItem
+      v-for="(item, index) in searchList"
+      :key="index"
+      :cover="item.avatar || '/static/images/userpic.png'"
+      :title="item.nickname"
+      showRight
+      @click="navToUserMineRoute(item)"
+    />
+  </view>
+
+  <view v-else class="search-tip">
+    <text class="search-tip-text">请输入用户账号</text>
+  </view>
 </template>
 
 <script setup lang="ts">
+import $api from '@/api';
+import type { IUser } from '@/types/user';
+
+// 搜索用户账号
 const searchInput = ref('');
-
-const searchType = ref('');
-// 搜索类型列表
-const searchTypeList = ref([
-  { name: '聊天记录', value: 'history' },
-  { name: '用户', value: 'user' },
-  { name: '群聊', value: 'group' }
-]);
-
 // 搜索列表
-const searchList = ref([]);
+const searchList = ref<IUser[]>([]);
 
-const placeholder = computed(() => {
-  switch (searchType.value) {
-    case 'history':
-      return '搜索聊天记录';
-    case 'user':
-      return '搜索用户';
-    case 'group':
-      return '搜索群聊';
-    default:
-      return '搜索';
+/**
+ * 确认搜索
+ */
+const confirmSearch = async () => {
+  if (!searchInput.value.trim()) return uni.$uv.toast('请输入用户账号');
+
+  try {
+    const searchRes = await $api.userSearchApi(searchInput.value.trim());
+    if (searchRes.data) {
+      searchList.value = [searchRes.data];
+    } else {
+      uni.$uv.toast('未搜索到用户');
+    }
+  } catch (error) {
+    console.log(error);
   }
-});
-
-// 选择搜索类型
-const changeSearchType = (item: typeof searchTypeList.value[0]) => {
-  searchType.value = item.value;
-  console.log(item);
 };
 
-// 确认搜索
-const confirmSearch = () => {
-  console.log(searchInput.value);
+/**
+ * 导航到用户(好友)名片页
+ */
+const navToUserMineRoute = (user: IUser) => {
+  uni.$uv.route('/pages/module-common/user-mine/user-mine', { friend_id: user.id });
 };
 </script>
 

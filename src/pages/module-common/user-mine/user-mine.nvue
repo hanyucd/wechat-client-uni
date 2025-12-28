@@ -1,25 +1,25 @@
 <template>
   <VNavbar bgColor="#fff">
     <template #right>
-      <VIcon :icon="'\ue6fd'" @click="openMenuPopup" />
+      <VIcon v-if="friendDetail.isfriend" :icon="'\ue6fd'" @click="openMenuPopup" />
     </template>
   </VNavbar>
   
   <!-- 信息模块 -->
   <view class="info-module">
-    <VAvatar :size="120" :src="'https://img.yzcdn.cn/vant/cat.jpeg'" :radius="8" />
+    <VAvatar :size="120" :src="friendDetail.avatar || 'https://img.yzcdn.cn/vant/cat.jpeg'" :radius="8" />
 
     <view class="info-wrap">
       <view class="nickname-wrap">
-        <text class="nickname">{{ '张王' }}</text>
-        <image v-if="1" src="/static/images/star.png" style="width: 40rpx; height: 40rpx;" />
+        <text class="nickname">{{ friendDetail.nickname }}</text>
+        <image v-if="friendDetail.isstar" src="/static/images/star.png" style="width: 40rpx; height: 40rpx;" />
       </view>
-      <text class="account">账号：{{ '184766747t' }}</text>
+      <text class="account">账号：{{ friendDetail.username }}</text>
     </view>
   </view>
 
   <!-- 标签 -->
-  <VListItem :showLeftIcon="false" showRight>
+  <VListItem v-if="friendDetail.isfriend" :showLeftIcon="false" showRight>
     <view class="tag-wrap">
       <text class="tag-title">标签</text>
       <text v-for="(item, index) in 0" :key="index" class="tag-item">
@@ -47,10 +47,14 @@
   <VListItem title="更多信息" :showLeftIcon="false" showRight />
   <VDivider />
 
-  <!-- 按钮 -->
-  <view class="action-btn" hover-class="bg-light">
-    <text class="iconfont icon-msg">&#xe64e;</text>
-    <text class="font-md">{{ 0 ? '移出黑名单' : '发信息' }}</text>
+  <!-- 好友操作按钮 -->
+  <view v-if="friendDetail.isfriend" class="action-btn" hover-class="bg-light" @click="navToChatRoute">
+    <text v-if="!friendDetail.isblack" class="iconfont icon-msg">&#xe64e;</text>
+    <text>{{ friendDetail.isblack ? '移出黑名单' : '发信息' }}</text>
+  </view>
+  <!-- 添加好友按钮 -->
+  <view v-else class="action-btn" hover-class="bg-light">
+    <text>添加好友</text>
   </view>
 
   <!-- 菜单弹窗 -->
@@ -74,18 +78,21 @@
 </template>
 
 <script setup lang="ts">
+import $api from '@/api';
 import VPopup from '@/components/VPopup/VPopup.vue';
+import type { IFriend } from '@/types/friend';
 
 type VPopupType = InstanceType<typeof VPopup>;
 const menuVPopupRef = ref<VPopupType | null>(null);
 
-const userDetail = ref({} as any);
+const friendId = ref(0);
+const friendDetail = ref({} as IFriend);
 
 // 菜单 popup 列表
 const menuPopupList = computed(() => {
   return [
     { icon: '\ue6b3', title: '设置备注和标签', type: 'navigate', path: 'pages/module-common/user-remark/user-remark' },
-    { icon: '\ue6b0', title: userDetail.value ? '取消星标好友' : '设为星标朋友', type: 'event', event: 'setStar' },
+    { icon: '\ue6b0', title: friendDetail.value ? '取消星标好友' : '设为星标朋友', type: 'event', event: 'setStar' },
     {
       icon: '\ue613',
       title: '把他推荐给朋友',
@@ -96,7 +103,7 @@ const menuPopupList = computed(() => {
       }))}`
     },
     { icon: '\ue667', title: '设置朋友圈和动态权限', type: 'navigate', path: 'pages/module-common/user-find-auth/user-find-auth' },
-    { icon: '\ue638', title: userDetail.value ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
+    { icon: '\ue638', title: friendDetail.value ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
     {
       icon: '\ue61c',
       title: '投诉',
@@ -108,6 +115,30 @@ const menuPopupList = computed(() => {
     { icon: '\ue638', title: '删除', type: 'event', event: 'delFriend' }
   ];
 });
+
+onLoad((option: any) => {
+  console.log(option);
+
+  if (option.friend_id) {
+    friendId.value = Number(option.friend_id);
+    _getFriendDetail();
+  }
+});
+
+/**
+ * 获取好友详情
+ */
+const _getFriendDetail = async () => {
+  if (!friendId.value) return;
+  
+  try {
+    const res = await $api.getFriendDetailApi(friendId.value);
+    
+    friendDetail.value = res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 /**
  * 打开菜单 popup
@@ -142,7 +173,7 @@ const setStar = async () => {
 
 // 设置黑名单
 const setBlack = async () => {
-  const modalContent = userDetail.value.isblack ? '移出黑名单' : '加入黑名单';
+  const modalContent = friendDetail.value.isblack ? '移出黑名单' : '加入黑名单';
   try {
     const modalRes = await uni.showModal({ title: '提示', content: modalContent });
     if (!modalRes.confirm) return;
@@ -153,7 +184,9 @@ const setBlack = async () => {
   }
 };
 
-// 删除好友
+/**
+ * 删除好友
+ */
 const delFriend = async () => {
   try {
     const modalRes = await uni.showModal({ title: '提示', content: '是否要删除该好友？' });
@@ -163,6 +196,14 @@ const delFriend = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+/**
+ * 导航到聊天页面
+ */
+const navToChatRoute = () => {
+  if (friendDetail.value.isblack) return uni.$uv.toast('黑名单用户不能聊天');
+  // uni.$uv.route('/pages/module-common/chat/chat', { friend_id: friendId.value });
 };
 </script>
 

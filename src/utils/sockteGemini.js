@@ -1,26 +1,5 @@
 // /utils/socket.js
 
-// url: string;
-// socketTask: UniApp.SocketTask | null = null;
-// isReconnecting: boolean = false;
-// reconnectTimer: any = null;
-// heartbeatTimer: any = null;
-// heartbeatInterval: number = 30000; // 心跳间隔，默认30秒
-// _isConnected: boolean = false;
-// onOpen: () => void;
-// onClose: () => void;
-// onError: (error: any) => void;
-// onMessage: (message: any) => void;
-
-// constructor(options: any = {}) {
-//   this.url = options.url || ''; // WebSocket 地址
-//   this.heartbeatInterval = options.heartbeatInterval || 30000;
-//   this.onOpen = options.onOpen || (() => {});
-//   this.onClose = options.onClose || (() => {});
-//   this.onError = options.onError || (() => {});
-//   this.onMessage = options.onMessage || (() => {});
-// }
-
 export default class WsClient {
   constructor(options = {}) {
     // 配置项

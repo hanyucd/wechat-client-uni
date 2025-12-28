@@ -40,6 +40,28 @@ export default class WebSocketClient {
    * 1. 发起连接
    */
   connect() {
+    if (!this.url) {
+      console.error('WS: WebSocket URL is required');
+      return;
+    }
+
+    // 防止重复连接，先清理旧连接
+    // if (this.socketTask) {
+    //   this.close(false); // false 表示这不是用户手动彻底关闭，而是为了重置
+    // }
+
+    this.socketTask = uni.connectSocket({
+      url: this.url,
+      success: () => {
+        console.log('WS: API调用成功，等待连接...');
+      },
+      fail: (err) => {
+        console.error('WS: API调用失败', err);
+        this.isConnected = false;
+        this.reconnect(); // API 调用失败也尝试重连
+      }
+    });
+    
     this._initEventListeners();
   }
 
@@ -47,6 +69,36 @@ export default class WebSocketClient {
    * 2. 初始化事件监听
    */
   private _initEventListeners() {
+    if (!this.socketTask) return;
+
+    // 监听连接成功
+    this.socketTask.onOpen(() => {
+      console.log('WS: 连接成功！');
+      this.isConnected = true;
+      this.retryCount = 0; // 重置重连次数
+      this.isManualClose = false;
+      // 开启心跳
+      // this.startHeartbeat();
+    });
+
+    // 监听连接出错
+    this.socketTask.onError((err) => {
+      console.error('WS: 连接错误', err);
+      this.isConnected = false;
+      this.reconnect();
+    });
+
+    // 监听连接关闭
+    this.socketTask.onClose((res) => {
+      console.log('WS: 连接关闭', res);
+      this.isConnected = false;
+      // this.stopHeartbeat();
+
+      // 如果不是手动关闭，则尝试重连
+      if (!this.isManualClose) {
+        this.reconnect();
+      }
+    });
   }
 
   /**

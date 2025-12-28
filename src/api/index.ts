@@ -1,5 +1,6 @@
 import httpRequest from './httpRequest';
 import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
+import type { IFriend } from '@/types/friend';
 
 const serverUrl = import.meta.env.VITE_API_URL;
 
@@ -11,5 +12,7 @@ export default {
   // 退出登录
   userLogoutApi: () => httpRequest<string>(`${ serverUrl }/api/user/logout`, {}, 'post'),
   // 用户搜索
-  userSearchApi: (keyword: string) => httpRequest<IUser>(`${ serverUrl }/api/user/search`, { keyword })
+  userSearchApi: (keyword: string) => httpRequest<IUser>(`${ serverUrl }/api/user/search`, { keyword }),
+  // 获取好友详情
+  getFriendDetailApi: (friendId: number) => httpRequest<IFriend>(`${ serverUrl }/api/friend/info/${ friendId }`, {}, 'get'),
 };

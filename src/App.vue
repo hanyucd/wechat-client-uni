@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { useUserStore } from '@/store';
+
+const userStore = useUserStore();
+
 onLaunch(() => {
-  console.log('App Launch');
+  // console.log('App Launch');
   
   // 加载公共图标库
   // #ifdef APP
@@ -11,6 +15,9 @@ onLaunch(() => {
     // 'src': 'url(\'https://at.alicdn.com/t/font_1365296_2ijcbdrmsg.ttf\')'
   });
   // #endif
+
+  // connect webSocket
+  // userStore.initWebSocketAction();
 });
 
 onShow(() => {

@@ -15,11 +15,24 @@ declare global {
   interface IResponse<T = any> {
     code: number | string;
     msg: string;
-    data: T | null;
+    data: T;
   }
 
   interface IPageParams {
     page: number;
     size: number;
+  }
+
+  interface IPageList<T = any> {
+    /** 页数 */
+    page: number;
+    /** 每页个数 */
+    size: number;
+    /** 总页数 */
+    total: number;
+    /** 总数 */
+    count: number;
+    /** 列表 */
+    list: T[];
   }
 }
