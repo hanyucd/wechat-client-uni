@@ -1,0 +1,20 @@
+.remark-module {
+	display: flex;
+  flex-direction: column;
+  .remark-title {
+    font-size: 25rpx;
+    color: #6c757d;
+    padding: 20rpx 30rpx;
+  }
+  .remark-input {
+    background: #fff;
+    font-size: 35rpx;
+    border: 1rpx solid #dee2e6;
+    padding: 0 30rpx;
+  }
+}
+
+.set-module {
+  margin: 30rpx;
+  margin-top: 80rpx;
+}

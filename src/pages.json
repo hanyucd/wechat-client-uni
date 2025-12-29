@@ -132,10 +132,15 @@
 		},
 		// 推荐给好友
 		{
-			"path": "pages/module-common/share-friend/share-friend",
+			"path": "pages/module-common/friend-share/friend-share",
 			"style": {
 				"app-plus": {}
 			}
+		},
+		// 好友申请
+		{
+			"path": "pages/module-common/friend-apply/friend-apply",
+			"style": {}
 		},
 		// 用户投诉
 		{

@@ -53,7 +53,7 @@
     <text>{{ friendDetail.isblack ? '移出黑名单' : '发信息' }}</text>
   </view>
   <!-- 添加好友按钮 -->
-  <view v-else class="action-btn" hover-class="bg-light">
+  <view v-else class="action-btn" hover-class="bg-light" @click="navToAddFriendRoute">
     <text>添加好友</text>
   </view>
 
@@ -97,7 +97,7 @@ const menuPopupList = computed(() => {
       icon: '\ue613',
       title: '把他推荐给朋友',
       type: 'navigate',
-      path: `pages/module-common/share-friend/share-friend?params=${ encodeURIComponent(JSON.stringify({
+      path: `pages/module-common/friend-share/friend-share?params=${ encodeURIComponent(JSON.stringify({
         type: 'card',
         num: 10
       }))}`
@@ -204,6 +204,13 @@ const delFriend = async () => {
 const navToChatRoute = () => {
   if (friendDetail.value.isblack) return uni.$uv.toast('黑名单用户不能聊天');
   // uni.$uv.route('/pages/module-common/chat/chat', { friend_id: friendId.value });
+};
+
+/**
+ * 导航到添加好友页面
+ */
+const navToAddFriendRoute = () => {
+  uni.$uv.route('/pages/module-common/friend-apply/friend-apply', { friend_id: friendId.value });
 };
 </script>
 

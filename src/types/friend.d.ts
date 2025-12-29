@@ -1,12 +1,12 @@
 // 朋友圈查看权限枚举
-export enum FriendCirclePermission {
+export enum FriendCirclePermissionEnum {
   /** 能看 */
   CAN_VIEW = 1,
   /** 不能看 */
   CANNOT_VIEW = 0
 }
 
-// 朋友信息
+// 好友信息
 export interface IFriend {
   id: number;
   /** 好友账号 */
@@ -28,8 +28,16 @@ export interface IFriend {
   /** 是否已收藏 */
   isstar: number;
   /** 能否看我朋友圈 */ 
-  lookme: FriendCirclePermission;
+  lookme: FriendCirclePermissionEnum;
   /** 能否看他朋友圈 */
-  lookhim: FriendCirclePermission;
+  lookhim: FriendCirclePermissionEnum;
   [property: string]: any;
+}
+
+// 好友申请参数
+export interface IFriendApplyParams {
+  friend_id: number;
+  nickname: string;
+  lookme: FriendCirclePermissionEnum;
+  lookhim: FriendCirclePermissionEnum;
 }

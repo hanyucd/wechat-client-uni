@@ -1,4 +1,4 @@
-// 1. 定义配置项接口
+// 定义配置项接口
 interface IWsOptions {
   url: string;
   pingInterval?: number;
@@ -6,7 +6,7 @@ interface IWsOptions {
   maxRetry?: number;
 }
 
-// 2. 定义消息回调函数的类型
+// 定义消息回调函数的类型
 type TMessageCallback = (data: any) => void;
 
 export default class WebSocketClient {

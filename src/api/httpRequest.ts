@@ -1,5 +1,5 @@
 import Request from 'luch-request';
-import type { HttpMethod, HttpRequestConfig } from 'luch-request';
+import type { HttpMethod, HttpRequestConfig, HttpTask } from 'luch-request';
 import { useUserStore } from '@/store';
 
 const http = new Request();
