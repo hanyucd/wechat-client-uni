@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
-import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
 import $api from '@/api';
 import WsClient from '@/utils/webSocketUtil';
+import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
+import type { IFriendApply } from '@/types/friend';
 
 export const useUserStore = defineStore('userModule', () => {
   // webSocket 地址
@@ -12,9 +13,15 @@ export const useUserStore = defineStore('userModule', () => {
 
   // 用户信息
   const userInfo = ref<IUser>({} as IUser);
+  // 好友申请列表
+  const friendApplyList = ref<IFriendApply[]>([]);
 
   // 用户 token 
   const userToken = computed(() => userInfo.value?.token || '');
+  // 待处理好友申请数量
+  const pendingFriendApplyCount = computed(() => {
+    return friendApplyList.value.filter(item => item.status === 'pending').length;
+  });
 
   /**
    * 用户注册
@@ -68,6 +75,17 @@ export const useUserStore = defineStore('userModule', () => {
   };
 
   /**
+   * 初始化应用启动时的操作
+   */
+  const initAppLaunchAction = async () => {
+    console.log('初始化 app 执行 action');
+    if (!userToken.value) return;
+
+    // initWebSocketAction();
+    getFriendApplyAction();
+  };
+
+  /**
    * 初始化 websocket 连接
    */
   const initWebSocketAction = async () => {
@@ -82,14 +100,41 @@ export const useUserStore = defineStore('userModule', () => {
     }
   };
 
+  /**
+   * 获取好友申请列表
+   */
+  const getFriendApplyAction = async (param?: IPageParams) => {
+    try {
+      const friendApplyRes = await $api.getFriendApplyListApi(param);
+      friendApplyList.value = friendApplyRes.data.list;
+
+      setContactTabBarBadgeAction();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /**
+   * 设置联系人 tab 栏的好友申请数量
+   */
+  const setContactTabBarBadgeAction = () => {
+    const count = pendingFriendApplyCount.value > 99 ? '99+' : pendingFriendApplyCount.value.toString();
+    console.log('tab 数标', count);
+    // uni.setTabBarBadge({ index: 1, text: count });
+    // uni.setTabBarBadge({ index: 0, text: '11' });
+  };
+
   return {
     wsURL,
     wsClient,
     userInfo,
     userToken,
+    friendApplyList,
+    pendingFriendApplyCount,
     userRegisterAction,
     userLoginAction,
     userLogoutAction,
+    initAppLaunchAction,
     initWebSocketAction
   };
 }, {

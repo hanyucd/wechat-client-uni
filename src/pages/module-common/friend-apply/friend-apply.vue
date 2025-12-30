@@ -37,9 +37,9 @@ const friendApplyId = ref(0);
 // 好友备注
 const nickname = ref('');
 // 不让他看我朋友圈
-const isLookMe = ref(false);
+const isLookMe = ref(true);
 // 不看他朋友圈
-const isLookHim = ref(false);
+const isLookHim = ref(true);
 
 onLoad((option: any) => {
   console.log(option);
@@ -57,7 +57,7 @@ const submitFriendApply = async () => {
   if (!modalRes.confirm) return;
   
   try {
-    const res = await $api.postFriendApplyApi({
+    await $api.postFriendApplyApi({
       friend_id: friendId.value,
       nickname: nickname.value,
       lookme: isLookMe.value ? 1 : 0,

@@ -15,7 +15,12 @@
       :key="item.id"
       :title="item.title"
       :cover="item.cover"
-    />
+      :showRight="item.id === 'friend' && userStore.pendingFriendApplyCount > 0"
+    >
+      <template #right>
+        <VBadge :value="userStore.pendingFriendApplyCount" />
+      </template>
+    </VListItem>
 
     <!-- 联系人列表 -->
     <view v-for="(cItem, cIndex) in contactList" :id="`cItem-${ cItem.title }`" :key="cIndex">
@@ -49,12 +54,14 @@
 
 <script setup lang="ts">
 import type { ScrollView } from '@uni-helper/uni-app-types';
-import { useAppStore } from '@/store';
+import { useAppStore, useUserStore } from '@/store';
+
 // #ifdef APP-NVUE
 const domModule = uni.requireNativePlugin('dom');
 // #endif
 
 const appStore = useAppStore();
+const userStore = useUserStore();
 
 // 通讯模块高度
 const contactModuleHeight = ref(0);

@@ -20,7 +20,7 @@ declare global {
 
   interface IPageParams {
     page: number;
-    size: number;
+    size?: number;
   }
 
   interface IPageList<T = any> {

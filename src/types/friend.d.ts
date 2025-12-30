@@ -6,6 +6,20 @@ export enum FriendCirclePermissionEnum {
   CANNOT_VIEW = 0
 }
 
+// 好友申请状态枚举
+export enum FriendApplyStatusEnum {
+  /** 待处理 */
+  PENDING = 'pending',
+  /** 已同意 */
+  AGREED = 'agreed',
+  /** 已拒绝 */
+  REJECTED = 'refuse',
+  /** 已过期 */
+  EXPIRED = 'expired',
+  /** 已忽略 */
+  IGNORED = 'ignored',
+}
+
 // 好友信息
 export interface IFriend {
   id: number;
@@ -40,4 +54,23 @@ export interface IFriendApplyParams {
   nickname: string;
   lookme: FriendCirclePermissionEnum;
   lookhim: FriendCirclePermissionEnum;
+}
+
+// 好友申请列表
+export interface IFriendApply {
+  id: number;
+  /** 申请人 id */
+  user_id: number;
+  /** 申请人信息 */
+  user: {
+    id: number;
+    username: string;
+    nickname: string;
+    avatar: string;
+  };
+  /** 申请状态 */
+  status: FriendApplyStatusEnum;
+  /** 申请时间 */
+  created_at: string;
+  [property: string]: any;
 }
