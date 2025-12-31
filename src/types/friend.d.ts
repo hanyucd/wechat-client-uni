@@ -11,13 +11,13 @@ export enum FriendApplyStatusEnum {
   /** 待处理 */
   PENDING = 'pending',
   /** 已同意 */
-  AGREED = 'agreed',
+  AGREED = 'agree',
   /** 已拒绝 */
   REJECTED = 'refuse',
   /** 已过期 */
-  EXPIRED = 'expired',
+  EXPIRED = 'expire',
   /** 已忽略 */
-  IGNORED = 'ignored',
+  IGNORED = 'ignore',
 }
 
 // 好友信息

@@ -91,7 +91,7 @@ const friendDetail = ref({} as IFriend);
 // 菜单 popup 列表
 const menuPopupList = computed(() => {
   return [
-    { icon: '\ue6b3', title: '设置备注和标签', type: 'navigate', path: 'pages/module-common/user-remark/user-remark' },
+    { icon: '\ue6b3', title: '设置备注和标签', type: 'navigate', path: 'pages/module-friend/friend-remark/friend-remark' },
     { icon: '\ue6b0', title: friendDetail.value ? '取消星标好友' : '设为星标朋友', type: 'event', event: 'setStar' },
     {
       icon: '\ue613',

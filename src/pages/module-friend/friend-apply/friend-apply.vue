@@ -47,6 +47,10 @@ onLoad((option: any) => {
   if (option.friend_id) {
     friendId.value = Number(option.friend_id);
   }
+
+  if (option.apply_id) {
+    friendApplyId.value = Number(option.apply_id);
+  }
 });
 
 /**

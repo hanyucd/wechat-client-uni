@@ -109,7 +109,7 @@
 		},
 		// 用户备注
 		{
-			"path": "pages/module-common/user-remark/user-remark",
+			"path": "pages/module-friend/friend-remark/friend-remark",
 			"style": {
 				"app-plus": {
 					"background": "#EDEDED"
@@ -140,6 +140,11 @@
 		// 好友申请
 		{
 			"path": "pages/module-friend/friend-apply/friend-apply",
+			"style": {}
+		},
+		// 好友申请列表
+		{
+			"path": "pages/module-friend/friend-apply-list/friend-apply-list",
 			"style": {}
 		},
 		// 用户投诉
