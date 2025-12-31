@@ -201,7 +201,7 @@ const navToLogin = () =>{
 
 // 进入搜索页面
 const navToSearchRoute = () => {
-  uni.$uv.route('/pages/module-common/user-search/user-search');
+  uni.$uv.route('/pages/module-friend/friend-search/friend-search');
 };
 </script>
 

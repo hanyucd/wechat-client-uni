@@ -118,21 +118,21 @@
 		},
 		// 用户标签设置
 		{
-			"path": "pages/module-common/user-tag-set/user-tag-set",
+			"path": "pages/module-friend/friend-tag-set/friend-tag-set",
 			"style": {
 				"app-plus": {}
 			}
 		},
 		// 设置朋友圈动态权限
 		{
-			"path": "pages/module-common/user-find-auth/user-find-auth",
+			"path": "pages/module-friend/friend-circle-auth/friend-circle-auth",
 			"style": {
 				"app-plus": {}
 			}
 		},
-		// 推荐给好友
+		// 好友搜索
 		{
-			"path": "pages/module-friend/friend-share/friend-share",
+			"path": "pages/module-friend/friend-search/friend-search",
 			"style": {
 				"app-plus": {}
 			}
@@ -151,7 +151,14 @@
 		},
 		// 用户投诉
 		{
-			"path": "pages/module-common/user-report/user-report",
+			"path": "pages/module-friend/friend-report/friend-report",
+			"style": {
+				"app-plus": {}
+			}
+		},
+		// 推荐给好友
+		{
+			"path": "pages/module-friend/friend-share/friend-share",
 			"style": {
 				"app-plus": {}
 			}
@@ -189,13 +196,6 @@
 		// 我的收藏
 		{
 			"path": "pages/module-profile/profile-fava/profile-fava",
-			"style": {
-				"app-plus": {}
-			}
-		},
-		// 用户搜索
-		{
-			"path": "pages/module-common/user-search/user-search",
 			"style": {
 				"app-plus": {}
 			}

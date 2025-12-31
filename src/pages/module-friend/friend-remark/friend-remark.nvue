@@ -47,7 +47,7 @@ onUnload(() => {
  * 进入标签设置页
  */
 const navTagSetRoute = async () => {
-  uni.$uv.route({ url: 'pages/module-common/user-tag-set/user-tag-set', params: { userId: 120 } });
+  uni.$uv.route({ url: 'pages/module-friend/friend-tag-set/friend-tag-set', params: { userId: 120 } });
 };
 
 /**

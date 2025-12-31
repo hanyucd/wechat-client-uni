@@ -102,13 +102,13 @@ const menuPopupList = computed(() => {
         num: 10
       }))}`
     },
-    { icon: '\ue667', title: '设置朋友圈和动态权限', type: 'navigate', path: 'pages/module-common/user-find-auth/user-find-auth' },
+    { icon: '\ue667', title: '设置朋友圈和动态权限', type: 'navigate', path: 'pages/module-friend/friend-circle-auth/friend-circle-auth' },
     { icon: '\ue638', title: friendDetail.value ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
     {
       icon: '\ue61c',
       title: '投诉',
       type: 'navigate',
-      path: `pages/module-common/user-report/user-report?params=${ encodeURIComponent(JSON.stringify({
+      path: `pages/module-friend/friend-report/friend-report?params=${ encodeURIComponent(JSON.stringify({
         type: 'user'
       }))}`
     },

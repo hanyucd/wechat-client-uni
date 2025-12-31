@@ -1,7 +1,7 @@
 <template>
   <VNavbar bg-color="#fff">
     <view class="navbar-input-wrap">
-      <uv-input v-model="searchInput" prefixIcon="search" placeholder="搜索用户" border="surround" @confirm="confirmSearch" />
+      <uv-input v-model="searchInput" prefixIcon="search" placeholder="搜索好友" border="surround" @confirm="confirmSearch" />
     </view>
   </VNavbar>
 
@@ -17,7 +17,7 @@
   </view>
 
   <view v-else class="search-tip">
-    <text class="search-tip-text">请输入用户账号</text>
+    <text class="search-tip-text">请输入好友账号</text>
   </view>
 </template>
 
