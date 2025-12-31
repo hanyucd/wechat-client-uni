@@ -97,7 +97,7 @@ const menuPopupList = computed(() => {
       icon: '\ue613',
       title: '把他推荐给朋友',
       type: 'navigate',
-      path: `pages/module-common/friend-share/friend-share?params=${ encodeURIComponent(JSON.stringify({
+      path: `pages/module-friend/friend-share/friend-share?params=${ encodeURIComponent(JSON.stringify({
         type: 'card',
         num: 10
       }))}`
@@ -210,7 +210,7 @@ const navToChatRoute = () => {
  * 导航到添加好友页面
  */
 const navToAddFriendRoute = () => {
-  uni.$uv.route('/pages/module-common/friend-apply/friend-apply', { friend_id: friendId.value });
+  uni.$uv.route('/pages/module-friend/friend-apply/friend-apply', { friend_id: friendId.value });
 };
 </script>
 

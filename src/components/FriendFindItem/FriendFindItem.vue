@@ -88,7 +88,7 @@ const previewImg = (curImgUrl: string, imgUrls: string[]) => {
  * 点击头像，进入用户主页
  */
 const navToUserMainPage = () => {
-  uni.$uv.route({ url: '/pages/module-common/user-mine/user-mine', params: { userId: 111 } });
+  uni.$uv.route({ url: '/pages/module-friend/friend-mine/friend-mine', params: { userId: 111 } });
 };
 
 const emit = defineEmits<{

@@ -5,7 +5,7 @@ import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
 import type { IFriendApply } from '@/types/friend';
 
 export const useUserStore = defineStore('userModule', () => {
-  // webSocket 地址
+  // webSocket URL地址
   const wsURL = ref(import.meta.env.VITE_SOCKET_URL);
   // webSocket 客户端
   const wsClient = ref<WsClient | null>(null);

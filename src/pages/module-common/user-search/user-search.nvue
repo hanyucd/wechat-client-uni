@@ -52,7 +52,7 @@ const confirmSearch = async () => {
  * 导航到用户(好友)名片页
  */
 const navToUserMineRoute = (user: IUser) => {
-  uni.$uv.route('/pages/module-common/user-mine/user-mine', { friend_id: user.id });
+  uni.$uv.route('/pages/module-friend/friend-mine/friend-mine', { friend_id: user.id });
 };
 </script>
 

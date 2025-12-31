@@ -100,7 +100,7 @@
 		},
 		// 用户(好友)主页
 		{
-			"path": "pages/module-common/user-mine/user-mine",
+			"path": "pages/module-friend/friend-mine/friend-mine",
 			"style": {
 				"app-plus": {
 					"background": "#EDEDED"
@@ -132,14 +132,14 @@
 		},
 		// 推荐给好友
 		{
-			"path": "pages/module-common/friend-share/friend-share",
+			"path": "pages/module-friend/friend-share/friend-share",
 			"style": {
 				"app-plus": {}
 			}
 		},
 		// 好友申请
 		{
-			"path": "pages/module-common/friend-apply/friend-apply",
+			"path": "pages/module-friend/friend-apply/friend-apply",
 			"style": {}
 		},
 		// 用户投诉
