@@ -1,6 +1,11 @@
 import httpRequest from './httpRequest';
 import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
-import type { IFriend, IFriendApplyParams, IFriendApply } from '@/types/friend';
+import type {
+  IFriend,
+  IFriendApplyParams,
+  IFriendApply,
+  IHandleFriendApplyParams
+} from '@/types/friend';
 
 const serverUrl = import.meta.env.VITE_API_URL;
 
@@ -19,4 +24,6 @@ export default {
   postFriendApplyApi: (param: IFriendApplyParams) => httpRequest<object>(`${ serverUrl }/api/friend/apply`, param, 'post'),
   // 获取好友申请列表
   getFriendApplyListApi: (param?: IPageParams) => httpRequest<IPageList<IFriendApply>>(`${ serverUrl }/api/friend/apply/list`, param, 'get'),
+  // 处理好友申请
+  postHandleFriendApplyApi: (applyId: number, param: IHandleFriendApplyParams) => httpRequest<string>(`${ serverUrl }/api/friend/apply/handle/${ applyId }`, param, 'post'),
 };

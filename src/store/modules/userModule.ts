@@ -119,7 +119,6 @@ export const useUserStore = defineStore('userModule', () => {
    */
   const setContactTabBarBadgeAction = () => {
     const count = pendingFriendApplyCount.value > 99 ? '99+' : pendingFriendApplyCount.value.toString();
-    console.log('tab 数标', count);
     // uni.setTabBarBadge({ index: 1, text: count });
     // uni.setTabBarBadge({ index: 0, text: '11' });
   };

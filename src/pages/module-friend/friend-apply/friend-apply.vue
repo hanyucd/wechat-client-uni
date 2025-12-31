@@ -22,8 +22,21 @@
   </VListItem>
 
   <view class="set-module">
-    <uv-button :custom-style="{ backgroundColor: '#08C060', color: '#fff' }" text="点击添加" @click="submitFriendApply" />
+    <!-- 发起申请 -->
+    <uv-button v-if="friendId" :custom-style="{ backgroundColor: '#08C060', color: '#fff' }" text="点击添加" @click="submitFriendApply" />
+    <!-- 申请处理 -->
+    <uv-button v-else-if="friendApplyId" :custom-style="{ backgroundColor: '#08C060', color: '#fff' }" text="处理申请" @click="openApplyStatusPopup" />
   </view>
+
+  <!-- 处理申请状态 picker -->
+  <uv-picker
+    ref="statusPickerRef"
+    keyName="label"
+    round="20"
+    confirmColor="#08C060"
+    :columns="statusPickerColumns"
+    @confirm="onStatusPickerConfirm"
+  />
 </template>
 
 <script setup lang="ts">
@@ -40,6 +53,16 @@ const nickname = ref('');
 const isLookMe = ref(true);
 // 不看他朋友圈
 const isLookHim = ref(true);
+
+const statusPickerRef = ref(null);
+// 处理好友申请状态
+const statusPickerColumns = ref([
+  [
+    { label: '同意', value: 'agree' },
+    { label: '拒绝' , value: 'refuse' },
+    { label: '忽略' , value: 'ignore' },
+  ]
+]);
 
 onLoad((option: any) => {
   console.log(option);
@@ -72,6 +95,38 @@ const submitFriendApply = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+/**
+ * 打开处理申请状态弹窗
+ */
+const openApplyStatusPopup = () => {
+  if (!friendApplyId.value) return uni.$uv.toast('无申请 id');
+  (statusPickerRef.value as any).open();
+};
+
+/**
+ * 处理好友申请
+ */
+const onStatusPickerConfirm = async (event: any) => {
+  uni.showLoading({ title: '', mask: true });
+  const applyStatus = event.value[0].value;
+
+  try {
+    await $api.postHandleFriendApplyApi(friendApplyId.value, {
+      applyId: friendApplyId.value,
+      nickname: nickname.value,
+      lookme: isLookMe.value ? 1 : 0,
+      lookhim: isLookHim.value ? 1 : 0,
+      status: applyStatus,
+    });
+
+    uni.$uv.route({ type: 'back' });
+    uni.$emit('handleApplyEvt', applyStatus);
+  } catch (error) {
+    console.log(error);
+  }
+  
 };
 </script>
 

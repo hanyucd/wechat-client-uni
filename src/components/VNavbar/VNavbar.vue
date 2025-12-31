@@ -84,10 +84,6 @@ const _getSystemInfo = () => {
 const handleBack = () => {
   // return uni.navigateBack({ delta: 1 });
   uni.$uv.route({ type: 'back' });
-
-  // if (props.backEvent) {
-  // }
-  // emit('back');
 };
 </script>
 

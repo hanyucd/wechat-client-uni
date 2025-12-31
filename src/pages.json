@@ -145,7 +145,9 @@
 		// 好友申请列表
 		{
 			"path": "pages/module-friend/friend-apply-list/friend-apply-list",
-			"style": {}
+			"style": {
+				"enablePullDownRefresh": true
+			}
 		},
 		// 用户投诉
 		{

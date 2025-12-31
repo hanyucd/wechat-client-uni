@@ -22,7 +22,7 @@
             <uv-text v-else-if="item.status === 'expire'" type="warning" text="已过期" />
           </view>
           <view class="apply-time">
-            <uv-text type="info" size="10" :text="item.created_at" />
+            <uv-text type="info" size="10" :text="`申请时间: ${ item.created_at }`" />
           </view>
         </view>
       </template>
@@ -41,6 +41,20 @@ const isNextLoading = ref(false); // 是否加载下一页
 
 onLoad(() => {
   _getFriendApplyList();
+
+  // 监听好友申请处理事件
+  uni.$on('handleApplyEvt', (handleStatus: string) => {
+    uni.$uv.toast(`已 ${ handleStatus }`);
+    setTimeout(() => {
+      _getFriendApplyList();
+    }, 1000);
+  });
+});
+
+onPullDownRefresh(() => {
+  console.log('下拉刷新');
+  _getFriendApplyList();
+  uni.stopPullDownRefresh();
 });
 
 onReachBottom(() => {

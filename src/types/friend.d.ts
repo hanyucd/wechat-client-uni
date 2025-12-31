@@ -1,24 +1,7 @@
-// 朋友圈查看权限枚举
-export enum FriendCirclePermissionEnum {
-  /** 能看 */
-  CAN_VIEW = 1,
-  /** 不能看 */
-  CANNOT_VIEW = 0
-}
-
-// 好友申请状态枚举
-export enum FriendApplyStatusEnum {
-  /** 待处理 */
-  PENDING = 'pending',
-  /** 已同意 */
-  AGREED = 'agree',
-  /** 已拒绝 */
-  REJECTED = 'refuse',
-  /** 已过期 */
-  EXPIRED = 'expire',
-  /** 已忽略 */
-  IGNORED = 'ignore',
-}
+import type {
+  FriendCirclePermissionEnum,
+  FriendApplyStatusEnum
+} from '../enum/index';
 
 // 好友信息
 export interface IFriend {
@@ -74,3 +57,18 @@ export interface IFriendApply {
   created_at: string;
   [property: string]: any;
 }
+
+// 处理好友申请参数
+export interface IHandleFriendApplyParams {
+  /** 申请id */
+  applyId: number;
+  /** 好友昵称 */
+  nickname: string;
+  /** 能否看我朋友圈 */ 
+  lookme: FriendCirclePermissionEnum;
+  /** 能否看他朋友圈 */
+  lookhim: FriendCirclePermissionEnum;
+  /** 申请状态 */
+  status: FriendApplyStatusEnum;
+}
+
