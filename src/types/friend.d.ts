@@ -72,3 +72,24 @@ export interface IHandleFriendApplyParams {
   status: FriendApplyStatusEnum;
 }
 
+// 联系人好友信息
+export interface IContactFriend {
+  id: number;
+  friend_avatar: string;
+  friend_id: number;
+  friend_nickname: string;
+  friend_username: string;
+}
+
+// 联系人好友列表
+export interface IContact {
+  /** 好友数量 */
+  count: number;
+  /** 字母索引列表 */
+  index_list: string[];
+  /** 好友列表 */
+  list: Array<{
+    title: string;
+    list: IContactFriend[];
+  }>;
+}

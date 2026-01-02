@@ -17,7 +17,7 @@ onLaunch(() => {
   // #endif
 
   // 初始化应用启动时的操作
-  userStore.initAppLaunchAction();
+  userStore.initAppAction();
 });
 
 onShow(() => {

@@ -40,9 +40,9 @@
 			},
 			{
 				"text": "发现",
-				"pagePath": "pages/tabbar/find/find",
-				"iconPath": "static/tabbar/find.png",
-				"selectedIconPath": "static/tabbar/find-select.png"
+				"pagePath": "pages/tabbar/circle/circle",
+				"iconPath": "static/tabbar/circle.png",
+				"selectedIconPath": "static/tabbar/circle-select.png"
 			},
 			{
 				"text": "我的",
@@ -70,7 +70,7 @@
 		},
 		// tabbar 朋友圈
 		{
-			"path": "pages/tabbar/find/find",
+			"path": "pages/tabbar/circle/circle",
 			"style": {}
 		},
 		// tabbar 我的

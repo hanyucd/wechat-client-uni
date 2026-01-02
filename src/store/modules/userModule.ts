@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import $api from '@/api';
 import WsClient from '@/utils/webSocketUtil';
 import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
-import type { IFriendApply } from '@/types/friend';
+import type { IContact } from '@/types/friend';
 
 export const useUserStore = defineStore('userModule', () => {
   // webSocket URL地址
@@ -13,15 +13,13 @@ export const useUserStore = defineStore('userModule', () => {
 
   // 用户信息
   const userInfo = ref<IUser>({} as IUser);
-  // 好友申请列表
-  const friendApplyList = ref<IFriendApply[]>([]);
+  // 待处理好友申请数量
+  const pendingFriendApplyCount = ref(0);
+  // 好友列表（通讯录）
+  const userContact = ref<IContact>({} as IContact);
 
   // 用户 token 
   const userToken = computed(() => userInfo.value?.token || '');
-  // 待处理好友申请数量
-  const pendingFriendApplyCount = computed(() => {
-    return friendApplyList.value.filter(item => item.status === 'pending').length;
-  });
 
   /**
    * 用户注册
@@ -77,12 +75,13 @@ export const useUserStore = defineStore('userModule', () => {
   /**
    * 初始化应用启动时的操作
    */
-  const initAppLaunchAction = async () => {
+  const initAppAction = async () => {
     console.log('初始化 app 执行 action');
     if (!userToken.value) return;
 
     // initWebSocketAction();
-    getFriendApplyAction();
+    getFriendApplyPendingCountAction();
+    getContactListAction();
   };
 
   /**
@@ -101,14 +100,26 @@ export const useUserStore = defineStore('userModule', () => {
   };
 
   /**
-   * 获取好友申请列表
+   * 获取好友申请待处理数量
    */
-  const getFriendApplyAction = async (param?: IPageParams) => {
+  const getFriendApplyPendingCountAction = async () => {
     try {
-      const friendApplyRes = await $api.getFriendApplyListApi(param);
-      friendApplyList.value = friendApplyRes.data.list;
-
+      const friendApplyRes = await $api.getPendingFriendApplyCountApi();
+      pendingFriendApplyCount.value = friendApplyRes.data.count ?? 0;
       setContactTabBarBadgeAction();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /**
+   * 获取好友列表（通讯录）
+   */
+  const getContactListAction = async () => {
+    try {
+      const contactRes = await $api.getContactListApi();
+      console.log(contactRes);
+      userContact.value = contactRes.data ?? {} as IContact;
     } catch (error) {
       console.log(error);
     }
@@ -120,7 +131,6 @@ export const useUserStore = defineStore('userModule', () => {
   const setContactTabBarBadgeAction = () => {
     const count = pendingFriendApplyCount.value > 99 ? '99+' : pendingFriendApplyCount.value.toString();
     // uni.setTabBarBadge({ index: 1, text: count });
-    // uni.setTabBarBadge({ index: 0, text: '11' });
   };
 
   return {
@@ -128,13 +138,14 @@ export const useUserStore = defineStore('userModule', () => {
     wsClient,
     userInfo,
     userToken,
-    friendApplyList,
+    userContact,
     pendingFriendApplyCount,
     userRegisterAction,
     userLoginAction,
     userLogoutAction,
-    initAppLaunchAction,
-    initWebSocketAction
+    initAppAction,
+    initWebSocketAction,
+    getContactListAction,
   };
 }, {
   persist: {

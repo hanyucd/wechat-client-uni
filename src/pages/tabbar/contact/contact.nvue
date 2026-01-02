@@ -24,7 +24,7 @@
     </VListItem>
 
     <!-- 联系人列表 -->
-    <view v-for="(cItem, cIndex) in contactList" :id="`cItem-${ cItem.title }`" :key="cIndex">
+    <view v-for="(cItem, cIndex) in userStore.userContact.list" :id="`cItem-${ cItem.title }`" :key="cIndex">
       <view v-if="cItem.list.length" class="contact-item-letter">
         <text class="contact-letter font-md text-dark">{{ cItem.title }}</text>
       </view>
@@ -32,8 +32,8 @@
       <VListItem
         v-for="(item, index) in cItem.list" 
         :key="index"
-        :title="item" 
-        :cover="'/static/images/userpic.png'"
+        :title="item.friend_nickname" 
+        :cover="item.friend_avatar || '/static/images/userpic.png'"
       />
     </view>
 
@@ -42,8 +42,8 @@
 
   <!-- 侧边字母导航条 -->
   <view class="letter-sidebar" :style="{ top: `${ letterSidebarTopHeight }px` }" @touchstart="onSidebarTouchStartEvt" @touchmove="onSidebarTouchMoveEvt" @touchend="onSidebarTouchEndEvt">
-    <view v-for="(item, index) in contactList" :key="index" class="letter-item flex-1 flex align-center justify-center">
-      <text class="letter-item-text font-sm text-muted">{{ item.title }}</text>
+    <view v-for="(item, index) in userStore.userContact.index_list" :key="index" class="letter-item flex-1 flex align-center justify-center">
+      <text class="letter-item-text font-sm text-muted">{{ item }}</text>
     </view>
   </view>
 
@@ -83,32 +83,9 @@ const contactMenuList = ref([
   { id: 'tag', title: '标签', cover: '/static/images/mail/tag.png', path: 'mail/tag-list/tag-list' }
 ]);
 
-// 联系人列表
-const contactList = ref([
-  {
-    title: 'A',
-    list: ['艾伦-沃克', 'A神']
-  },
-  {
-    title: 'B',
-    list: []
-  },
-  {
-    title: 'L',
-    list: ['ILLENIUM', '蛇叔']
-  },
-  {
-    title: 'M',
-    list: ['马丁-盖瑞斯', '棉花糖']
-  },
-  {
-    title: 'X',
-    list: ['XLLENIUM', '蛇叔']
-  },
-]);
-
+// 索引字母的每项高度
 const letterItemHeight = computed(() => {
-  const count = contactList.value.length;
+  const count = userStore.userContact.index_list.length;
   if(count < 1) return 0;
 
   return contactModuleHeight.value / count;
@@ -189,7 +166,7 @@ const _changeScrollViewInto = (event: any) => {
   const letterTopY = pageY - letterSidebarTopHeight.value;
 
   let letterIndex = Math.floor(letterTopY / letterItemHeight.value);
-  let contactItem = contactList.value[letterIndex];
+  let contactItem = userStore.userContact.list[letterIndex];
   // console.log('contactItem: ', contactItem);
 
   if (contactItem) {
