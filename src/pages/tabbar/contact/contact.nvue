@@ -34,10 +34,14 @@
         :key="index"
         :title="item.friend_nickname" 
         :cover="item.friend_avatar || '/static/images/userpic.png'"
+        @click="navToFriendMineRoute(item.friend_id)"
       />
     </view>
 
     <view style="height: 50rpx;" />
+    <view class="contact-count">
+      <text class="contact-count-text">{{ userStore.userContact.count }} 个好友</text>
+    </view>
   </scroll-view>
 
   <!-- 侧边字母导航条 -->
@@ -180,6 +184,13 @@ const _changeScrollViewInto = (event: any) => {
  */
 const navContactRoute = (path: string) => {
   uni.$uv.route(path);
+};
+
+/**
+ * 导航到好友主页
+ */
+const navToFriendMineRoute = (friendId: number) => {
+  uni.$uv.route('/pages/module-friend/friend-mine/friend-mine', { friend_id: friendId });
 };
 </script>
 

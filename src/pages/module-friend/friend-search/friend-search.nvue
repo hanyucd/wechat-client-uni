@@ -12,7 +12,7 @@
       :cover="item.avatar || '/static/images/userpic.png'"
       :title="item.nickname"
       showRight
-      @click="navToUserMineRoute(item)"
+      @click="navToFriendMineRoute(item)"
     />
   </view>
 
@@ -49,9 +49,9 @@ const confirmSearch = async () => {
 };
 
 /**
- * 导航到用户(好友)名片页
+ * 导航到好友主页
  */
-const navToUserMineRoute = (user: IUser) => {
+const navToFriendMineRoute = (user: IUser) => {
   uni.$uv.route('/pages/module-friend/friend-mine/friend-mine', { friend_id: user.id });
 };
 </script>

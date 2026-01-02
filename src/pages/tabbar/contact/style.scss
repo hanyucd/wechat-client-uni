@@ -46,3 +46,11 @@
     font-size: 40rpx;
   }
 }
+
+.contact-count {
+  @include flex-xy-layout;
+  .contact-count-text {
+    font-size: 28rpx;
+    color: #6c757d;
+  }
+}

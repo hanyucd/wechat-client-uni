@@ -50,7 +50,7 @@
   <!-- 好友操作按钮 -->
   <view v-if="friendDetail.isfriend" class="action-btn" hover-class="bg-light" @click="navToChatRoute">
     <text v-if="!friendDetail.isblack" class="iconfont icon-msg">&#xe64e;</text>
-    <text>{{ friendDetail.isblack ? '移出黑名单' : '发信息' }}</text>
+    <text>{{ friendDetail.isblack ? '已在黑名单' : '发信息' }}</text>
   </view>
   <!-- 添加好友按钮 -->
   <view v-else class="action-btn" hover-class="bg-light" @click="navToAddFriendRoute">
@@ -92,7 +92,8 @@ const friendDetail = ref({} as IFriend);
 const menuPopupList = computed(() => {
   return [
     { icon: '\ue6b3', title: '设置备注和标签', type: 'navigate', path: 'pages/module-friend/friend-remark/friend-remark' },
-    { icon: '\ue6b0', title: friendDetail.value ? '取消星标好友' : '设为星标朋友', type: 'event', event: 'setStar' },
+    { icon: '\ue6b0', title: friendDetail.value.isstar ? '取消星标好友' : '设为星标朋友', type: 'event', event: 'setStar' },
+    { icon: '\ue638', title: friendDetail.value.isblack ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
     {
       icon: '\ue613',
       title: '把他推荐给朋友',
@@ -103,7 +104,6 @@ const menuPopupList = computed(() => {
       }))}`
     },
     { icon: '\ue667', title: '设置朋友圈和动态权限', type: 'navigate', path: 'pages/module-friend/friend-circle-auth/friend-circle-auth' },
-    { icon: '\ue638', title: friendDetail.value ? '移出黑名单' : '加入黑名单', type: 'event', event: 'setBlack' },
     {
       icon: '\ue61c',
       title: '投诉',
@@ -157,8 +157,8 @@ const handleMenuClick = async (menuItem: typeof menuPopupList.value[0]) => {
       uni.$uv.route({ url: menuItem.path, params: { userId: 120 } });
       break;
     case 'event':
-      menuItem.event === 'setStar' && setStar();
-      menuItem.event === 'setBlack' && setBlack();
+      menuItem.event === 'setStar' && _setStar();
+      menuItem.event === 'setBlack' && _setBlack();
       menuItem.event === 'delFriend' && delFriend();
       break;
   }
@@ -166,18 +166,36 @@ const handleMenuClick = async (menuItem: typeof menuPopupList.value[0]) => {
   menuVPopupRef.value?.closeVPopup();
 };
 
-// 设置星标好友
-const setStar = async () => {
-  console.log('设置星标');
+/**
+ * 设置星标好友
+ */
+const _setStar = async () => {
+  uni.showLoading({ title: '', mask: true });
+  const starValue = friendDetail.value.isstar ? 0 : 1;
+  
+  try {
+    await $api.setFriendStarApi(friendId.value, starValue);
+    _getFriendDetail();
+
+    uni.$uv.toast(`${ friendDetail.value.isstar ? '取消' : '设为' }星标成功`);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-// 设置黑名单
-const setBlack = async () => {
+/**
+ * 设置黑名单
+ */
+const _setBlack = async () => {
   const modalContent = friendDetail.value.isblack ? '移出黑名单' : '加入黑名单';
   try {
     const modalRes = await uni.showModal({ title: '提示', content: modalContent });
     if (!modalRes.confirm) return;
 
+    const blackValue = friendDetail.value.isblack ? 0 : 1;
+    await $api.setFriendBlackApi(friendId.value, blackValue);
+    _getFriendDetail();
+    
     uni.$uv.toast(`${ modalContent }成功`);
   } catch (error) {
     console.log(error);
@@ -202,7 +220,7 @@ const delFriend = async () => {
  * 导航到聊天页面
  */
 const navToChatRoute = () => {
-  if (friendDetail.value.isblack) return uni.$uv.toast('黑名单用户不能聊天');
+  if (friendDetail.value.isblack) return uni.$uv.toast('拉黑用户不能聊天');
   // uni.$uv.route('/pages/module-common/chat/chat', { friend_id: friendId.value });
 };
 

@@ -5,6 +5,7 @@ import type {
 
 // 好友信息
 export interface IFriend {
+  /** 好友 id */
   id: number;
   /** 好友账号 */
   username: string;
@@ -81,7 +82,7 @@ export interface IContactFriend {
   friend_username: string;
 }
 
-// 联系人好友列表
+// 联系人好友列表（通讯录）
 export interface IContact {
   /** 好友数量 */
   count: number;

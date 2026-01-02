@@ -31,4 +31,8 @@ export default {
   postHandleFriendApplyApi: (applyId: number, param: IHandleFriendApplyParams) => httpRequest<string>(`${ serverUrl }/api/friend/apply/handle/${ applyId }`, param, 'post'),
   // 获取好友列表（通讯录）
   getContactListApi: () => httpRequest<IContact>(`${ serverUrl }/api/friend/list`, {}, 'get'),
+  // 设置好友星标
+  setFriendStarApi: (friendId: number, isStar: number) => httpRequest<string>(`${ serverUrl }/api/friend/set-star/${ friendId }`, { isStar }, 'post'),
+  // 设置好友黑名单
+  setFriendBlackApi: (friendId: number, isBlack: number) => httpRequest<string>(`${ serverUrl }/api/friend/set-black/${ friendId }`, { isBlack }, 'post'),
 };
