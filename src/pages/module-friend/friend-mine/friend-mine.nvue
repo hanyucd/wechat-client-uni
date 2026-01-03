@@ -108,6 +108,11 @@ onLoad((option: any) => {
     friendId.value = Number(option.friend_id);
     _getFriendDetail();
   }
+
+  uni.$on('updateRemarkSuccessEvt', () => {
+    uni.$uv.toast('修改成功');
+    _getFriendDetail();
+  });
 });
 
 /**

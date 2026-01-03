@@ -20,6 +20,8 @@ export default {
   userLogoutApi: () => httpRequest<string>(`${ serverUrl }/api/user/logout`, {}, 'post'),
   // 用户搜索
   userSearchApi: (keyword: string) => httpRequest<IUser>(`${ serverUrl }/api/user/search`, { keyword }),
+  // 举报用户
+  postReportUserApi: (param: any) => httpRequest<any>(`${ serverUrl }/api/user/report`, param, 'post'),
   // 获取好友详情
   getFriendDetailApi: (friendId: number) => httpRequest<IFriend>(`${ serverUrl }/api/friend/info/${ friendId }`, {}, 'get'),
   // 好友申请
@@ -38,4 +40,6 @@ export default {
   setFriendBlackApi: (friendId: number, isBlack: number) => httpRequest<string>(`${ serverUrl }/api/friend/set-black/${ friendId }`, { isBlack }, 'post'),
   // 设置好友朋友圈权限
   setFriendCircleLookApi: (friendId: number, param: TFriendCircleLook) => httpRequest<string>(`${ serverUrl }/api/friend/circle-setlook/${ friendId }`, param, 'post'),
+  // 设置好友配置和标签
+  setFriendRemarkAndTagsApi: (friendId: number, param: any) => httpRequest<string>(`${ serverUrl }/api/friend/set-remark-tag/${ friendId }`, param, 'post'),
 };

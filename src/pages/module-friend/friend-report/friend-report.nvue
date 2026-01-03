@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import $api from '@/api';
 
 const pickerRef = ref(null);
 const reportCategoryColumns = ref([['色情低俗','政治敏感','广告营销','其他']]);
@@ -22,13 +23,21 @@ const reportCategoryColumns = ref([['色情低俗','政治敏感','广告营销'
 const reportCategory = ref('');
 // 举报内容
 const reportContent = ref('');
+// 举报目标id
+const targetId = ref(0);
+const reportType = ref('');
 
 onLoad((option: any) => {
   console.log(option);
 
+  if (option.friend_id) {
+    targetId.value = Number(option.friend_id);
+  }
+
   if (option.params) {
     const _params = JSON.parse(decodeURIComponent(option.params));
     console.log(_params);
+    reportType.value = _params.type;
   }
 });
 
@@ -42,13 +51,26 @@ const onPickerConfirmEvt = (event: any) => {
   reportCategory.value = event.value[0];
 };
 
-// 提交举报
-const submitReport = () => {
+/**
+ * 提交举报
+ */
+const submitReport = async () => {
   if (!reportCategory.value) return uni.$uv.toast('请选择分类');
   if (!reportContent.value.trim()) return uni.$uv.toast('请填写投诉内容');
 
-  uni.$uv.toast('提交成功');
-  // uni.$uv.route({ type: 'back' });
+  try {
+    await $api.postReportUserApi({
+      target_id: targetId.value,
+      report_type: reportType.value,
+      category: reportCategory.value,
+      content: reportContent.value.trim(),
+    });
+
+    uni.$uv.toast('提交成功');
+    uni.$uv.route({ type: 'back' });
+  } catch (error) {
+    return;
+  }
 };
 </script>
 
