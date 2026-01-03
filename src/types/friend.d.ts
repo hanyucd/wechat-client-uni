@@ -98,3 +98,9 @@ export interface IContact {
 // 朋友圈查看权限 
 export type TFriendCircleLook = Pick<IFriendApplyParams, 'lookme' | 'lookhim'>;
 
+// 朋友备注和标签参数
+export interface IFriendRemarkAndTagsParams {
+  remark: string;
+  tagList: string[];
+}
+

@@ -1,12 +1,13 @@
 import httpRequest from './httpRequest';
-import type { IUser, TLoginParams, TRegisterParams } from '@/types/user';
+import type { IUser, TLoginParams, TRegisterParams, IReportUserParams } from '@/types/user';
 import type {
   IFriend,
-  IFriendApplyParams,
-  IFriendApply,
-  IHandleFriendApplyParams,
   IContact,
-  TFriendCircleLook
+  IFriendApply,
+  TFriendCircleLook,
+  IFriendApplyParams,
+  IHandleFriendApplyParams,
+  IFriendRemarkAndTagsParams,
 } from '@/types/friend';
 
 const serverUrl = import.meta.env.VITE_API_URL;
@@ -21,7 +22,7 @@ export default {
   // 用户搜索
   userSearchApi: (keyword: string) => httpRequest<IUser>(`${ serverUrl }/api/user/search`, { keyword }),
   // 举报用户
-  postReportUserApi: (param: any) => httpRequest<any>(`${ serverUrl }/api/user/report`, param, 'post'),
+  postReportUserApi: (param: IReportUserParams) => httpRequest<any>(`${ serverUrl }/api/user/report`, param, 'post'),
   // 获取好友详情
   getFriendDetailApi: (friendId: number) => httpRequest<IFriend>(`${ serverUrl }/api/friend/info/${ friendId }`, {}, 'get'),
   // 好友申请
@@ -41,5 +42,5 @@ export default {
   // 设置好友朋友圈权限
   setFriendCircleLookApi: (friendId: number, param: TFriendCircleLook) => httpRequest<string>(`${ serverUrl }/api/friend/circle-setlook/${ friendId }`, param, 'post'),
   // 设置好友配置和标签
-  setFriendRemarkAndTagsApi: (friendId: number, param: any) => httpRequest<string>(`${ serverUrl }/api/friend/set-remark-tag/${ friendId }`, param, 'post'),
+  setFriendRemarkAndTagsApi: (friendId: number, param: IFriendRemarkAndTagsParams) => httpRequest<string>(`${ serverUrl }/api/friend/set-remark-tag/${ friendId }`, param, 'post'),
 };

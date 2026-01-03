@@ -41,6 +41,9 @@
 
 <script setup lang="ts">
 import $api from '@/api';
+import { useUserStore } from '@/store';
+
+const userStore = useUserStore();
 
 // 好友 id
 const friendId = ref(0);
@@ -123,10 +126,11 @@ const onStatusPickerConfirm = async (event: any) => {
 
     uni.$uv.route({ type: 'back' });
     uni.$emit('handleApplyEvt', applyStatus);
+    // 更新通讯录数据
+    userStore.getContactListAction();
   } catch (error) {
     console.log(error);
   }
-  
 };
 </script>
 

@@ -80,7 +80,7 @@ const submitUpdateRemark = async () => {
   try {
     await $api.setFriendRemarkAndTagsApi(friendId.value, {
       remark: nickname.value,
-      tags: tagList.value,
+      tagList: tagList.value,
     });
     uni.$uv.route({ type: 'back' });
     uni.$emit('updateRemarkSuccessEvt');

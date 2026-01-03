@@ -32,3 +32,11 @@ export interface IUser {
   updated_at: string;
   [property: string]: any;
 }
+
+// 举报用户参数
+export interface IReportUserParams {
+  target_id: number;
+  report_type: string;
+  category: string;
+  content: string;
+}
