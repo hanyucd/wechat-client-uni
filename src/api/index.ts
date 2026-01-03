@@ -5,7 +5,8 @@ import type {
   IFriendApplyParams,
   IFriendApply,
   IHandleFriendApplyParams,
-  IContact
+  IContact,
+  TFriendCircleLook
 } from '@/types/friend';
 
 const serverUrl = import.meta.env.VITE_API_URL;
@@ -35,4 +36,6 @@ export default {
   setFriendStarApi: (friendId: number, isStar: number) => httpRequest<string>(`${ serverUrl }/api/friend/set-star/${ friendId }`, { isStar }, 'post'),
   // 设置好友黑名单
   setFriendBlackApi: (friendId: number, isBlack: number) => httpRequest<string>(`${ serverUrl }/api/friend/set-black/${ friendId }`, { isBlack }, 'post'),
+  // 设置好友朋友圈权限
+  setFriendCircleLookApi: (friendId: number, param: TFriendCircleLook) => httpRequest<string>(`${ serverUrl }/api/friend/circle-setlook/${ friendId }`, param, 'post'),
 };

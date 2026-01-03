@@ -15,22 +15,70 @@
 </template>
 
 <script setup lang="ts">
-const userId = ref(0);
+import $api from '@/api';
+
+const friendId = ref(0);
 // 不让他看我
 const isLookMe = ref(false);
 // 不看他
 const isLookHe = ref(false);
 
-// onNotLookMeChangeEvt 不让他看我
-const onNotLookMeChangeEvt = (val: any) => {
-  // isLookMe.value = val;
-  console.log(val);
+onLoad((option: any) => {
+  console.log(option);
+
+  if (option.friend_id) {
+    friendId.value = Number(option.friend_id);
+    _getFriendDetail();
+  }
+});
+
+/**
+ * 获取好友详情
+ */
+const _getFriendDetail = async () => {
+  if (!friendId.value) return;
+  
+  try {
+    const res = await $api.getFriendDetailApi(friendId.value);
+    isLookMe.value = res.data.lookme === 1 ? false : true;
+    isLookHe.value = res.data.lookhim === 1 ? false : true;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-// onNotLookHeChangeEvt 不看他
-const onNotLookHeChangeEvt = (val: any) => {
-  // isLookHe.value = val;
+/**
+ * 不让他看我朋友圈
+ */
+const onNotLookMeChangeEvt = (val: any) => {
   console.log(val);
+  _setFriendCircleLookAuth();
+};
+
+/**
+ * 不看他朋友圈
+ */
+const onNotLookHeChangeEvt = (val: any) => {
+  console.log(val);
+  _setFriendCircleLookAuth();
+};
+
+/**
+ * 设置好友朋友圈查看权限
+ */
+const _setFriendCircleLookAuth = async () => {
+  if (!friendId.value) return uni.$uv.toast('无好友 id');
+
+  try {
+    await $api.setFriendCircleLookApi(friendId.value, {
+      lookme: isLookMe.value ? 0 : 1,
+      lookhim: isLookHe.value ? 0 : 1,
+    });
+
+    uni.$uv.toast('设置成功');
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 

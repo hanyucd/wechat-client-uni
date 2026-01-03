@@ -51,7 +51,7 @@ http.interceptors.response.use(response => {
   // 401 未授权
   if (errResponse.statusCode === 401) {
     const userStore = useUserStore();
-    userStore.userLogoutAction();
+    userStore.userLogoutAction(errResponse.statusCode);
     return Promise.reject(errData);
   }
 

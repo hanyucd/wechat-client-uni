@@ -54,16 +54,18 @@ export const useUserStore = defineStore('userModule', () => {
     uni.$uv.toast('登录成功');
     uni.$uv.route({ type: 'tab', url: 'pages/tabbar/index/index' });
 
-    initWebSocketAction();
+    // initWebSocketAction();
+    initAppAction();
   };
 
   /**
    * 退出登录
    */
-  const userLogoutAction = async () => {
+  const userLogoutAction = async (httpCode?: number) => {
     try {
+      if (!httpCode) await $api.userLogoutApi();
+      
       // 清除用户信息
-      await $api.userLogoutApi();
       userInfo.value = {} as IUser;
       uni.$uv.toast('已退出登录');
       uni.$uv.route({ type: 'launch', url: 'pages/login/login' });

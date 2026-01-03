@@ -94,3 +94,7 @@ export interface IContact {
     list: IContactFriend[];
   }>;
 }
+
+// 朋友圈查看权限 
+export type TFriendCircleLook = Pick<IFriendApplyParams, 'lookme' | 'lookhim'>;
+
